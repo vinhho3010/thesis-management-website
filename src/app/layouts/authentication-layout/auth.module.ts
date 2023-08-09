@@ -4,6 +4,7 @@ import { AuthenticationLayoutComponent } from './authentication-layout/authentic
 import { LoginComponent } from 'src/app/pages/authentication/login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RegisterComponent } from 'src/app/pages/authentication/register/register.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -15,7 +16,8 @@ import { RegisterComponent } from 'src/app/pages/authentication/register/registe
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ]
 })
 export class AuthModule { }
