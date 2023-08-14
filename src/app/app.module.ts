@@ -7,6 +7,10 @@ import { HttpClientModule }     from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatModule } from './shared/mat.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './layouts/authentication-layout/auth.module';
+import { MainModule } from './layouts/main-layout/main.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
+    AuthModule,
+    MainModule
   ],
   providers: [],
   bootstrap: [AppComponent]

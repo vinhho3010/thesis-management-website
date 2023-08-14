@@ -1,3 +1,50 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+<div class="wrapper h-full">
+  <div class="form-wrapper">
+    <div class="title">Đăng nhập vào tài khoản của bạn</div>
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+      <div class="input">
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full">
+          <mat-label>Email</mat-label>
+          <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none">
+          <mat-error
+            *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
+            Enter a valid email address
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input">
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
+          <mat-label>Password</mat-label>
+          <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
+            [placeholder]=" isShowPassword ? 'Password' : ' • • • • • • • •' ">
+          <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Hide Password' : 'Show Password' "
+            matSuffix tabindex="-1" (click)="isShowPassword=!isShowPassword">
+            <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')">
+            Password must be at least 8 characters long
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="utility-field">
+        <div class="remember-check" [class.alert-space]="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')
+        && (this.loginForm.controls.password.touched && this.loginForm.controls.password.dirty)">
+          <mat-checkbox formControlName="isRemember" color="primary">Remember me</mat-checkbox>
+        </div>
+        <div class="forgot-password">
+          <a routerLink="/forgot-password">Forgot password?</a>
+        </div>
+      </div>
+      <button type="submit" mat-flat-button extended color="primary" class="btn-submit w-full mt-3">
+        Login
+      </button>
+      <p class="text-sm font-light text-gray-700 dark:text-gray-400 mt-5">
+        Don’t have an account yet? <a href="#" class="font-medium text-blue-600 dark:text-blue-500">Sign up</a>
+    </p>
+    </form>
+  </div>
+</div>
