@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { RouteInfo, routesInfo } from './sidebar-data';
+import { SidebarService } from 'src/app/services/local/sidebar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,5 +9,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  routesInfo = routesInfo;
 
+  constructor(public sidebarService: SidebarService, private router: Router) { }
+
+  getMobileMenuClass(){
+    return {' translate-x-0': this.sidebarService.showMobileMenuValue == true,
+            'md:translate-x-0': this.sidebarService.showMobileMenuValue == false}
+  }
+
+  handleRouting(route: RouteInfo){
+    if(!this.isOnRoute(route.path)){
+      this.router.navigate([route.path]);
+      this.sidebarService.setShowMobileMenu = false;
+    }
+  }
+
+  isOnRoute(route: string){
+    return this.router.url.includes(route);
+  }
 }

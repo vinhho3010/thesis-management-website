@@ -87,7 +87,8 @@ import { CommonModule } from '@angular/common';
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    MatIconModule,
   ],
   imports: [
     A11yModule,
@@ -132,7 +133,8 @@ import { CommonModule } from '@angular/common';
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    MatIconModule
   ]
 })
 export class MatModule { }

@@ -1,4 +1,4 @@
-<div class="wrapper h-full">
+<div class="wrapper">
   <div class="form-wrapper">
     <div class="title">Đăng nhập vào tài khoản của bạn</div>
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
@@ -15,7 +15,7 @@
 
       <div class="input">
         <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
-          <mat-label>Password</mat-label>
+          <mat-label>Mật khẩu</mat-label>
           <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
             [placeholder]=" isShowPassword ? 'Password' : ' • • • • • • • •' ">
           <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Hide Password' : 'Show Password' "
@@ -33,18 +33,15 @@
       <div class="utility-field">
         <div class="remember-check" [class.alert-space]="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')
         && (this.loginForm.controls.password.touched && this.loginForm.controls.password.dirty)">
-          <mat-checkbox formControlName="isRemember" color="primary">Remember me</mat-checkbox>
+          <mat-checkbox formControlName="isRemember" color="primary">Nhớ tài khoản</mat-checkbox>
         </div>
-        <div class="forgot-password">
-          <a routerLink="/forgot-password">Forgot password?</a>
+        <div class="forgot-password font-medium text-blue-700">
+          <a routerLink="/forgot-password">Quên mật khẩu?</a>
         </div>
       </div>
       <button type="submit" mat-flat-button extended color="primary" class="btn-submit w-full mt-3">
-        Login
+        Đăng nhập
       </button>
-      <p class="text-sm font-light text-gray-700 dark:text-gray-400 mt-5">
-        Don’t have an account yet? <a href="#" class="font-medium text-blue-600 dark:text-blue-500">Sign up</a>
-    </p>
     </form>
   </div>
 </div>

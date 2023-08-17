@@ -78,7 +78,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind components;
 @tailwind utilities;
 
-  .mdc-notched-outline__notch
+
+.mdc-notched-outline__notch
 {
   border-right: none;
 }
@@ -91,6 +92,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mdc-notched-outline__leading {
   border-top-left-radius: 16px !important;
   border-bottom-left-radius: 16px !important;
+}
+
+
+.mat-mdc-text-field-wrapper {
+  background-color: white !important;
+  border-bottom: none !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: white !important;
+}
+
+  .mat-mdc-text-field-wrapper {
+    background-color: white !important;
+    //border-bottom: none !important;
+    border-radius: 12px;
+}
+
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: white !important;
+}
+
+.mdc-line-ripple {
+  display: none;
+}
+
+
+
+.panel-custom{
+  margin-top: 12px !important;
+  border-radius: 12px !important;
 }
 
 

@@ -10,12 +10,12 @@ import { HomeComponent } from 'src/app/pages/home/home/home.component';
 @NgModule({
   declarations: [
     MainLayoutComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class MainModule { }

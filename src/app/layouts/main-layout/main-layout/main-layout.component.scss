@@ -1,0 +1,11 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  background-size: cover;
+  margin: 0 auto;
+  position: relative;
+  transition: 0.2s ease-in;
+
+}

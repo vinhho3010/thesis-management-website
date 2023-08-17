@@ -12,10 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './layouts/authentication-layout/auth.module';
 import { MainModule } from './layouts/main-layout/main.module';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     HttpClientModule,
@@ -24,11 +26,16 @@ import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
     SharedModule,
     BrowserAnimationsModule,
     AuthModule,
-    MainModule
+    MainModule,
   ],
   providers: [
     {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(iconRegistry: MatIconRegistry){
+    iconRegistry.setDefaultFontSetClass('material-icons-outlined');
+  }
+}
