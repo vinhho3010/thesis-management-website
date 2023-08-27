@@ -4,6 +4,7 @@ import { LoginComponent } from 'src/app/pages/authentication/login/login.compone
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationLayoutComponent } from './authentication-layout/authentication-layout.component';
 import { RegisterComponent } from 'src/app/pages/authentication/register/register.component';
+import { ThesisListComponent } from 'src/app/shared/components/thesis-list/thesis-list.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
     {
       path: 'register',
       component: RegisterComponent
+    },
+    {
+      path: 'public',
+      component: ThesisListComponent
     }
   ]
 }

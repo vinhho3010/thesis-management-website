@@ -29,6 +29,7 @@ import { MatIconRegistry } from '@angular/material/icon';
     MainModule,
   ],
   providers: [
+    HttpClientModule,
     {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}}
   ],
   bootstrap: [AppComponent]

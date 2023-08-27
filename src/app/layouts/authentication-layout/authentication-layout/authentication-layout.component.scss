@@ -3,19 +3,18 @@
   flex-direction: column;
   width: 100vw !important;
   min-height: 100vh !important;
-  background-image: url(../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg);
-  background-size: cover;
   margin: 0 auto;
   position: relative;
-  transition: 0.2s ease-in;
+  transition: .2s ease-in-out;
+  background-image: url(../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg);
+  background-size: cover;
 
-  .container-fluid {
-    flex: 1 0 auto;
-    min-width: 100%;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    margin-top: -32px;
+  .container-outlet {
+    width: 100%;
+    flex: 1 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 64px;
   }
 }

@@ -8,7 +8,7 @@
           <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none">
           <mat-error
             *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
-            Enter a valid email address
+            Vui lòng nhập đúng định dạng email
           </mat-error>
         </mat-form-field>
       </div>
@@ -24,7 +24,7 @@
           </button>
           <mat-error
             *ngIf="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')">
-            Password must be at least 8 characters long
+            Mật khẩu phải có ít nhất 8 ký tự
           </mat-error>
         </mat-form-field>
       </div>
