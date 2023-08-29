@@ -1,34 +1,35 @@
 export const routesInfo: RouteInfo[] = [
   {
-    path: '/home',
+    path: '/class',
     title: 'Trang chủ',
     icon: 'home_outline'
   },
   {
-    path: '/home',
-    title: 'Trang chủ',
-    icon: 'home_outline'
+    path: '/class',
+    title: 'Lớp học',
+    icon: 'book_outline'
   },
   {
-    path: '/home',
-    title: 'Trang chủ',
-    icon: 'home_outline'
+    path: '/process',
+    title: 'Tiến độ thực hiện',
+    icon: 'trending_up_outline'
   },
   {
-    path: '/home',
-    title: 'Trang chủ',
-    icon: 'home_outline'
+    path: '/students',
+    title: 'Danh sách sinh viên',
+    icon: 'people_outline'
   },
   {
-    path: '/home',
-    title: 'Trang chủ',
-    icon: 'home_outline'
+    path: '/milestone',
+    title: 'Mốc thời gian',
+    icon: 'schedule_outline'
   },
   {
-    path: '/home',
-    title: 'Trang chủ',
-    icon: 'home_outline'
+    path: '/topics',
+    title: 'Danh sách đề tài',
+    icon: 'info'
   },
+
 ];
 
 export interface RouteInfo {

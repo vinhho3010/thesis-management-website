@@ -21,7 +21,8 @@ import { ThesisListComponent } from './components/thesis-list/thesis-list.compon
     HeaderComponent,
     SidebarComponent,
     MatModule,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    ThesisListComponent
   ]
 })
 export class SharedModule { }

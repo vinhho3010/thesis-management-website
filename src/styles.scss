@@ -27,6 +27,12 @@ $thesis-management-website-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($thesis-management-website-theme);
 
+@for $i from 0 through 24 {
+  .mat-mdc-card.mat-elevation-z#{$i} {
+    @include mat.elevation($i);
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 /* custom scrollbar */

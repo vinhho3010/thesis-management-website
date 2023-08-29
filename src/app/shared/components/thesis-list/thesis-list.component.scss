@@ -1,39 +1,43 @@
-.public-wrapper {
-  min-height: 80vh;
-  min-width: 50vw;
-  background-color: white;
+.wrapper{
+  height: 85vh;
   width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 12px;
 
-  .title{
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    padding: 1rem;
-  }
+  .public-wrapper {
+    min-height: 100%;
+    min-width: 50vw;
+    background-color: white;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
 
-  .form-wrapper{
-    width: 90%;
-    padding: 16px;
-
-  }
-
-  .list-item{
-    overflow-y: auto;
-    padding: 8px 48px;
-
-    .thesis-item{
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      margin-top: 8px;
+    .title{
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      padding: 1rem;
     }
-  }
 
+    .form-wrapper{
+      width: 90%;
+      padding: 16px;
+
+    }
+
+    .list-item{
+      overflow-y: auto;
+
+      .thesis-item{
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        margin-top: 8px;
+      }
+    }
+
+  }
 }
 
 .button-view{
