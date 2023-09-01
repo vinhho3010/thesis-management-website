@@ -1,0 +1,26 @@
+.board-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  padding: 16px;
+
+  .class-info{
+    min-height: 320px;
+    background: url(../../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg);
+    background-size: cover;
+    border-radius: 12px;
+    margin-top: 12px;
+  }
+
+  .news-item{
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-top: 8px;
+
+  }
+
+}

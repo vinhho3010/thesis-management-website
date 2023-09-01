@@ -27,72 +27,7 @@
       </form>
 
     <div class="list-item max-h-[550px] py-2 px-2 md:px-12">
-      <mat-card class="thesis-item md:p-3" [class.mat-elevation-z0]="true" *ngFor="let i of [1,2,3, 4, 5, 6, 7, 8, 9];">
-        <mat-card-header>
-            <mat-card-title>Luận văn Thứ 1</mat-card-title>
-            <mat-card-subtitle>
-                Giảng viên hướng dẫn: Nguyễn Văn A
-            </mat-card-subtitle>
-            <mat-card-subtitle>
-              <div class="flex flex-wrap items-center gap-1">
-                Trạng thái: <span class="text-green-600 bg-green-200 rounded-lg px-3 py-1">Đã hoàn thành</span>
-                <span class="text-yellow-600 bg-yellow-200 rounded-lg px-3 py-1">Đang tiến hành</span>
-              </div>
-            </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-   <div class="flex gap-3 mt-4 md:flex-row flex-col">
-    <img mat-card-md-image src="../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg">
-    <p class="line-clamp-5">
-        With the idea of imparting programming
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        With the idea of imparting programming
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        With the idea of imparting programming
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        With the idea of imparting programming
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-        With the idea of imparting programming
-        knowledge, Mr. Sandeep Jain, an IIT Roorkee
-        alumnus started a dream, GeeksforGeeks.
-        Whether programming excites you or you feel
-        stifled, wondering how to prepare for
-        interview questions or how to ace data
-
-    </p>
-   </div>
-        </mat-card-content>
-        <mat-card-actions class="justify-end">
-            <button mat-button color="primary" class="button-view">Xem chi tiết</button>
-
-        </mat-card-actions>
-    </mat-card>
+      <app-thesis-card *ngFor="let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]"></app-thesis-card>
     </div>
   </div>
 

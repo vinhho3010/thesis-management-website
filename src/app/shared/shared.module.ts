@@ -5,12 +5,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MatModule } from './mat.module';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
+import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    ThesisListComponent
+    ThesisListComponent,
+    ThesisCardComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { ThesisListComponent } from './components/thesis-list/thesis-list.compon
     SidebarComponent,
     MatModule,
     ClickOutsideDirective,
-    ThesisListComponent
+    ThesisListComponent,
+    ThesisCardComponent
   ]
 })
 export class SharedModule { }

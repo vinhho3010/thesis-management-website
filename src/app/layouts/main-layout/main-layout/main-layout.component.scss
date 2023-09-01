@@ -1,11 +1,16 @@
 .wrapper{
   display: flex;
   flex-direction: column;
-  width: 100vw !important;
-  min-height: 100vh !important;
+  width: 100%;
+  min-height: 100vh;
   background-size: cover;
   margin: 0 auto;
   position: relative;
   transition: 0.2s ease-in;
 
+  .container-custom{
+    flex: 1 1 auto;
+    max-height: calc(100% - 64px);
+    margin-top: 64px;
+  }
 }

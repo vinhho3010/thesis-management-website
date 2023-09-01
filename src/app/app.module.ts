@@ -13,10 +13,20 @@ import { AuthModule } from './layouts/authentication-layout/auth.module';
 import { MainModule } from './layouts/main-layout/main.module';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { ClassComponent } from './pages/home/class/class.component';
+import { MilestonesComponent } from './pages/home/milestones/milestones.component';
+import { TopicComponent } from './pages/home/topic/topic.component';
+import { StudentListComponent } from './pages/home/student-list/student-list.component';
+import { ClassBoardComponent } from './pages/home/class/class-board/class-board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ClassComponent,
+    MilestonesComponent,
+    TopicComponent,
+    StudentListComponent,
+    ClassBoardComponent,
 
   ],
   imports: [

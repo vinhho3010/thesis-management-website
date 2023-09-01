@@ -1,17 +1,17 @@
 export const routesInfo: RouteInfo[] = [
   {
-    path: '/class',
+    path: '/home',
     title: 'Trang chủ',
     icon: 'home_outline'
   },
   {
     path: '/class',
-    title: 'Lớp học',
+    title: 'Quản lý lớp học',
     icon: 'book_outline'
   },
   {
     path: '/process',
-    title: 'Tiến độ thực hiện',
+    title: 'Quản lý tiến độ',
     icon: 'trending_up_outline'
   },
   {
@@ -20,13 +20,13 @@ export const routesInfo: RouteInfo[] = [
     icon: 'people_outline'
   },
   {
-    path: '/milestone',
-    title: 'Mốc thời gian',
+    path: '/milestones',
+    title: 'Quản lý mốc thời gian',
     icon: 'schedule_outline'
   },
   {
     path: '/topics',
-    title: 'Danh sách đề tài',
+    title: 'Quản lý đề tài',
     icon: 'info'
   },
 
