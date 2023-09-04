@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
 
 @Component({
@@ -7,7 +8,11 @@ import { SidebarService } from 'src/app/services/local/sidebar.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  constructor(public sidebarService: SidebarService) {
+  constructor(public sidebarService: SidebarService, private router: Router) {
 
+   }
+
+   onLogout(): void {
+    this.router.navigate(['/login']);
    }
 }

@@ -1,0 +1,48 @@
+<div class="active-wrapper">
+  <div class="active-list-header flex justify-between items-center mt-9 p-3">
+    <div class="list-title w-1/2 text-3xl text-blue-800">
+      Danh sách sinh viên
+    </div>
+    <div class="search-wrapper w-1/3 p-3">
+      <mat-form-field floatLabel="always" appearance="outline" class="w-full">
+        <mat-label>Tìm kiếm</mat-label>
+        <input matInput type="text" placeholder="Nhập tên sinh viên">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+ <div class="active-list">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z4" matSort>
+
+    <ng-container matColumnDef="studentCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
+      <span class="mobile-label">MSSV: </span>
+      <td mat-cell *matCellDef="let element"> {{element.studentCode}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
+      <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
+      <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button color="primary" (click)="onEditRow(row)">Edit</button>
+        <button mat-button color="warn" (click)="onDeleteRow(row)">Edit</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>
+
+</div>

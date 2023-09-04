@@ -1,29 +1,37 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b backdrop-blur border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav
+  class="fixed top-0 z-50 w-full bg-white border-b backdrop-blur border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-          type="button"
-          (click)="sidebarService.toggleMobileMenu()"
+          type="button" (click)="sidebarService.toggleMobileMenu()"
           class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span class="sr-only">Open sidebar</span>
           <mat-icon>menu</mat-icon>
         </button>
-        <a routerLink="['/home']"  class="flex ml-2 md:mr-24">
-          <!-- <img src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png" class="h-8 mr-3" alt="Logo" /> -->
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">CTU Thesis</span>
+        <a routerLink="['/home']" class="flex ml-2 md:mr-24">
+          <img src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png" class="h-12 mr-3"
+            alt="Logo" />
+          <span class="hidden sm:inline self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">CTU
+            Thesis</span>
         </a>
       </div>
-      <span class="avatar">
-        <img  [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-       src="../../../../assets/picture/batman_hero_avatar_comics-512.webp"  width="40px" height="40px">
-      </span>
-      <mat-menu #userMenu="matMenu" panelClass="panel-custom">
+      <div class="flex justify-start items-center">
+        <div class="info-wrapper flex justify-end flex-col items-end">
+          <div class="name text-gray-700">Nguyễn Văn tét</div>
+          <div class="role text-sm text-gray-500">Sinh viên</div>
+        </div>
+        <span class="avatar ml-2">
+          <img [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+            src="../../../../assets/picture/batman_hero_avatar_comics-512.webp" width="40px" height="40px">
+        </span>
+      </div>
+      <mat-menu #userMenu="matMenu" backdropClass="panel-custom">
         <button mat-menu-item>
           <mat-icon>settings_applications</mat-icon>
           <span>Cài đặt tài khoản</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="onLogout()">
           <mat-icon>exit_to_app</mat-icon>
           <span>Đăng xuất</span>
         </button>

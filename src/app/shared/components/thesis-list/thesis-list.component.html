@@ -15,12 +15,12 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="relative order-1 md:order-2 md:w-3/4 w-full">
+        <mat-form-field class="relative order-1 md:order-2 md:w-3/4 w-full -mb-6" appearance="outline">
+          <mat-icon matPrefix>search</mat-icon>
           <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-700">
-              <mat-icon>search</mat-icon>
           </div>
-          <input type="search" id="default-search" class="block w-full outline-none p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tìm kiếm luận văn" required>
-      </div>
+          <input matInput type="search" id="default-search" class="block w-full outline-none p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tìm kiếm luận văn">
+      </mat-form-field>
       <button type="submit" class="w-full md:w-auto order-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-7 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-md min-w-[124px]">Tìm kiếm</button>
 
       </div>
