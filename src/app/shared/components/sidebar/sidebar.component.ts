@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouteInfo, routesInfo } from './sidebar-data';
+import { Component, Input } from '@angular/core';
+import { RouteInfo } from './sidebar-data';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
 import { Router } from '@angular/router';
 
@@ -8,10 +8,12 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
-  routesInfo = routesInfo;
+export class SidebarComponent{
+  @Input() routesInfo!: RouteInfo[];
 
-  constructor(public sidebarService: SidebarService, private router: Router) { }
+  constructor(public sidebarService: SidebarService, private router: Router) {
+
+   }
 
   getMobileMenuClass(){
     return {' translate-x-0': this.sidebarService.showMobileMenuValue == true,

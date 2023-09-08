@@ -9,7 +9,12 @@ const routes: Routes = [
 {
   path: 'home',
   loadChildren: () => import('./layouts/main-layout/main.module').then(m => m.MainModule),
-}
+},
+{
+  path: 'admin',
+  loadChildren: () => import('./layouts/admin-layout/admin.module').then(m => m.AdminModule),
+},
+
 ];
 
 @NgModule({

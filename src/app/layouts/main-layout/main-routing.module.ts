@@ -7,6 +7,7 @@ import { MilestonesComponent } from 'src/app/pages/home/milestones/milestones.co
 import { ClassComponent } from 'src/app/pages/home/class/class.component';
 import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { StudentListComponent } from 'src/app/pages/home/student-list/student-list.component';
+import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'students',
         component: StudentListComponent
+      },
+      {
+        path: 'process',
+        component: ProcessComponent
       }
 
     ]

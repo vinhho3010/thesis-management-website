@@ -32,6 +32,14 @@ export const routesInfo: RouteInfo[] = [
 
 ];
 
+export const routesInfoAdmin: RouteInfo[] = [
+  {
+    path: 'admin/manage-account',
+    title: 'Quản lý tài khoản',
+    icon: 'manage_accounts'
+  }
+]
+
 export interface RouteInfo {
   path: string;
   title: string;
