@@ -6,6 +6,7 @@ import { MatModule } from './mat.module';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
 import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis
     CommonModule,
     MatModule,
     ClickOutsideDirective,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
@@ -25,7 +27,8 @@ import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis
     MatModule,
     ClickOutsideDirective,
     ThesisListComponent,
-    ThesisCardComponent
+    ThesisCardComponent,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

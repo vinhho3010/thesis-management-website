@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddAccountDialogComponent } from '../dialog/add-account-dialog/add-account-dialog.component';
 
 export interface PeriodicElement {
   studentCode: string;
@@ -52,10 +53,7 @@ export class ManageAccountComponent {
   }
 
   openDialogAddAccount(): void {
-    const dialogRef = this.dialog.open(ManageAccountComponent, {
-      width: '50vw',
-      data: {name: 'name', animal: 'animal'}
-    });
+    const dialogRef = this.dialog.open(AddAccountDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

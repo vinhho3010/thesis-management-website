@@ -10,11 +10,15 @@ import { AuthModule } from './layouts/authentication-layout/auth.module';
 import { MainModule } from './layouts/main-layout/main.module';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { AddAccountDialogComponent } from './pages/admin/dialog/add-account-dialog/add-account-dialog.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddAccountDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -27,7 +31,16 @@ import { MatIconRegistry } from '@angular/material/icon';
   ],
   providers: [
     HttpClientModule,
-    {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}}
+    {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}},
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        ...new MatDialogConfig(),
+        maxHeight: "90vh",
+        panelClass: 'custom-dialog',
+      } as MatDialogConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -5,15 +5,16 @@
       <div class="input">
         <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full">
           <mat-label>Email</mat-label>
-          <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none">
+          <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com">
           <mat-error
+            class="text-red-500 text-xs"
             *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
             Vui lòng nhập đúng định dạng email
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div class="input">
+      <div class="input mt-2">
         <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
           <mat-label>Mật khẩu</mat-label>
           <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
@@ -23,6 +24,7 @@
             <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
           </button>
           <mat-error
+            class="text-red-500 text-xs"
             *ngIf="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')">
             Mật khẩu phải có ít nhất 8 ký tự
           </mat-error>
