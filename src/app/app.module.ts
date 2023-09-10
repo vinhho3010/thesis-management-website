@@ -13,6 +13,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { AddAccountDialogComponent } from './pages/admin/dialog/add-account-dialog/add-account-dialog.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
+import { TableAccountComponent } from './pages/admin/manage-account/table-account/table-account.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/d
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {
         ...new MatDialogConfig(),
-        maxHeight: "90vh",
+        maxHeight: "95vh",
         panelClass: 'custom-dialog',
       } as MatDialogConfig,
     }

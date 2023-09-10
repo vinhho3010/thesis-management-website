@@ -1,32 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddAccountDialogComponent } from '../dialog/add-account-dialog/add-account-dialog.component';
-
-export interface PeriodicElement {
-  studentCode: string;
-  fullName: string;
-  class: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
-];
+import { ManageUserService } from 'src/app/services/manage-user.service';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 
 @Component({
   selector: 'app-manage-account',
@@ -35,28 +13,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class ManageAccountComponent {
-  @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['studentCode', 'fullName', 'class', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  tableTypeRole = RoleAccount;
+  displayedColumnsStudent: string[] = ['position', 'code', 'fullName', 'type', 'actions'];
+  displayedColumnsTeacher: string[] = ['position', 'code', 'fullName', 'class', 'actions'];
+  dataSource = new MatTableDataSource();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private manageUserService: ManageUserService) { }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
-  onEditRow(row: any): void {
-    console.log(row);
-  }
-  onDeleteRow(row: any): void {
-    console.log(row);
-  }
-
-  openDialogAddAccount(): void {
-    const dialogRef = this.dialog.open(AddAccountDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 }
