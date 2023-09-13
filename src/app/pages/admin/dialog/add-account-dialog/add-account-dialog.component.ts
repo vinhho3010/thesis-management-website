@@ -55,6 +55,7 @@ export class AddAccountDialogComponent implements OnInit {
     } else if(this.data.role === RoleAccount.MINISTRY){
       this.newAccountForm.controls['type'].setValue('ministry');
     }
+console.log(this.data);
 
     this.newAccountForm.patchValue(this.data);
   }

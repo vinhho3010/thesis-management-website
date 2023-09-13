@@ -6,6 +6,7 @@ import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 import { AddAccountDialogComponent } from '../../dialog/add-account-dialog/add-account-dialog.component';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { AddFileAccountComponent } from '../../dialog/add-file-account/add-file-account.component';
 
 @Component({
   selector: 'app-table-account',
@@ -62,6 +63,15 @@ export class TableAccountComponent {
       },
       error: () => {
         this.toastService.showErrorToast('Xóa thất bại');
+      }
+    });
+  }
+
+  openDialogAddFile(): void {
+    const dialogRef = this.dialog.open(AddFileAccountComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.initDataSource();
       }
     });
   }

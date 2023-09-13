@@ -14,6 +14,10 @@ export class ManageUserService {
     return this.http.post('/api/register', data)
   }
 
+  createListAccount(data: unknown){
+    return this.http.post('/api/register-list', data)
+  }
+
   updateAccount(id: string, data: unknown){
     return this.http.put(`/api/user/${id}`, data)
   }

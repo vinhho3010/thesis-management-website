@@ -10,16 +10,15 @@ import { AuthModule } from './layouts/authentication-layout/auth.module';
 import { MainModule } from './layouts/main-layout/main.module';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { AddAccountDialogComponent } from './pages/admin/dialog/add-account-dialog/add-account-dialog.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
-import { TableAccountComponent } from './pages/admin/manage-account/table-account/table-account.component';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddAccountDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -29,6 +28,8 @@ import { TableAccountComponent } from './pages/admin/manage-account/table-accoun
     BrowserAnimationsModule,
     AuthModule,
     MainModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot()
   ],
   providers: [
     HttpClientModule,

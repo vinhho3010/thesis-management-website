@@ -1,0 +1,58 @@
+<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
+  <div class="min-h-[100px] flex justify-center items-center border-b-[1px] border-gray-400 px-2 mb-2">
+    <div class="upload-field">
+      <input type="file" class="hidden" (change)="onFileSelected($event)" accept=".xlsx, .xls"  #fileUpload>
+      <button mat-flat-button color="primary" class="py-5 px-6 rounded-xl" (click)="fileUpload.click()">
+        <mat-icon>insert_drive_file_outline</mat-icon>
+        <span class="line-clamp-1">{{fileName ? fileName : "Chọn tập tin Excel"}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="account-list max-h-[40vh] overflow-y-auto" *ngIf="dataSourceInput.data">
+    <table mat-table [dataSource]="dataSourceInput" class="mat-elevation-z0" matSort>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> STT </th>
+        <td mat-cell *matCellDef="let element; let i = dataIndex">{{dataSourceInput.filteredData.indexOf(element) + 1}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã tài khoản </th>
+        <span class="mobile-label"> Mã tài khoản </span>
+        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
+        <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại tài khoản </th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button color="primary" (click)="onViewData(row)">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button mat-button color="warn" (click)="onDeleteRow(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    </div>
+  <div class="flex justify-end items-center gap-4 mt-3">
+    <button class="custom-btn" mat-flat-button (click)="onClose()">Huỷ</button>
+    <button class="custom-btn bg-blue-600 text-white" mat-flat-button (click)="onSubmitData()">Thêm mới danh
+      sách</button>
+  </div>
+
+</div>
