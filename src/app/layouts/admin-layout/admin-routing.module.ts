@@ -11,6 +11,11 @@ const routes: Routes = [
     component : AdminLayoutComponent,
     children : [
       {
+        path: '',
+        redirectTo: 'manage-account',
+        pathMatch: 'full'
+      },
+      {
         path: 'manage-account',
         component: ManageAccountComponent
       }

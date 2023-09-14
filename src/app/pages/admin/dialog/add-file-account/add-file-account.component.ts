@@ -20,6 +20,7 @@ export class AddFileAccountComponent {
   accountSchema = inputAccountSchema;
   dataSourceInput = new MatTableDataSource(undefined);
   displayedColumns: string[] = ['position', 'code', 'fullName', 'type', 'actions'];
+  isLoading = false;
 
   constructor(public dialogRef: MatDialogRef<AddFileAccountComponent>,
      private excelHandleService: ExcelHandleService,
@@ -32,8 +33,10 @@ export class AddFileAccountComponent {
 
 
   onSubmitData() {
+    this.isLoading = true;
     this.manageUserService.createListAccount(this.accountListForm.value).subscribe({
       next: (response: any) => {
+        this.isLoading = false;
         if(response?.data.newAccount.length > 0){
           this.showToastService.showSuccessToast(`Thêm mới ${response?.data?.newAccount.length} tài khoản thành công`);
         }
@@ -43,6 +46,7 @@ export class AddFileAccountComponent {
         this.dialogRef.close(response);
       },
       error: (response) => {
+        this.isLoading = false;
         this.showToastService.showErrorToast(response.error.message);
       }
     });
@@ -53,7 +57,6 @@ export class AddFileAccountComponent {
 
   onFileSelected(event: any) {
     event.preventDefault();
-    console.log(event.target.files[0].name);
     this.fileName = event.target.files[0].name;
     this.excelHandleService.readExcelFile(event.target.files[0], this.accountSchema).then((data) => {
       data = data.map((element: any) => {
@@ -66,8 +69,6 @@ export class AddFileAccountComponent {
       data.forEach((element: any) => {
         this.accountListForm.push(this.buildFormAccountHelper(element));
       });
-      console.log(this.accountListForm.value);
-
     })
     event.target.value = '';
   }
@@ -76,10 +77,7 @@ export class AddFileAccountComponent {
     const dialogRef = this.dialog.open(AddAccountDialogComponent, {
       data: {...data, isView: true,},
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-
-    });
+    dialogRef.afterClosed().subscribe(result => {});
 
   }
 

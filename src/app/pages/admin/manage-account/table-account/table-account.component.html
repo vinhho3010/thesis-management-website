@@ -1,12 +1,12 @@
 <div class="account-list-header flex flex-col justify-center items-start mt-9 p-3">
   <div class="list-title w-1/2 text-3xl text-blue-800">
-    Danh sách sinh viên
+    {{tableType === roleAccount.STUDENT ? 'Danh sách sinh viên' : tableType === roleAccount.TEACHER ? 'Danh sách giảng viên' : 'Danh sách giáo vụ'}}
   </div>
   <div class="flex items-center justify-between w-full lg:px-4">
     <div class="search-wrapper w-1/2 p-3 flex items-center">
       <mat-form-field floatLabel="always" appearance="outline" class="w-3/4 mt-4">
         <mat-label>Tìm kiếm</mat-label>
-        <input matInput type="text" placeholder="Nhập tên sinh viên">
+        <input matInput type="text" placeholder="Tìm kiếm">
       </mat-form-field>
     </div>
     <div class="flex items-center justify-end lg:w-2/5 w-3/4 gap-2">
@@ -44,7 +44,7 @@
 
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại tài khoản </th>
-    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.role === 'STUDENT' ? 'Sinh viên' : element.role === 'TEACHER' ? 'Giảng viên' : 'Giáo vụ'}}  </td>
   </ng-container>
 
   <ng-container matColumnDef="actions">

@@ -1,39 +1,45 @@
 <div class="account-wrapper w-full">
   <mat-tab-group mat-stretch-tabs animationDuration="0ms">
 
-    <mat-tab label="Register">
+    <mat-tab label="Student">
       <ng-template mat-tab-label>
         Sinh viên
       </ng-template>
       <div class="tab-content">
-        <app-table-account
+        <ng-template matTabContent="">
+          <app-table-account
         [tableType]="tableTypeRole.STUDENT"
         [displayedColumns]="displayedColumnsStudent"
         ></app-table-account>
+        </ng-template>
       </div>
       </mat-tab>
 
-      <mat-tab label="Processing">
+      <mat-tab label="Teacher">
       <ng-template mat-tab-label>
         Giảng viên
       </ng-template>
       <div class="tab-content">
-        <app-table-account
-        [tableType]="tableTypeRole.TEACHER"
-        [displayedColumns]="displayedColumnsStudent"
-        ></app-table-account>
+        <ng-template matTabContent>
+          <app-table-account
+          [tableType]="tableTypeRole.TEACHER"
+          [displayedColumns]="displayedColumnsStudent"
+          ></app-table-account>
+        </ng-template>
       </div>
     </mat-tab>
 
-      <mat-tab label="Result">
+      <mat-tab label="Ministry">
       <ng-template mat-tab-label>
         Giáo vụ
       </ng-template>
       <div class="tab-content">
-        <app-table-account
-        [tableType]="tableTypeRole.MINISTRY"
-        [displayedColumns]="displayedColumnsStudent"
-        ></app-table-account>
+        <ng-template matTabContent="">
+          <app-table-account
+          [tableType]="tableTypeRole.MINISTRY"
+          [displayedColumns]="displayedColumnsStudent"
+          ></app-table-account>
+        </ng-template>
       </div>
     </mat-tab>
 
