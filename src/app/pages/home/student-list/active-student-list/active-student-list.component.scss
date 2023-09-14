@@ -7,6 +7,11 @@
   display: none;
 }
 
+.mat-mdc-table .mdc-data-table__row{
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
 @media(max-width: 768px) {
   .mobile-label {
     width: 80px;
