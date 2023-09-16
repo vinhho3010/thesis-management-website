@@ -8,6 +8,8 @@ import { ClassComponent } from 'src/app/pages/home/class/class.component';
 import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { StudentListComponent } from 'src/app/pages/home/student-list/student-list.component';
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
+import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
+import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
 
 
 const routes: Routes = [
@@ -38,6 +40,18 @@ const routes: Routes = [
       {
         path: 'process',
         component: ProcessComponent
+      },
+      {
+        path: 'register-topic',
+        component: RegisterTopicComponent
+      },
+      {
+        path: 'process',
+        component: ProcessComponent
+      },
+      {
+        path: 'my-thesis',
+        component: MyThesisComponent
       }
 
     ]
@@ -45,7 +59,6 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'home'
-
   }
   ]
 

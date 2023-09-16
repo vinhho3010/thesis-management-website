@@ -17,6 +17,7 @@ export class AddAccountDialogComponent implements OnInit {
   roleAccount = RoleAccount;
   formAction!: FormAction;
   FormAction = FormAction;
+  isShowPassword = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddAccountDialogComponent>,
@@ -47,17 +48,16 @@ export class AddAccountDialogComponent implements OnInit {
 
   fillDataToForm(){
     if(this.data.role === RoleAccount.STUDENT){
-      this.newAccountForm.addControl('class', new FormControl('', Validators.required));
-      this.newAccountForm.addControl('major', new FormControl('', Validators.required));
+      this.buildStudentForm();
       this.newAccountForm.controls['type'].setValue('student');
     } else if(this.data.role === RoleAccount.TEACHER){
+      this.buildTeacherForm();
       this.newAccountForm.controls['type'].setValue('teacher');
     } else if(this.data.role === RoleAccount.MINISTRY){
       this.newAccountForm.controls['type'].setValue('ministry');
     }
-console.log(this.data);
-
     this.newAccountForm.patchValue(this.data);
+    this.newAccountForm.controls['password'].disable();
   }
 
   onClose(result?: any) {
@@ -65,11 +65,40 @@ console.log(this.data);
   }
 
   onChangeType(event: MatSelectChange) {
-    if (event.value === 'student' && !this.newAccountForm.contains('class') && !this.newAccountForm.contains('major')) {
+    this.clearOptinalField();
+    if (event.value === 'student') {
+      this.buildStudentForm();
+    } else if (event.value === 'teacher') {
+      this.buildTeacherForm();
+    }
+    this.newAccountForm.reset({type: event.value});
+  }
+
+  buildStudentForm() {
+    if(!this.newAccountForm.contains('class') || !this.newAccountForm.contains('major')){
       this.newAccountForm.addControl('class', new FormControl('', Validators.required));
       this.newAccountForm.addControl('major', new FormControl('', Validators.required));
     } else {
       this.newAccountForm.removeControl('class');
+      this.newAccountForm.removeControl('major');
+    }
+    this.newAccountForm.updateValueAndValidity();
+  }
+
+  buildTeacherForm() {
+    if(!this.newAccountForm.contains('major')){
+      this.newAccountForm.addControl('major', new FormControl('', Validators.required));
+    } else {
+      this.newAccountForm.removeControl('major');
+    }
+    this.newAccountForm.updateValueAndValidity();
+  }
+
+  clearOptinalField() {
+    if (this.newAccountForm.contains('class')) {
+      this.newAccountForm.removeControl('class');
+    }
+    if (this.newAccountForm.contains('major')) {
       this.newAccountForm.removeControl('major');
     }
     this.newAccountForm.updateValueAndValidity();

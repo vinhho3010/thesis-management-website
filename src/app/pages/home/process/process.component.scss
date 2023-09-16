@@ -1,0 +1,18 @@
+.document-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  padding: 16px;
+
+  .docs-item{
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    margin-top: 8px;
+    width: 100%;
+  }
+  }
+

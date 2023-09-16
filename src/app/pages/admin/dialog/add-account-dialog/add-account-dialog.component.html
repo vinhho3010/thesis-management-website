@@ -55,11 +55,25 @@
       </div>
     </div>
 
+    <div class="input-field w-full gap-3" *ngIf="submitData.role === roleAccount.TEACHER">
+      <div class="flex flex-col w-full">
+        <span class="p-1 text-gray-700">Khoa</span>
+        <mat-form-field>
+          <input matInput placeholder="Kỹ thuật phần mềm" formControlName="major">
+        </mat-form-field>
+      </div>
+    </div>
+
     <div class="input-field">
       <div class="flex flex-col w-full">
         <span class="p-1 text-gray-700">Mật khẩu*</span>
         <mat-form-field class="w-full">
-          <input matInput placeholder="******" formControlName="password" type="password">
+          <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
+          [placeholder]=" isShowPassword ? 'Nhập mật khẩu' : ' • • • • • • • •' ">
+          <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu' "
+          matSuffix tabindex="-1" (click)="isShowPassword=!isShowPassword">
+          <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
+        </button>
           <mat-error *ngIf="newAccountForm.controls['password'].hasError('minlength')" class="text-red-500 text-sm">
             Mật khẩu phải có ít nhất 8 ký tự
           </mat-error>

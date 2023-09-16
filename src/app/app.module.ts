@@ -13,18 +13,13 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
-import { RegisterTopicComponent } from './pages/home/register-topic/register-topic.component';
-import { MyThesisComponent } from './pages/home/my-thesis/my-thesis.component';
-import { ThesisResultComponent } from './pages/home/thesis-result/thesis-result.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterTopicComponent,
-    MyThesisComponent,
-    ThesisResultComponent,
+
   ],
   imports: [
     HttpClientModule,

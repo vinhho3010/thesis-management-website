@@ -15,6 +15,9 @@ import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { ClassOverviewComponent } from 'src/app/pages/home/class/class-overview/class-overview.component';
 import { MilestoneCardComponent } from 'src/app/pages/home/milestones/milestone-card/milestone-card.component';
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
+import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
+import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
+
 
 
 
@@ -33,6 +36,8 @@ import { ProcessComponent } from 'src/app/pages/home/process/process.component';
     ClassOverviewComponent,
     MilestoneCardComponent,
     ProcessComponent,
+    RegisterTopicComponent,
+    MyThesisComponent,
   ],
   imports: [
     CommonModule,

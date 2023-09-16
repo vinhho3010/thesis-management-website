@@ -1,32 +1,51 @@
-<div class="class-wrapper">
-  <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+<div class="document-wrapper max-w-5xl mx-auto">
+  <div class="filter-wrapper w-full flex justify-end items-center pr-3 pt-4">
+    <mat-form-field appearance="outline" class="lg:w-1/3 w-1/2">
+      <mat-label>Chủ đề tài liệu</mat-label>
+      <mat-select panelClass="panel-custom">
+        <mat-option *ngFor="let food of [1, 2, 3, 4,45,5]" [value]="food">
+          {{food}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-    <mat-tab label="Register">
-      <ng-template mat-tab-label>
-        Đăng ký
-      </ng-template>
-      <div class="tab-content">
-        Register
+  <div class="docs-list w-full flex justify-start flex-col">
+    <div class="docs-item-wrapper w-full">
+      <div class="docs-header">
+        Tag 1
       </div>
-      </mat-tab>
-
-      <mat-tab label="Processing">
-      <ng-template mat-tab-label>
-        Thực hiện
-      </ng-template>
-      <div class="tab-content">
-        Doing
+      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
+        <mat-card-content>Ngày mai nghỉ</mat-card-content>
+        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+      </mat-card>
+    </div>
+    <div class="docs-item-wrapper w-full">
+      <div class="docs-header">
+        Tag 1
       </div>
-    </mat-tab>
-
-      <mat-tab label="Result">
-      <ng-template mat-tab-label>
-        Kết quả
-      </ng-template>
-      <div class="tab-content">
-        Result
+      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
+        <mat-card-content>Ngày mai nghỉ</mat-card-content>
+        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+      </mat-card>
+    </div>
+    <div class="docs-item-wrapper w-full">
+      <div class="docs-header">
+        Tag 1
       </div>
-    </mat-tab>
-
-  </mat-tab-group>
+      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
+        <mat-card-content>Ngày mai nghỉ</mat-card-content>
+        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+      </mat-card>
+    </div>
+    <div class="docs-item-wrapper w-full">
+      <div class="docs-header">
+        Tag 1
+      </div>
+      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
+        <mat-card-content>Ngày mai nghỉ</mat-card-content>
+        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
