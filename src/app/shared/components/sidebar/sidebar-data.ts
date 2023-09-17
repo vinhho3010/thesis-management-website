@@ -96,6 +96,24 @@ export const routesInfoStudent: RouteInfo[] = [
   }
 ];
 
+export const routesInfoMinistry: RouteInfo[] = [
+  {
+    path: 'ministry/class-list',
+    title: 'Danh sách lớp luận văn',
+    icon: 'book_outline'
+  },
+  {
+    path: 'ministry/public-thesis',
+    title: 'Luận văn công khai',
+    icon: 'assignment'
+  },
+  {
+    path: 'ministry/council',
+    title: 'Danh sách hội đồng',
+    icon: 'people_outline'
+  }
+];
+
 export interface RouteInfo {
   path: string;
   title: string;
