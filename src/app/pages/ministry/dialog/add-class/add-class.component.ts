@@ -49,7 +49,6 @@ export class AddClassComponent implements OnInit {
     const schoolYear = this.newClassForm.get('schoolYear')?.value;
     const semester = this.newClassForm.get('semester')?.value;
     const major = this.newClassForm.get('major')?.value;
-    const teacher = this.newClassForm.get('teacher')?.value;
     const name = this.newClassForm.get('name')?.value;
 
     if(name) {
