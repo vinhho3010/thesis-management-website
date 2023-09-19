@@ -1,0 +1,50 @@
+<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
+  <h1 class="pb-6 pt-2 text-xl font-medium text-blue-700">Thêm nhóm hướng dẫn</h1>
+
+
+<form class="form-wrapper" [formGroup]="newClassForm">
+  <div class="input-field w-full gap-2">
+    <mat-form-field class="w-full">
+      <mat-label>Tên nhóm</mat-label>
+      <input matInput placeholder="Nhập tên nhóm" formControlName="name">
+    </mat-form-field>
+  </div>
+
+  <div class="input-field gap-2">
+    <mat-form-field class="lg:w-1/4 w-1/2">
+      <mat-label>Học kỳ</mat-label>
+      <mat-select panelClass="panel-custom" placeholder="Chọn học kỳ" formControlName="semester">
+        <mat-option [value]="data" *ngFor="let data of semester"> {{data}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="lg:w-3/4 w-1/2">
+      <mat-label>Niên khoá</mat-label>
+      <mat-select panelClass="panel-custom" placeholder="Chọn niên khoá" formControlName="schoolYear">
+        <mat-option [value]="data" *ngFor="let data of schoolYear"> {{data}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="input-field gap-2">
+    <mat-form-field class="lg:w-1/3 w-full">
+      <mat-label>Chọn khoa</mat-label>
+      <mat-select panelClass="panel-custom" formControlName="major">
+        <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class=" lg:w-2/3 w-full">
+      <mat-label>Chọn giảng viên</mat-label>
+      <mat-select panelClass="panel-custom" formControlName="teacher">
+        <mat-option value="1">Nguyễn Văn A</mat-option>
+        <mat-option value="2">Nguyễn Văn B</mat-option>
+        <mat-option value="3">Nguyễn Văn C</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-end items-center gap-4">
+    <button class="custom-btn" mat-flat-button>Huỷ</button>
+    <button class="custom-btn bg-blue-600 text-white" mat-flat-button >{{'Thêm nhóm học'}}</button>
+  </div>
+</form>
+</div>

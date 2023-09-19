@@ -17,6 +17,8 @@ import { MinistryLayoutComponent } from './layouts/ministry-layout/ministry-layo
 import { ClassListComponent } from './pages/ministry/class-list/class-list.component';
 import { PublicThesisComponent } from './pages/ministry/public-thesis/public-thesis.component';
 import { CouncilComponent } from './pages/ministry/council/council.component';
+import { ThesisCardComponent } from './pages/ministry/public-thesis/thesis-card/thesis-card.component';
+import { AddClassComponent } from './pages/ministry/dialog/add-class/add-class.component';
 
 
 
@@ -27,6 +29,8 @@ import { CouncilComponent } from './pages/ministry/council/council.component';
     ClassListComponent,
     PublicThesisComponent,
     CouncilComponent,
+    ThesisCardComponent,
+    AddClassComponent,
 
   ],
   imports: [
@@ -51,7 +55,7 @@ import { CouncilComponent } from './pages/ministry/council/council.component';
         maxHeight: "95vh",
         panelClass: 'custom-dialog',
       } as MatDialogConfig,
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

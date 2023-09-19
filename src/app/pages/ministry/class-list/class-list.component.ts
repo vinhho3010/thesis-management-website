@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddClassComponent } from '../dialog/add-class/add-class.component';
 export interface PeriodicElement {
   studentCode: string;
   fullName: string;
@@ -35,14 +37,18 @@ export class ClassListComponent {
   displayedColumns: string[] = [ 'position', 'name', 'supervisor', 'count', 'actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  constructor(private dialog: MatDialog) { }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
   onEditRow(row: any): void {
-    console.log(row);
   }
   onDeleteRow(row: any): void {
-    console.log(row);
+  }
+
+  onCreateClass() {
+    this.dialog.open(AddClassComponent);
   }
 }

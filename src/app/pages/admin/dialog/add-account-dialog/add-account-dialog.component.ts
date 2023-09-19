@@ -4,7 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { FormAction } from 'src/app/Model/enum/form-action';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
+import { Major } from 'src/app/Model/major.model';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 
 @Component({
@@ -18,11 +20,13 @@ export class AddAccountDialogComponent implements OnInit {
   formAction!: FormAction;
   FormAction = FormAction;
   isShowPassword = false;
+  majorList: Major[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddAccountDialogComponent>,
     private toastService: ToastService,
     private manageUserService: ManageUserService,
+    private majorService: MajorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.newAccountForm = new FormGroup({
@@ -38,12 +42,33 @@ export class AddAccountDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.data){
+    this.loadMajorList();
+    if(this.data && this.data?.isView){
+      this.formAction = FormAction.VIEW;
+      this.fillDataToFormView();
+      this.newAccountForm.disable();
+    } else if (this.data){
       this.formAction = FormAction.EDIT;
       this.fillDataToForm();
     } else {
       this.formAction = FormAction.ADD;
     }
+  }
+
+  loadMajorList() {
+    this.majorService.getAllmajor().subscribe({
+      next: (res) => {
+        this.majorList = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  fillDataToFormView(){
+    this.fillDataToForm();
+    this.newAccountForm.disable();
   }
 
   fillDataToForm(){
@@ -58,6 +83,11 @@ export class AddAccountDialogComponent implements OnInit {
     }
     this.newAccountForm.patchValue(this.data);
     this.newAccountForm.controls['password'].disable();
+    this.newAccountForm.controls['type'].disable();
+    this.newAccountForm.controls['email'].disable();
+    if(this.newAccountForm.contains('major')){
+      this.newAccountForm.controls['major'].disable();
+    }
   }
 
   onClose(result?: any) {
@@ -105,9 +135,16 @@ export class AddAccountDialogComponent implements OnInit {
   }
 
   get submitData() {
-    return {
-      ...this.newAccountForm.value,
-      role: this.buildRole(this.newAccountForm.value.type),
+    if(this.data){
+      return {
+        ...this.newAccountForm.value,
+        role: this.data.role,
+      }
+    } else {
+      return {
+        ...this.newAccountForm.value,
+        role: this.buildRole(this.newAccountForm.value.type),
+      }
     }
   }
 

@@ -50,7 +50,9 @@
       <div class="flex flex-col md:w-2/3 w-full">
         <span class="p-1 text-gray-700">Ngành học*</span>
         <mat-form-field>
-          <input matInput placeholder="Kỹ thuật phần mềm" formControlName="major">
+          <mat-select formControlName="major" placeholder="Chọn ngành học">
+            <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
@@ -59,7 +61,9 @@
       <div class="flex flex-col w-full">
         <span class="p-1 text-gray-700">Khoa</span>
         <mat-form-field>
-          <input matInput placeholder="Kỹ thuật phần mềm" formControlName="major">
+          <mat-select formControlName="major" placeholder="Chọn khoa giảng dạy">
+            <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>

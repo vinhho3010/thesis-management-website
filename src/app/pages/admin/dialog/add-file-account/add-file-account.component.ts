@@ -8,6 +8,8 @@ import { inputAccountSchema } from 'src/app/shared/utilities/excel-schema';
 import { AddAccountDialogComponent } from '../add-account-dialog/add-account-dialog.component';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { Major } from 'src/app/Model/major.model';
+import { MajorService } from 'src/app/services/major.service';
 
 @Component({
   selector: 'app-add-file-account',
@@ -21,15 +23,33 @@ export class AddFileAccountComponent {
   dataSourceInput = new MatTableDataSource(undefined);
   displayedColumns: string[] = ['position', 'code', 'fullName', 'type', 'actions'];
   isLoading = false;
+  majorList: Major[] = [];
 
   constructor(public dialogRef: MatDialogRef<AddFileAccountComponent>,
      private excelHandleService: ExcelHandleService,
       private fb: FormBuilder,
       private dialog: MatDialog,
       private manageUserService: ManageUserService,
+      private majorService: MajorService,
       private showToastService: ToastService) {
     this.accountListForm = new FormArray<any>([]);
    }
+
+  ngOnInit(): void {
+    this.loadMajorList();
+  }
+
+  loadMajorList() {
+    this.majorService.getAllmajor().subscribe({
+      next: (res) => {
+        this.majorList = res;
+      },
+      error: (err) => {
+        this.showToastService.showErrorToast(err.error.message);
+      }
+    });
+  }
+
 
 
   onSubmitData() {
@@ -63,6 +83,7 @@ export class AddFileAccountComponent {
         return {
           ...element,
           gender: element.gender == 'nam' ? 'male' : 'female',
+          major: this.majorList.find((major) => major.name === element.major.trim())?._id,
         }});
       this.dataSourceInput.data = data;
       this.accountListForm.clear();
