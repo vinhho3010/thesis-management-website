@@ -7,19 +7,21 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
 import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SemesterPipe } from './pipes/semester.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
     ThesisListComponent,
-    ThesisCardComponent
+    ThesisCardComponent,
+    SemesterPipe
   ],
   imports: [
     CommonModule,
     MatModule,
     ClickOutsideDirective,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     HeaderComponent,
@@ -28,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ClickOutsideDirective,
     ThesisListComponent,
     ThesisCardComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SemesterPipe
   ]
 })
 export class SharedModule { }

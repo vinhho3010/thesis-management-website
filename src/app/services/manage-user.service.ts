@@ -29,4 +29,9 @@ export class ManageUserService {
   getAllAccount(role: RoleAccount){
     return this.http.get<AccountInfo[]>(`/api/user/${role}`)
   }
+
+  getTeacherByMajor(majorId: string){
+     const params = new HttpParams().set('role', RoleAccount.TEACHER);
+    return this.http.get<AccountInfo[]>(`/api/user/major/${majorId}`, {params})
+  }
 }

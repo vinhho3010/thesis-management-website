@@ -1,78 +1,92 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { debounceTime } from 'rxjs';
 import { schoolYear, semester } from 'src/app/Model/enum/schoolYear';
 import { Major } from 'src/app/Model/major.model';
+import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
+import { ManageUserService } from 'src/app/services/manage-user.service';
 
 @Component({
   selector: 'app-add-class',
   templateUrl: './add-class.component.html',
-  styleUrls: ['./add-class.component.scss']
+  styleUrls: ['./add-class.component.scss'],
 })
 export class AddClassComponent implements OnInit {
   majorList: Major[] = [];
   schoolYear = schoolYear;
   semester = semester;
   newClassForm: FormGroup;
+  teacherByMajor: any[] = [];
 
   constructor(
     private majorService: MajorService,
     private toastService: ToastService,
+    private manageUserService: ManageUserService,
+    private classService: ClassService,
+    private matDialogRef: MatDialogRef<AddClassComponent>
   ) {
     this.newClassForm = new FormGroup({
-      name: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
-      schoolYear: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
-      semester: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
-      major: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
-      teacher: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
+      name: new FormControl('', { validators: [Validators.required] }),
+      schoolYear: new FormControl('', { validators: [Validators.required] }),
+      semester: new FormControl('', { validators: [Validators.required] }),
+      major: new FormControl('', { validators: [Validators.required] }),
+      teacher: new FormControl('', { validators: [Validators.required] }),
     });
-
   }
 
   ngOnInit(): void {
     this.loadMajorList();
   }
 
-  _onListeningFormChange() {
-    this.newClassForm.valueChanges
-    .pipe(
-      debounceTime(500),
-    )
-    .subscribe((res) => {
-      this.renderInputField();
-    });
-  }
-
-  renderInputField() {
-    const schoolYear = this.newClassForm.get('schoolYear')?.value;
-    const semester = this.newClassForm.get('semester')?.value;
-    const major = this.newClassForm.get('major')?.value;
-    const name = this.newClassForm.get('name')?.value;
-
-    if(name) {
-      this.newClassForm.get('semester')?.enable();
-    }
-
-    if (name && semester) {
-      this.newClassForm.get('schoolYear')?.enable();
-    }
-
-    if(name && semester && schoolYear) {
-      this.newClassForm.get('major')?.enable();
-    }
-
-    if(name && semester && schoolYear && major) {
-      this.newClassForm.get('teacher')?.enable();
-    }
-  }
-
   initDisableInputField() {
-    this.newClassForm.get('schoolYear')?.disable();
-    this.newClassForm.get('semester')?.disable();
-    this.newClassForm.get('major')?.disable();
-    this.newClassForm.get('teacher')?.disable();
+    this.newClassForm.controls['teacher'].disable();
+  }
+
+  onClose() {
+    this.matDialogRef.close();
+  }
+
+  onSubmit() {
+    this.classService.createClass(this.submitData).subscribe({
+      next: (res) => {
+        this.toastService.showSuccessToast('Tạo nhóm hướng dẫn thành công');
+        this.matDialogRef.close();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  get submitData() {
+    return {
+      name: this.newClassForm.get('name')?.value,
+      semester: `${this.newClassForm.controls['semester'].value}/${this.newClassForm.controls['schoolYear'].value}`,
+      major: this.newClassForm.get('major')?.value,
+      teacher: this.newClassForm.get('teacher')?.value,
+    }
+  }
+
+  onChangeMajor(event: MatSelectChange) {
+    this.newClassForm.controls['teacher'].enable();
+    this.newClassForm.controls['teacher'].reset();
+    const selectedMajor = this.newClassForm.get('major')?.value;
+
+    this.manageUserService.getTeacherByMajor(selectedMajor).subscribe({
+      next: (res) => {
+        this.teacherByMajor = res;
+        if (this.teacherByMajor.length === 0) {
+          this.newClassForm.controls['teacher'].disable();
+        }
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
   }
 
   loadMajorList() {
@@ -85,8 +99,7 @@ export class AddClassComponent implements OnInit {
       },
       complete: () => {
         this.initDisableInputField();
-        this._onListeningFormChange();
-      }
+      },
     });
   }
 }

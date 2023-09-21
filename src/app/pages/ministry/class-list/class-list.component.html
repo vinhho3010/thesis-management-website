@@ -30,17 +30,22 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên nhóm </th>
       <span class="mobile-label">MSSV: </span>
-      <td mat-cell *matCellDef="let element"> {{element.studentCode}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="supervisor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Học kỳ - Niên khoá </th>
+      <td mat-cell *matCellDef="let element"> {{element?.semester}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="semester">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Hướng dẫn </th>
-      <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element?.teacher?.fullName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="count">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng </th>
-      <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+      <td mat-cell *matCellDef="let element"> {{element?.students?.length ?? 0}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
