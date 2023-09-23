@@ -4,6 +4,7 @@ import { MinistryLayoutComponent } from './ministry-layout/ministry-layout.compo
 import { ClassListComponent } from 'src/app/pages/ministry/class-list/class-list.component';
 import { PublicThesisComponent } from 'src/app/pages/ministry/public-thesis/public-thesis.component';
 import { CouncilComponent } from 'src/app/pages/ministry/council/council.component';
+import { ClassDetailComponent } from 'src/app/pages/ministry/class-list/class-detail/class-detail.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'class-list',
         component: ClassListComponent
+      },
+      {
+        path: 'class-list/:id',
+        component: ClassDetailComponent
       },
       {
         path: 'public-thesis',

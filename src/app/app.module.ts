@@ -19,19 +19,13 @@ import { PublicThesisComponent } from './pages/ministry/public-thesis/public-the
 import { CouncilComponent } from './pages/ministry/council/council.component';
 import { ThesisCardComponent } from './pages/ministry/public-thesis/thesis-card/thesis-card.component';
 import { AddClassComponent } from './pages/ministry/dialog/add-class/add-class.component';
+import { ClassDetailComponent } from './pages/ministry/class-list/class-detail/class-detail.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MinistryLayoutComponent,
-    ClassListComponent,
-    PublicThesisComponent,
-    CouncilComponent,
-    ThesisCardComponent,
-    AddClassComponent,
-
   ],
   imports: [
     HttpClientModule,

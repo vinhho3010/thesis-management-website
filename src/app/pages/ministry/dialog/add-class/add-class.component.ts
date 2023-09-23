@@ -65,7 +65,8 @@ export class AddClassComponent implements OnInit {
   get submitData() {
     return {
       name: this.newClassForm.get('name')?.value,
-      semester: `${this.newClassForm.controls['semester'].value}/${this.newClassForm.controls['schoolYear'].value}`,
+      semester: this.newClassForm.get('semester')?.value,
+      schoolYear: this.newClassForm.get('schoolYear')?.value,
       major: this.newClassForm.get('major')?.value,
       teacher: this.newClassForm.get('teacher')?.value,
     }

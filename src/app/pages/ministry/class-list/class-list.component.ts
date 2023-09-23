@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddClassComponent } from '../dialog/add-class/add-class.component';
 import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-class-list',
@@ -16,7 +17,7 @@ export class ClassListComponent implements OnInit {
   displayedColumns: string[] = [ 'position', 'name', 'semester', 'supervisor', 'count', 'actions'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService) { }
+  constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadClassList();
@@ -38,8 +39,22 @@ export class ClassListComponent implements OnInit {
   }
 
   onEditRow(row: any): void {
+    this.router.navigate(['ministry/class-list', row._id]);
   }
   onDeleteRow(row: any): void {
+    this.toastService.confirmDelete(this.handleDeleteClass.bind(this, row._id));
+  }
+
+  handleDeleteClass(id: string): void {
+    this.classService.delete(id).subscribe({
+      next: () => {
+        this.dataSource.data = this.dataSource.data.filter((item) => item._id !== id);
+        this.toastService.showSuccessToast('Xóa thành công');
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
   }
 
   onCreateClass() {
