@@ -14,43 +14,53 @@
         <mat-icon matPrefix>search</mat-icon>
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-700">
         </div>
-        <input matInput type="search" id="default-search"  placeholder="Tìm kiếm luận văn">
+        <input matInput type="search" id="default-search"  placeholder="Tìm kiếm giảng viên">
     </mat-form-field>
     <button mat-flat-button type="submit" class="w-full md:w-auto order-3 py-6 px-7 rounded-xl min-w-[124px]" color="primary">Tìm kiếm</button>
     </div>
   </div>
   <div class="result-list mt-4 grid grid-cols-3">
     <div class="teacher-list">
-      <div class="title text-blue-600 text-xl">Danh sách giảng viên</div>
-      <div class="max-h-[550px] py-2 px-2 md:px-12">
-        <div class="teacher-card Selected rounded-xl border border-gray-400 bg-blue-500 mb-3 p-2 cursor-pointer">
-          <div class="teacher-card__name text-white">Giang vien</div>
-          <div class="teacher-card__topic-list text-yellow-300 text-xs">AI, Web Application,...</div>
+      <div class="title text-blue-600 text-xl">Danh sách Khoa</div>
+      <div class="max-h-[550px] py-2 px-2 md:mr-12">
+        <div *ngFor="let x of [1, 2, 3]">
+          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 bg-blue-500 hover:opacity-90 text-white cursor-pointer flex justify-between items-center">
+            <div class="teacher-card__name">Công nghệ thông tin</div>
+            <span class="font-semibold flex items-center">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </span>
+          </div>
         </div>
-        <div *ngFor="let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]">
-          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-2 hover:bg-gray-100 cursor-pointer">
-            <div class="teacher-card__name">Giang vien</div>
-            <div class="teacher-card__topic-list text-blue-500 text-xs">AI, Web Application,...</div>
+        <div *ngFor="let x of [1, 2, 3]">
+          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 hover:opacity-90 cursor-pointer flex justify-between items-center hover:bg-gray-100">
+            <div class="teacher-card__name">Công nghệ thông tin</div>
+            <span class="font-semibold flex items-center">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </span>
           </div>
         </div>
       </div>
     </div>
     <div class="topic-list col-span-2">
       <div class="flex justify-between">
-        <div class="title text-blue-600 text-xl">Danh sách đề tài</div>
-        <button mat-button color="primary" class="rounded-xl text-blue-600 px-4 py-3">
+        <div class="title text-blue-600 text-xl">Danh sách giảng viên hướng dẫn</div>
+        <!-- <button mat-button color="primary" class="rounded-xl text-blue-600 px-4 py-3">
           <mat-icon matPrefix>add</mat-icon>
-          Đăng ký đề tài mới</button>
+          Đăng ký đề tài mới</button> -->
       </div>
-      <div class="max-h-[550px] py-2 px-2 md:px-12">
-        <div *ngFor="let x of [1, 2, 3]">
+      <div class="max-h-[550px] py-2 px-2 mt-3">
+        <div *ngFor="let x of [1]">
           <div class="topic">
-            <div class="topic-title text-blue-600">Web Application</div>
-            <ng-container *ngFor="let x of [1,2,3,4,5]">
-              <div class="topic-subscribtion flex justify-between items-center rounded-xl border-gray-400 hover:bg-gray-50 mb-3 line-clamp-1 p-3">
-                <span class="topic-name">
-                  OKKKKKKKKKKKKKKKKKKKK
-                </span>
+            <ng-container *ngFor="let x of [1,2,3]">
+              <div class="topic-subscribtion flex justify-between items-center rounded-xl border-gray-400 hover:bg-gray-100 mb-3 line-clamp-1 p-3">
+                <div class="topic-info_wrapper flex flex-col">
+                  <span class="topic-teacher">
+                    Giảng viên: <span class="text-blue-500">Nguyễn Văn A</span>
+                  </span>
+                  <div class="topic-name text-gray-600 italic">
+                    AI, Web Application, Microservice, ...
+                  </div>
+                </div>
                 <button mat-button class="rounded-xl" color="accent">
                   <mat-icon matPrefix>edit</mat-icon>
                   Đăng ký
