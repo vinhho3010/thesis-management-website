@@ -27,7 +27,7 @@ export class ManageUserService {
   }
 
   getAllAccount(role: RoleAccount){
-    return this.http.get<AccountInfo[]>(`/api/user/${role}`)
+    return this.http.get<AccountInfo[]>(`/api/user/roles/${role}`)
   }
 
   getTeacherByMajor(majorId: string){

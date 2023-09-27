@@ -5,45 +5,64 @@
     </div>
     <form action="" class="form-wrappper mt-3 w-full" [formGroup]="classDetailForm">
       <div class="input-field">
-        <mat-form-field class="w-full">
-          <mat-label>Tên nhóm</mat-label>
+        <div class="field-title p-2 text-gray-600">
+          Tên nhóm
+        </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic' >
           <input matInput type="text" placeholder="Nhập tên nhóm" formControlName="name">
         </mat-form-field>
       </div>
       <div class="input-field">
-        <mat-form-field class="w-full">
-          <mat-label>Giảng viên hướng dẫn</mat-label>
-          <input matInput type="text" placeholder="Tên giảng viên" formControlName="teacher">
+        <div class="field-title p-2 text-gray-600">
+          Giảng viên hướng dẫn
+        </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic'>
+          <input matInput type="text" placeholder="Tên giảng viên" formControlName="teacher" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-optgroup *ngFor="let group of majorsAndTeacher" [label]="group.major" class="font-semibold">
+              <mat-option *ngFor="let teacher of group.teachers" [value]="teacher.fullName" class="font-normal">
+                {{teacher.fullName}}
+              </mat-option>
+          </mat-optgroup>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="input-field">
-        <mat-form-field class="w-full">
-          <mat-label>Ngành</mat-label>
-          <mat-select panelClass="panel-custom" formControlName="major">
+        <div class="field-title p-2 text-gray-600">
+          Ngành
+      </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic'>
+          <mat-select panelClass="panel-custom" formControlName="major" placeholder="Ngành học">
             <mat-option [value]="major._id" *ngFor="let major of majors">{{major.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div class="input-field">
-        <mat-form-field class="w-full">
-          <mat-label>Số lượng sinh viên</mat-label>
-          <input matInput type="text" placeholder="Tên giảng viên" formControlName="studentCount">
+        <div class="field-title p-2 text-gray-600">
+          Số lượng sinh viên
+        </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic'>
+          <input matInput type="text" placeholder="Số lượng sinh viên trong nhóm" formControlName="studentCount">
         </mat-form-field>
       </div>
       <div class="input-fields grid grid-cols-3 gap-2">
         <div class="input-field">
-          <mat-form-field class="w-full">
-            <mat-label>Học kỳ</mat-label>
-            <mat-select panelClass="panel-custom" formControlName="semester">
+          <div class="field-title p-2 text-gray-600">
+            Học kỳ
+        </div>
+          <mat-form-field class="w-full" subscriptSizing='dynamic'>
+            <mat-select panelClass="panel-custom" formControlName="semester" placeholder="Học kỳ">
               <mat-option [value]="'1'">1</mat-option>
               <mat-option [value]="'2'">2</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="input-field col-span-2">
-          <mat-form-field class="w-full">
-            <mat-label>Niên khoá</mat-label>
-            <mat-select panelClass="panel-custom" formControlName="schoolYear">
+          <div class="field-title p-2 text-gray-600">
+            Niên khoá
+          </div>
+          <mat-form-field class="w-full" subscriptSizing='dynamic'>
+            <mat-select panelClass="panel-custom" formControlName="schoolYear" placeholder="Niên khoá">
               <mat-option [value]="'2020-2021'">2020-2021</mat-option>
               <mat-option [value]="'2021-2022'">2021-2022</mat-option>
               <mat-option [value]="'2022-2023'">2022-2023</mat-option>
@@ -54,12 +73,14 @@
         </div>
       </div>
       <div class="input-field">
-        <mat-form-field class="w-full">
-          <mat-label>Ghi chú</mat-label>
-          <textarea matInput placeholder="..."></textarea>
+        <div class="field-title p-2 text-gray-600">
+          Ghi chú
+        </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic'>
+          <textarea matInput placeholder="Ghi chú" formControlName="description"></textarea>
         </mat-form-field>
       </div>
-      <div class="flex justify-end items-center gap-2">
+      <div class="flex justify-end items-center gap-2 mt-3">
         <button mat-flat-button color="basic" class="rounded-xl px-5 py-4" [routerLink]="'/ministry/class-list'">Huỷ</button>
         <button mat-flat-button color="primary" class="rounded-xl text-white px-5 py-4">Xác nhận</button>
       </div>

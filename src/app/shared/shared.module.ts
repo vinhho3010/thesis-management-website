@@ -8,6 +8,7 @@ import { ThesisListComponent } from './components/thesis-list/thesis-list.compon
 import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
+import { DataTableComponent } from './components/data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SemesterPipe } from './pipes/semester.pipe';
     SidebarComponent,
     ThesisListComponent,
     ThesisCardComponent,
-    SemesterPipe
+    SemesterPipe,
+    DataTableComponent
   ],
   imports: [
     CommonModule,

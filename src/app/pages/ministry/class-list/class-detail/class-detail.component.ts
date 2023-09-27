@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
+import { ManageUserService } from 'src/app/services/manage-user.service';
 
 @Component({
   selector: 'app-class-detail',
@@ -13,9 +15,16 @@ import { MajorService } from 'src/app/services/major.service';
 export class ClassDetailComponent {
   classId = '';
   classDetailForm: FormGroup;
-  majors: any[] = [];
+  majorsAndTeacher: any[] = [];
 
-    constructor(private activatedRoute: ActivatedRoute, private classService: ClassService, private toastService: ToastService, private majorService: MajorService) {
+  majors: any[] = [];
+  teacherList: any[] = [];
+
+    constructor(private activatedRoute: ActivatedRoute,
+       private classService: ClassService,
+        private toastService: ToastService,
+        private majorService: MajorService,
+        private manageUserService: ManageUserService) {
       this.classDetailForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
         semester: new FormControl('', [Validators.required]),
@@ -23,7 +32,7 @@ export class ClassDetailComponent {
         teacher: new FormControl('', [Validators.required]),
         major: new FormControl('', [Validators.required]),
         studentCount: new FormControl('', [Validators.required]),
-
+        description: new FormControl(''),
       });
     }
 
@@ -31,6 +40,32 @@ export class ClassDetailComponent {
       this. classId = this.activatedRoute.snapshot.params['id'];
       this.loadMajorList();
       this.loadClassInfo();
+      this.loadTeacherList();
+    }
+
+    disableInfoField(){
+      this.classDetailForm.disable();
+      this.classDetailForm.controls['name'].enable();
+      this.classDetailForm.controls['teacher'].enable();
+    }
+
+    loadTeacherList() {
+      this.manageUserService.getAllAccount(RoleAccount.TEACHER).subscribe({
+        next: (res) => {
+          this.teacherList = res;
+          this.mapTeacherListByMajor();
+        },
+        error: (err) => {
+          this.toastService.showErrorToast(err.error.message);
+        }
+      })
+    }
+
+    mapTeacherListByMajor(){
+      this.majorsAndTeacher = this.majors.map(major => {
+        const teachers = this.teacherList.filter(teacher => teacher.major.name === major.name);
+        return { major: major.name, teachers };
+      });
     }
 
     loadMajorList(): void {
@@ -69,6 +104,9 @@ export class ClassDetailComponent {
         },
         error: (err) => {
           this.toastService.showErrorToast(err.error.message);
+        },
+        complete: () => {
+          this.disableInfoField();
         }
       })
     }
