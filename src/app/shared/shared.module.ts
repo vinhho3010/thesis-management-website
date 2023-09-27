@@ -6,7 +6,7 @@ import { MatModule } from './mat.module';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
 import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
 import { DataTableComponent } from './components/data-table/data-table.component';
 
@@ -33,7 +33,7 @@ import { DataTableComponent } from './components/data-table/data-table.component
     ThesisListComponent,
     ThesisCardComponent,
     ReactiveFormsModule,
-    SemesterPipe
+    SemesterPipe,
   ]
 })
 export class SharedModule { }

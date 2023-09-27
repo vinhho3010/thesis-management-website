@@ -23,4 +23,8 @@ export class ClassService {
   getAllClass(){
     return this.http.get<any>(`/api/class`)
   }
+
+  addStudent(id: string, data: unknown){
+    return this.http.post(`/api/class/${id}/add-student`, data)
+  }
 }

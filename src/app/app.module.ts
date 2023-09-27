@@ -20,6 +20,7 @@ import { CouncilComponent } from './pages/ministry/council/council.component';
 import { ThesisCardComponent } from './pages/ministry/public-thesis/thesis-card/thesis-card.component';
 import { AddClassComponent } from './pages/ministry/dialog/add-class/add-class.component';
 import { ClassDetailComponent } from './pages/ministry/class-list/class-detail/class-detail.component';
+import { AddStudentToClassComponent } from './pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
 
 
 
@@ -36,7 +37,7 @@ import { ClassDetailComponent } from './pages/ministry/class-list/class-detail/c
     AuthModule,
     MainModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [
     HttpClientModule,

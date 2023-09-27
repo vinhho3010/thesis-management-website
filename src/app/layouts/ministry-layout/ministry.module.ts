@@ -10,6 +10,8 @@ import { PublicThesisComponent } from 'src/app/pages/ministry/public-thesis/publ
 import { MinistryLayoutComponent } from './ministry-layout/ministry-layout.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ThesisCardComponent } from 'src/app/pages/ministry/public-thesis/thesis-card/thesis-card.component';
+import { AddStudentToClassComponent } from 'src/app/pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,11 +23,13 @@ import { ThesisCardComponent } from 'src/app/pages/ministry/public-thesis/thesis
     AddClassComponent,
     ClassDetailComponent,
     ThesisCardComponent,
+    AddStudentToClassComponent
   ],
   imports: [
     CommonModule,
     MinistryRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class MinistryModule { }

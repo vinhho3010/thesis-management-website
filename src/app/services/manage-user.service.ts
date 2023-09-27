@@ -30,6 +30,12 @@ export class ManageUserService {
     return this.http.get<AccountInfo[]>(`/api/user/roles/${role}`)
   }
 
+  getUserByKey(role: RoleAccount, key: string, value: string){
+    const params = new HttpParams().set('key', key)
+                                .set('value', value);
+    return this.http.get<AccountInfo[]>(`/api/user/key-value/${role}`, {params});
+  }
+
   getTeacherByMajor(majorId: string){
      const params = new HttpParams().set('role', RoleAccount.TEACHER);
     return this.http.get<AccountInfo[]>(`/api/user/major/${majorId}`, {params})

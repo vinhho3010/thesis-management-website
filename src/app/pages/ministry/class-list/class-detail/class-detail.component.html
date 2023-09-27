@@ -1,9 +1,9 @@
-<div class="detail-wrapper flex mt-9 p-3">
+<div class="detail-wrapper flex mt-9 p-3 gap-2">
   <div class="detail-list-header flex justify-start items-center flex-col basis-1/3 border border-gray-200 rounded-xl px-3 py-2">
     <div class="list-title w-full text-2xl text-blue-800">
       Nhóm hướng dẫn
     </div>
-    <form action="" class="form-wrappper mt-3 w-full" [formGroup]="classDetailForm">
+    <form class="form-wrappper mt-3 w-full" [formGroup]="classDetailForm" ngOnSubmit="onSubmit()">
       <div class="input-field">
         <div class="field-title p-2 text-gray-600">
           Tên nhóm
@@ -17,11 +17,12 @@
           Giảng viên hướng dẫn
         </div>
         <mat-form-field class="w-full" subscriptSizing='dynamic'>
-          <input matInput type="text" placeholder="Tên giảng viên" formControlName="teacher" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-optgroup *ngFor="let group of majorsAndTeacher" [label]="group.major" class="font-semibold">
+          <input matInput type="text" placeholder="Tên giảng viên" formControlName="teacher" [matAutocomplete]="autoTeacher">
+          <mat-autocomplete #autoTeacher="matAutocomplete">
+            <mat-optgroup *ngFor="let group of teacher$ | async" [label]="group.major" class="font-semibold">
               <mat-option *ngFor="let teacher of group.teachers" [value]="teacher.fullName" class="font-normal">
                 {{teacher.fullName}}
+
               </mat-option>
           </mat-optgroup>
           </mat-autocomplete>
@@ -82,13 +83,55 @@
       </div>
       <div class="flex justify-end items-center gap-2 mt-3">
         <button mat-flat-button color="basic" class="rounded-xl px-5 py-4" [routerLink]="'/ministry/class-list'">Huỷ</button>
-        <button mat-flat-button color="primary" class="rounded-xl text-white px-5 py-4">Xác nhận</button>
+        <button mat-flat-button color="primary" class="rounded-xl text-white px-5 py-4" type="submit">Cập nhật</button>
       </div>
     </form>
   </div>
-  <div class="detail-list basis-2/3">
-    <div class="list-header">
-      Danh sách sinh viên
+  <div class="detail-list flex justify-start items-start flex-col basis-2/3 w-full border border-gray-200 rounded-xl px-3 py-2">
+    <div class="list-header w-full p-3 flex justify-between items-center">
+      <span class=" text-2xl text-blue-800 ">Danh sách sinh viên</span>
+      <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" (click)="onAddStudent()">
+        <mat-icon>add</mat-icon>
+        Thêm sinh viên
+      </button>
+    </div>
+    <div class="active-list w-full">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
+
+        <ng-container matColumnDef="studentCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
+          <span class="mobile-label">MSSV: </span>
+          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
+          <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
+          <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài </th>
+          <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
     </div>
   </div>
 
