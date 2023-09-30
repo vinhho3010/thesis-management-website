@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map, startWith } from 'rxjs';
 import { AccountInfo } from 'src/app/Model/account-info';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
@@ -22,6 +22,7 @@ export class ClassDetailComponent {
   classDetailForm: FormGroup;
   majorsAndTeacher: any[] = [];
   teacher$!: Observable<any[]>;
+  selectedTeacher!: AccountInfo;;
 
   majors: any[] = [];
   teacherList: any[] = [];
@@ -33,7 +34,8 @@ export class ClassDetailComponent {
         private toastService: ToastService,
         private majorService: MajorService,
         private manageUserService: ManageUserService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private router: Router) {
       this.classDetailForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
         semester: new FormControl('', [Validators.required]),
@@ -47,7 +49,7 @@ export class ClassDetailComponent {
     }
 
     ngOnInit(): void {
-      this. classId = this.activatedRoute.snapshot.params['id'];
+      this.classId = this.activatedRoute.snapshot.params['id'];
       this.loadMajorList();
       this.loadClassInfo();
       this.loadTeacherList();
@@ -64,6 +66,7 @@ export class ClassDetailComponent {
       this.classDetailForm.controls['name'].enable();
       this.classDetailForm.controls['teacher'].enable();
       this.classDetailForm.controls['description'].enable();
+      this.classDetailForm.controls['student'].enable();
     }
 
     loadTeacherList() {
@@ -109,6 +112,7 @@ export class ClassDetailComponent {
       })
 
       this.dataSource.data = data.student;
+      this.selectedTeacher = data.teacher;
 
     }
 
@@ -130,16 +134,46 @@ export class ClassDetailComponent {
       const addStudentDialog = this.dialog.open(AddStudentToClassComponent);
       addStudentDialog.afterClosed().subscribe({
         next: (res) => {
-          if(res) {
-            this.classService.addStudent(this.classId, res.result).subscribe({
-              next: (res) => {
+          if(res.result) {
+            this.classService.addStudentToClass(this.classId, res.result).subscribe({
+              next: () => {
                 this.toastService.showSuccessToast('Thêm sinh viên thành công');
+                this.loadClassInfo();
               },
               error: (err) => {
                 this.toastService.showErrorToast(err.error.message);
               }
             })
           }
+        }
+      })
+    }
+
+    updateTeacherData(data: any): void {
+      this.selectedTeacher = data;
+      this.classDetailForm.controls['teacher'].setValue(data.fullName);
+    }
+
+    onSubmit() {
+      if(this.classDetailForm.invalid){
+        return;
+      }
+      const data = this.classDetailForm.value;
+      const teacherData = {
+        _id: this.selectedTeacher._id ?? '',
+        fullName: this.selectedTeacher.fullName,
+        major: this.selectedTeacher.major,
+      }
+      data.teacher = teacherData;
+      console.log(data);
+
+      this.classService.update(this.classId, data).subscribe({
+        next: () => {
+          this.toastService.showSuccessToast('Cập nhật thông tin thành công');
+          this.router.navigate(['/ministry/class-list']);
+        },
+        error: (err) => {
+          this.toastService.showErrorToast(err.error.message);
         }
       })
     }
@@ -151,7 +185,7 @@ export class ClassDetailComponent {
         return this.majorsAndTeacher
           .map(groupItem => {
             return {
-              major: groupItem.major,
+              major: groupItem?.major,
               teachers: this._filter(groupItem.teachers, value)
             }
           })
@@ -161,7 +195,7 @@ export class ClassDetailComponent {
     }
 
     _filter = (opt: any[], value: string): string[] => {
-      const filterValue = value.toLowerCase();
-      return opt.filter(item => item?.fullName.toLowerCase().includes(filterValue));
+      const filterValue = value.toUpperCase();
+      return opt.filter(item => item?.fullName.toUpperCase().includes(filterValue));
     };
 }

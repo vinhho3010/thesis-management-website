@@ -3,7 +3,7 @@
     <div class="list-title w-full text-2xl text-blue-800">
       Nhóm hướng dẫn
     </div>
-    <form class="form-wrappper mt-3 w-full" [formGroup]="classDetailForm" ngOnSubmit="onSubmit()">
+    <form class="form-wrappper mt-3 w-full" [formGroup]="classDetailForm" (ngSubmit)="onSubmit()">
       <div class="input-field">
         <div class="field-title p-2 text-gray-600">
           Tên nhóm
@@ -19,10 +19,9 @@
         <mat-form-field class="w-full" subscriptSizing='dynamic'>
           <input matInput type="text" placeholder="Tên giảng viên" formControlName="teacher" [matAutocomplete]="autoTeacher">
           <mat-autocomplete #autoTeacher="matAutocomplete">
-            <mat-optgroup *ngFor="let group of teacher$ | async" [label]="group.major" class="font-semibold">
-              <mat-option *ngFor="let teacher of group.teachers" [value]="teacher.fullName" class="font-normal">
+            <mat-optgroup *ngFor="let group of teacher$ | async" [label]="group?.major" class="font-semibold">
+              <mat-option *ngFor="let teacher of group?.teachers" [value]="teacher.fullName" class="font-normal"  (onSelectionChange)="updateTeacherData(teacher)">
                 {{teacher.fullName}}
-
               </mat-option>
           </mat-optgroup>
           </mat-autocomplete>
@@ -64,7 +63,6 @@
           </div>
           <mat-form-field class="w-full" subscriptSizing='dynamic'>
             <mat-select panelClass="panel-custom" formControlName="schoolYear" placeholder="Niên khoá">
-              <mat-option [value]="'2020-2021'">2020-2021</mat-option>
               <mat-option [value]="'2021-2022'">2021-2022</mat-option>
               <mat-option [value]="'2022-2023'">2022-2023</mat-option>
               <mat-option [value]="'2023-2024'">2023-2024</mat-option>
@@ -96,7 +94,7 @@
       </button>
     </div>
     <div class="active-list w-full">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
 
         <ng-container matColumnDef="studentCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>

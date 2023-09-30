@@ -6,18 +6,18 @@
   <div class="input-field w-full gap-2">
     <mat-form-field class="w-full">
       <mat-label>Mã số sinh viên</mat-label>
-      <input matInput placeholder="Nhập tên nhóm" formControlName="studentCode">
+      <input matInput placeholder="Nhập mã số sinh viên" formControlName="studentCode">
     </mat-form-field>
   </div>
   <div class="input-field w-full gap-2">
     <mat-form-field class="w-full">
-      <mat-label>Tên sinh viên</mat-label>
-      <input matInput placeholder="Nhập tên nhóm" formControlName="studentName">
+      <mat-label>{{!studentResult ? 'Chưa có thông tin sinh viên' : 'Tên sinh viên'}}</mat-label>
+      <input matInput formControlName="studentName">
     </mat-form-field>
   </div>
 
   <div class="flex justify-end items-center gap-4">
-    <button class="custom-btn" mat-flat-button (click)="onClose()">Huỷ</button>
+    <button class="custom-btn rounded-xl" mat-flat-button (click)="onClose()">Huỷ</button>
     <button class="custom-btn bg-blue-600 text-white rounded-xl" mat-flat-button
     (click)="onSubmit()">Thêm sinh viên</button>
   </div>

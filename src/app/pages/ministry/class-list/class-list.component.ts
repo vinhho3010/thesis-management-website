@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ClassListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = [ 'position', 'name', 'semester', 'supervisor', 'count', 'actions'];
+  displayedColumns: string[] = [ 'position', 'name', 'semester', 'major', 'supervisor', 'count', 'actions'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService, private router: Router) { }
@@ -26,10 +26,21 @@ export class ClassListComponent implements OnInit {
   loadClassList(): void {
     this.classService.getAllClass().subscribe({
       next: (res) => {
-        this.dataSource.data = res;
+        this.dataSource.data = this.standardizeData(res);
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  standardizeData (data: any[]): any[] {
+    return data.map((item, index) => {
+      return {
+        ...item,
+        major: item.major.name,
+        count: item.student.length,
+
       }
     })
   }

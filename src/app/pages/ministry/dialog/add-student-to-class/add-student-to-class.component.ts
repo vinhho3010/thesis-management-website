@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
@@ -15,7 +15,7 @@ export class AddStudentToClassComponent implements OnInit{
   studentResult: any = null;
     constructor(private matDialogRef: MatDialogRef<AddStudentToClassComponent>, private manageUserService: ManageUserService) {
       this.findStudentForm = new FormGroup({
-        studentCode: new FormControl(),
+        studentCode: new FormControl('', [Validators.required]),
         studentName: new FormControl(),
       });
       this.findStudentForm.controls['studentName'].disable();
@@ -33,8 +33,8 @@ export class AddStudentToClassComponent implements OnInit{
     }
 
     findStudentInfo(){
-      const studentCode = this.findStudentForm.value.studentCode;
-      this.manageUserService.getUserByKey(RoleAccount.STUDENT, 'code', studentCode).subscribe({
+      const studentCode = this.findStudentForm.value.studentCode as string;
+      this.manageUserService.getUserByKey(RoleAccount.STUDENT, 'code', studentCode.toUpperCase()).subscribe({
         next: (res) => {
           if(res.length > 0){
             this.studentResult = res[0];
@@ -51,6 +51,9 @@ export class AddStudentToClassComponent implements OnInit{
     }
 
     onSubmit() {
+      if(this.findStudentForm.invalid){
+        return;
+      }
       this.matDialogRef.close({result: this.studentResult});
     }
 }

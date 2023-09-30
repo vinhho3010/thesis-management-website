@@ -16,6 +16,10 @@ export class ClassService {
     return this.http.delete(`/api/class/${id}`)
   }
 
+  update(id: string, data: unknown){
+    return this.http.put(`/api/class/${id}`, data)
+  }
+
   getClassInfo(id: string){
     return this.http.get<any>(`/api/class/${id}`)
   }
@@ -24,7 +28,7 @@ export class ClassService {
     return this.http.get<any>(`/api/class`)
   }
 
-  addStudent(id: string, data: unknown){
+  addStudentToClass(id: string, data: unknown){
     return this.http.post(`/api/class/${id}/add-student`, data)
   }
 }
