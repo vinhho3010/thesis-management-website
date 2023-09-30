@@ -69,4 +69,20 @@ export class ToastService {
       }
     })
   }
+
+  confirmHandle(title: string, callback: () => void) {
+    return Swal.fire({
+      title: title,
+      showDenyButton: true,
+      confirmButtonText: 'Có',
+      confirmButtonColor: "#f44336",
+      denyButtonText: 'Không',
+      denyButtonColor: "gray",
+      icon: 'question',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        callback();
+      }
+    })
+  }
 }

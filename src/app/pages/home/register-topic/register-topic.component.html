@@ -23,17 +23,11 @@
     <div class="teacher-list">
       <div class="title text-blue-600 text-xl">Danh sách Khoa</div>
       <div class="max-h-[550px] py-2 px-2 md:mr-12">
-        <div *ngFor="let x of [1, 2, 3]">
-          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 bg-blue-500 hover:opacity-90 text-white cursor-pointer flex justify-between items-center">
-            <div class="teacher-card__name">Công nghệ thông tin</div>
-            <span class="font-semibold flex items-center">
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </span>
-          </div>
-        </div>
-        <div *ngFor="let x of [1, 2, 3]">
-          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 hover:opacity-90 cursor-pointer flex justify-between items-center hover:bg-gray-100">
-            <div class="teacher-card__name">Công nghệ thông tin</div>
+        <div *ngFor="let major of majorList" (click)="selectMajor(major)">
+          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 cursor-pointer flex justify-between items-center"
+          [class.hover:bg-gray-100]="major._id !== selectedMajor._id"
+          [ngClass]="{'bg-blue-500 text-white hover:bg-blue-500' : major._id === selectedMajor._id}">
+            <div class="teacher-card__name">{{major.name}}</div>
             <span class="font-semibold flex items-center">
               <mat-icon>keyboard_arrow_right</mat-icon>
             </span>
@@ -44,18 +38,14 @@
     <div class="topic-list col-span-2">
       <div class="flex justify-between">
         <div class="title text-blue-600 text-xl">Danh sách giảng viên hướng dẫn</div>
-        <!-- <button mat-button color="primary" class="rounded-xl text-blue-600 px-4 py-3">
-          <mat-icon matPrefix>add</mat-icon>
-          Đăng ký đề tài mới</button> -->
       </div>
       <div class="max-h-[550px] py-2 px-2 mt-3">
-        <div *ngFor="let x of [1]">
-          <div class="topic">
-            <ng-container *ngFor="let x of [1,2,3]">
-              <div class="topic-subscribtion flex justify-between items-center rounded-xl border-gray-400 hover:bg-gray-100 mb-3 line-clamp-1 p-3">
+          <div class="topic" *ngIf="teacherList && teacherList.length > 0; else emptyTeacher">
+            <ng-container *ngFor="let teacher of teacherList">
+              <div class="topic-subscribtion flex justify-between items-center rounded-xl border-gray-400 hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer">
                 <div class="topic-info_wrapper flex flex-col">
                   <span class="topic-teacher">
-                    Giảng viên: <span class="text-blue-500">Nguyễn Văn A</span>
+                    Giảng viên: <span class="text-blue-500">{{teacher?.fullName}}</span>
                   </span>
                   <div class="topic-name text-gray-600 italic">
                     AI, Web Application, Microservice, ...
@@ -68,7 +58,10 @@
               </div>
             </ng-container>
           </div>
-        </div>
+
+          <ng-template #emptyTeacher>
+              <div class="text-gray-600 text-center mt-3">Không có giảng viên nào hướng dẫn trong kỳ này</div>
+          </ng-template>
       </div>
     </div>
 

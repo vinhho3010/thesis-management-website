@@ -16,10 +16,10 @@
             Thesis</span>
         </a>
       </div>
-      <div class="flex justify-start items-center">
+      <div *ngIf="isLogin" class="user-info flex justify-start items-center">
         <div class="info-wrapper flex justify-end flex-col items-end">
-          <div class="name text-gray-700">Nguyễn Văn tét</div>
-          <div class="role text-sm text-gray-500">Sinh viên</div>
+          <div class="name text-gray-700">{{userData.fullName}}</div>
+          <div class="role text-sm text-gray-500">{{userData.role | role}}</div>
         </div>
         <span class="avatar ml-2">
           <img [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"

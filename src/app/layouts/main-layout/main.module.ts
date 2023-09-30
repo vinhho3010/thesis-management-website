@@ -38,6 +38,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
     ProcessComponent,
     RegisterTopicComponent,
     MyThesisComponent,
+    RegisterTopicComponent
   ],
   imports: [
     CommonModule,

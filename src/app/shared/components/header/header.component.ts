@@ -1,18 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
+import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  constructor(public sidebarService: SidebarService, private router: Router) {
+export class HeaderComponent implements OnInit{
+  userData: any;
+  isLogin = false;
 
-   }
+  constructor(
+    public sidebarService: SidebarService,
+    private authService: AuthService,
+    private showToast: ToastService
+  ) {}
 
-   onLogout(): void {
-    this.router.navigate(['/login']);
-   }
+  ngOnInit(): void {
+    this.userData = this.authService.getUser();
+    this.isLogin = this.authService.isLogin();
+  }
+
+  onLogout(): void {
+    this.showToast.confirmHandle(
+      'Bạn có chắc chắn muốn đăng xuất?',
+      this.authService.logout.bind(this.authService)
+    );
+  }
 }

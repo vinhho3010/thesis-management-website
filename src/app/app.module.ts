@@ -21,6 +21,7 @@ import { ThesisCardComponent } from './pages/ministry/public-thesis/thesis-card/
 import { AddClassComponent } from './pages/ministry/dialog/add-class/add-class.component';
 import { ClassDetailComponent } from './pages/ministry/class-list/class-detail/class-detail.component';
 import { AddStudentToClassComponent } from './pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
+import { RegisterTopicComponent } from './pages/home/dialog/register-topic/register-topic.component';
 
 
 

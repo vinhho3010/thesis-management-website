@@ -31,6 +31,7 @@ export class LoginComponent {
       next: (res) => {
         this.toast.showSuccessToast('Đăng nhập thành công');
         this.router.navigate(['/home']);
+        this.authService.saveUser(res.data);
       },
       error: (err) => {
         this.toast.showErrorToast('Đăng nhập thất bại');
