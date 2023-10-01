@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { mergeMap } from 'rxjs';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
+import { RegisterTopicDialogComponent } from '../dialog/register-topic/register-topic.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register-topic',
@@ -19,6 +22,8 @@ export class RegisterTopicComponent implements OnInit {
     private majorService: MajorService,
     private manageUserService: ManageUserService,
     private toastService: ToastService,
+    private matDialog: MatDialog,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -52,5 +57,20 @@ export class RegisterTopicComponent implements OnInit {
   selectMajor(major: any){
     this.selectedMajor = major;
     this.loadTeacherList();
+  }
+
+  onRegisterTopic(teacher: any){
+   const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
+      data: {
+        teacher: teacher,
+        ...this.authService.getUser()
+      }
+    });
+
+    registerTopic.afterClosed().subscribe(result => {
+      if(result){
+        this.loadTeacherList();
+      }
+    });
   }
 }

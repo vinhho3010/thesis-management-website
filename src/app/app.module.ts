@@ -13,17 +13,6 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
-import { MinistryLayoutComponent } from './layouts/ministry-layout/ministry-layout/ministry-layout.component';
-import { ClassListComponent } from './pages/ministry/class-list/class-list.component';
-import { PublicThesisComponent } from './pages/ministry/public-thesis/public-thesis.component';
-import { CouncilComponent } from './pages/ministry/council/council.component';
-import { ThesisCardComponent } from './pages/ministry/public-thesis/thesis-card/thesis-card.component';
-import { AddClassComponent } from './pages/ministry/dialog/add-class/add-class.component';
-import { ClassDetailComponent } from './pages/ministry/class-list/class-detail/class-detail.component';
-import { AddStudentToClassComponent } from './pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
-import { RegisterTopicComponent } from './pages/home/dialog/register-topic/register-topic.component';
-
-
 
 @NgModule({
   declarations: [

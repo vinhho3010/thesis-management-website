@@ -17,6 +17,7 @@ import { MilestoneCardComponent } from 'src/app/pages/home/milestones/milestone-
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
+import { RegisterTopicDialogComponent } from 'src/app/pages/home/dialog/register-topic/register-topic.component';
 
 
 
@@ -38,7 +39,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
     ProcessComponent,
     RegisterTopicComponent,
     MyThesisComponent,
-    RegisterTopicComponent
+    RegisterTopicDialogComponent
   ],
   imports: [
     CommonModule,

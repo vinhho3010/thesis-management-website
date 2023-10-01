@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegisterTopicComponent } from './register-topic.component';
+import { RegisterTopicDialogComponent } from './register-topic.component';
 
-describe('RegisterTopicComponent', () => {
-  let component: RegisterTopicComponent;
-  let fixture: ComponentFixture<RegisterTopicComponent>;
+describe('RegisterTopicDialogComponent', () => {
+  let component: RegisterTopicDialogComponent;
+  let fixture: ComponentFixture<RegisterTopicDialogComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RegisterTopicComponent]
+      declarations: [RegisterTopicDialogComponent]
     });
-    fixture = TestBed.createComponent(RegisterTopicComponent);
+    fixture = TestBed.createComponent(RegisterTopicDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
