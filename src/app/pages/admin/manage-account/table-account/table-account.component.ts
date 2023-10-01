@@ -43,7 +43,7 @@ export class TableAccountComponent {
 
   onEditRow(row: any): void {
     const editAccount = this.dialog.open(AddAccountDialogComponent, {
-      data: row,
+      data: row
     });
     editAccount.afterClosed().subscribe(result => {
       if (result){

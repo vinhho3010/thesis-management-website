@@ -40,4 +40,8 @@ export class ManageUserService {
      const params = new HttpParams().set('role', RoleAccount.TEACHER);
     return this.http.get<AccountInfo[]>(`/api/user/major/${majorId}`, {params})
   }
+
+  getTeacherByMajorHasClass(majorId: string){
+    return this.http.get<AccountInfo[]>(`/api/user/major/${majorId}/has-class`)
+  }
 }

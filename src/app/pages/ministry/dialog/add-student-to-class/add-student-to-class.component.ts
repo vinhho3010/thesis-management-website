@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
@@ -16,9 +16,8 @@ export class AddStudentToClassComponent implements OnInit{
     constructor(private matDialogRef: MatDialogRef<AddStudentToClassComponent>, private manageUserService: ManageUserService) {
       this.findStudentForm = new FormGroup({
         studentCode: new FormControl('', [Validators.required]),
-        studentName: new FormControl(),
+        studentName: new FormControl('', [Validators.required]),
       });
-      this.findStudentForm.controls['studentName'].disable();
      }
 
      ngOnInit(): void {

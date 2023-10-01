@@ -67,6 +67,8 @@ export class ClassDetailComponent {
       this.classDetailForm.controls['teacher'].enable();
       this.classDetailForm.controls['description'].enable();
       this.classDetailForm.controls['student'].enable();
+      this.classDetailForm.controls['semester'].enable();
+      this.classDetailForm.controls['schoolYear'].enable();
     }
 
     loadTeacherList() {
@@ -149,6 +151,22 @@ export class ClassDetailComponent {
       })
     }
 
+    removeStudent(studentId: string){
+      this.classService.removeStudentFromClass(this.classId, studentId).subscribe({
+        next: () => {
+          this.toastService.showSuccessToast('Xóa sinh viên thành công');
+          this.loadClassInfo();
+        },
+        error: (err) => {
+          this.toastService.showErrorToast(err.error.message);
+        }
+      })
+    }
+
+    onRemoveStudent(data: any){
+      this.toastService.confirmDelete(this.removeStudent.bind(this, data._id));
+    }
+
     updateTeacherData(data: any): void {
       this.selectedTeacher = data;
       this.classDetailForm.controls['teacher'].setValue(data.fullName);
@@ -165,7 +183,6 @@ export class ClassDetailComponent {
         major: this.selectedTeacher.major,
       }
       data.teacher = teacherData;
-      console.log(data);
 
       this.classService.update(this.classId, data).subscribe({
         next: () => {

@@ -31,4 +31,8 @@ export class ClassService {
   addStudentToClass(id: string, data: unknown){
     return this.http.post(`/api/class/${id}/add-student`, data)
   }
+
+  removeStudentFromClass(id: string, studentId: string){
+    return this.http.delete(`/api/class/${id}/remove-student/${studentId}`)
+  }
 }

@@ -39,7 +39,7 @@ export class RegisterTopicComponent implements OnInit {
 
   }
   loadTeacherList(){
-    this.manageUserService.getTeacherByMajor(this.selectedMajor._id).subscribe({
+    this.manageUserService.getTeacherByMajorHasClass(this.selectedMajor._id).subscribe({
       next: (res) => {
         this.teacherList = res;
       },
@@ -50,8 +50,6 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   selectMajor(major: any){
-    console.log(major);
-
     this.selectedMajor = major;
     this.loadTeacherList();
   }

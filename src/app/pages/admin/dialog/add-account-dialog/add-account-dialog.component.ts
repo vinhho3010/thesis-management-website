@@ -81,7 +81,7 @@ export class AddAccountDialogComponent implements OnInit {
     } else if(this.data.role === RoleAccount.MINISTRY){
       this.newAccountForm.controls['type'].setValue('ministry');
     }
-    this.newAccountForm.patchValue(this.data);
+    this.fillData(this.data);
     this.newAccountForm.controls['password'].disable();
     this.newAccountForm.controls['type'].disable();
     this.newAccountForm.controls['email'].disable();
@@ -92,6 +92,13 @@ export class AddAccountDialogComponent implements OnInit {
 
   onClose(result?: any) {
     this.dialogRef.close(result);
+  }
+
+  fillData(data: any){
+    this.newAccountForm.patchValue(data);
+    if(this.newAccountForm.contains('major')){
+      this.newAccountForm.controls['major'].setValue(data.major._id);
+    }
   }
 
   onChangeType(event: MatSelectChange) {

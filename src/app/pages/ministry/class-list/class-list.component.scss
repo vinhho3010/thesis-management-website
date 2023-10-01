@@ -81,7 +81,6 @@
 
 ::ng-deep {
   .mat-sort-header-container {
-    margin-left: 12px;
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
