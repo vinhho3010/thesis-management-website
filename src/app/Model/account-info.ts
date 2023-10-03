@@ -10,4 +10,7 @@ export interface AccountInfo {
   address: string,
   code: string,
   major: string,
+  followClass?: string;
+  instructClass?: string;
+  topic?: string;
 }

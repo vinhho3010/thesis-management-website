@@ -1,41 +1,26 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTab } from '@angular/material/tabs';
-
-export interface PeriodicElement {
-  studentCode: string;
-  fullName: string;
-  class: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
- {studentCode: 'B19061279', fullName: 'Hydrogen', class: 'DI1996A5'},
-];
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
+import { ClassService } from 'src/app/services/class.service';
+import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
   selector: 'app-active-student-list',
   templateUrl: './active-student-list.component.html',
   styleUrls: ['./active-student-list.component.scss']
 })
-export class ActiveStudentListComponent implements AfterViewInit {
+export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['studentCode', 'fullName', 'class', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['code', 'fullName', 'class', 'actions'];
+  dataSource = new MatTableDataSource([]);
+
+  constructor(private authService: AuthService, private classService: ClassService, private toastService: ToastService) { }
+
+  ngOnInit(): void {
+    this.loadStudentList();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -46,5 +31,16 @@ export class ActiveStudentListComponent implements AfterViewInit {
   }
   onDeleteRow(row: any): void {
     console.log(row);
+  }
+
+  loadStudentList(): void {
+    this.classService.getClassInfo(this.authService.getUser().instructClass as string).subscribe({
+      next: (res) => {
+        this.dataSource.data = res.student;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
   }
 }

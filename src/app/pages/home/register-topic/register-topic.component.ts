@@ -6,6 +6,8 @@ import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 import { RegisterTopicDialogComponent } from '../dialog/register-topic/register-topic.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { registerToClassData } from 'src/app/Model/register-topic';
+import { ClassService } from 'src/app/services/class.service';
 
 @Component({
   selector: 'app-register-topic',
@@ -17,13 +19,15 @@ export class RegisterTopicComponent implements OnInit {
   majorList: any[] = [];
   teacherList: any[] = [];
   selectedMajor: any;
+  selectedTeacher: any;
 
   constructor(
     private majorService: MajorService,
     private manageUserService: ManageUserService,
     private toastService: ToastService,
     private matDialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private classService: ClassService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +63,7 @@ export class RegisterTopicComponent implements OnInit {
     this.loadTeacherList();
   }
 
+
   onRegisterTopic(teacher: any){
    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
@@ -67,9 +72,29 @@ export class RegisterTopicComponent implements OnInit {
       }
     });
 
-    registerTopic.afterClosed().subscribe(result => {
-      if(result){
-        this.loadTeacherList();
+    registerTopic.afterClosed().subscribe(res => {
+      if(res){
+        const result = res.result;
+
+        const submitData: registerToClassData = {
+          studentId: this.authService.getUser()._id,
+          classId: teacher?.instructClass,
+          type: result?.type,
+          topic: result?.topic,
+          status: false,
+          description: result.description,
+          semester: result.semester,
+          schoolYear: result.schoolYear
+        }
+
+        this.classService.registerToClass(submitData).subscribe({
+          next: () => {
+            this.toastService.showSuccessToast('Đăng ký thành công');
+          },
+          error: (err) => {
+            this.toastService.showErrorToast(err.error.message);
+          }
+        });
       }
     });
   }

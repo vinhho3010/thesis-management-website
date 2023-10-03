@@ -6,7 +6,9 @@
         Sinh viên đang hướng dẫn
       </ng-template>
       <div class="tab-content">
-        <app-active-student-list></app-active-student-list>
+        <ng-template matTabContent>
+          <app-active-student-list></app-active-student-list>
+        </ng-template>
       </div>
       </mat-tab>
 
@@ -16,7 +18,9 @@
         Sinh viên đăng ký
       </ng-template>
       <div class="tab-content">
-        <app-pending-student-list></app-pending-student-list>
+        <ng-template matTabContent>
+          <app-pending-student-list></app-pending-student-list>
+        </ng-template>
       </div>
     </mat-tab>
 

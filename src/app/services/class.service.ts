@@ -35,4 +35,16 @@ export class ClassService {
   removeStudentFromClass(id: string, studentId: string){
     return this.http.delete(`/api/class/${id}/remove-student/${studentId}`)
   }
+
+  registerToClass(data: unknown){
+    return this.http.post(`/api/pending-class`, data)
+  }
+
+  getPendingStudents(id: string){
+    return this.http.get<any>(`/api/pending-class/${id}`)
+  }
+
+  approvePendingItem(id: string){
+    return this.http.get(`/api/pending-class/${id}/approve`)
+  }
 }
