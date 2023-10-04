@@ -20,11 +20,6 @@ export const routesInfo: RouteInfo[] = [
     icon: 'schedule_outline'
   },
   {
-    path: '/topics',
-    title: 'Quản lý đề tài',
-    icon: 'info'
-  },
-  {
     path: '/register-topic',
     title: 'Đăng ký đề tài',
     icon: 'assignment'
@@ -71,14 +66,14 @@ export const routesInfoTeacher: RouteInfo[] = [
     title: 'Quản lý mốc thời gian',
     icon: 'schedule_outline'
   },
-  {
-    path: '/topics',
-    title: 'Quản lý đề tài',
-    icon: 'info'
-  }
 ];
 
 export const routesInfoStudent: RouteInfo[] = [
+  {
+    path: '/home',
+    title: 'Trang chủ',
+    icon: 'home_outline'
+  },
   {
     path: '/register-topic',
     title: 'Đăng ký đề tài',

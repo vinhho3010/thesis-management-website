@@ -28,6 +28,10 @@ export class ClassService {
     return this.http.get<any>(`/api/class`)
   }
 
+  getStudentInClass(id: string){
+    return this.http.get<any>(`/api/class/${id}/student`)
+  }
+
   addStudentToClass(id: string, data: unknown){
     return this.http.post(`/api/class/${id}/add-student`, data)
   }
@@ -36,15 +40,35 @@ export class ClassService {
     return this.http.delete(`/api/class/${id}/remove-student/${studentId}`)
   }
 
+
+
+  //*************************pending request*****************************
+
   registerToClass(data: unknown){
     return this.http.post(`/api/pending-class`, data)
   }
 
+  updateRegister(id: string, data: unknown){
+    return this.http.put(`/api/pending-class/${id}`, data)
+  }
+
+  cancelRegister(id: string) {
+    return this.http.delete(`/api/pending-class/${id}`)
+  }
+
   getPendingStudents(id: string){
-    return this.http.get<any>(`/api/pending-class/${id}`)
+    return this.http.get<any>(`/api/pending-class/class/${id}`)
   }
 
   approvePendingItem(id: string){
     return this.http.get(`/api/pending-class/${id}/approve`)
+  }
+
+  rejectPendingItem(id: string){
+    return this.http.get(`/api/pending-class/${id}/reject`)
+  }
+
+  getPendingRequestOfStudent(id: string){
+    return this.http.get<any>(`/api/pending-class/student/${id}`)
   }
 }

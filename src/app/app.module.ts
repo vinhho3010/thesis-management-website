@@ -13,6 +13,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from './shared/utilities/customPaginator';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
         panelClass: 'custom-dialog',
       } as MatDialogConfig,
     },
+    { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() }
   ],
   bootstrap: [AppComponent]
 })

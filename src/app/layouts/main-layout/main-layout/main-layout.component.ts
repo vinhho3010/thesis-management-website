@@ -1,6 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
+import { AuthService } from 'src/app/services/auth.service';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
-import { routesInfo } from 'src/app/shared/components/sidebar/sidebar-data';
+import { routesInfoTeacher, routesInfoStudent, RouteInfo } from 'src/app/shared/components/sidebar/sidebar-data';
 
 @Component({
   selector: 'app-main-layout',
@@ -8,8 +10,9 @@ import { routesInfo } from 'src/app/shared/components/sidebar/sidebar-data';
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
-  routesInfo = routesInfo;
-
-  constructor(private sidebarService: SidebarService) { }
+  routesInfo: RouteInfo[];
+  constructor(private authService: AuthService) {
+    this.routesInfo = this.authService.getUser()?.role.includes(RoleAccount.TEACHER) ? routesInfoTeacher : routesInfoStudent;
+   }
 
 }

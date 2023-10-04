@@ -8,3 +8,7 @@ export interface registerToClassData {
   semester?: string;
   schoolYear?: string;
 }
+
+export interface updateRegisterToClassData extends registerToClassData {
+ _id: string;
+}

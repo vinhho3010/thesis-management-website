@@ -37,6 +37,12 @@ export class RegisterTopicDialogComponent {
       this.registerTopicForm.controls['major'].setValue(this.data?.major.name);
       this.registerTopicForm.controls['teacher'].setValue(this.data?.teacher.fullName);
     }
+
+    if(this.data.pending) {
+      this.registerTopicForm.controls['topic'].setValue(this.data?.pending.topic);
+      this.registerTopicForm.controls['type'].setValue(this.data?.pending.type);
+      this.registerTopicForm.controls['description'].setValue(this.data?.pending.description);
+    }
   }
   onClose() {
     this.matDialogRef.close();

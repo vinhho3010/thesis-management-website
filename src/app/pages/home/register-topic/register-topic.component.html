@@ -1,69 +1,112 @@
-<div class="topic-wrapper mt-5 max-w-7xl mx-auto p-2">
-  <div class="title text-blue-600 text-2xl pb-5">Đăng ký đề tài</div>
-  <div class="search-field mt-2">
-    <div class="flex items-center justify-center gap-3 flex-col md:flex-row">
-      <mat-form-field appearance="outline" class="-mb-6 order-2 md:order-1 w-full md:w-auto">
-        <mat-label>Lọc theo</mat-label>
-        <mat-select panelClass="panel-custom">
-          <mat-option *ngFor="let food of [1, 2, 3]" [value]="food">
-            {{food}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="relative order-1 md:order-2 md:w-3/4 w-full -mb-6" appearance="outline">
-        <mat-icon matPrefix>search</mat-icon>
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-700">
-        </div>
-        <input matInput type="search" id="default-search"  placeholder="Tìm kiếm giảng viên">
-    </mat-form-field>
-    <button mat-flat-button type="submit" class="w-full md:w-auto order-3 py-6 px-7 rounded-xl min-w-[124px]" color="primary">Tìm kiếm</button>
-    </div>
-  </div>
-  <div class="result-list mt-4 grid grid-cols-12 gap-2">
-    <div class="teacher-list lg:col-span-3 col-span-5">
-      <div class="title text-blue-600 text-xl">Danh sách Khoa</div>
-      <div class="max-h-[550px] py-2 px-2 md:mr-12">
-        <div *ngFor="let major of majorList" (click)="selectMajor(major)">
-          <div class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 cursor-pointer flex justify-between items-center"
-          [class.hover:bg-gray-100]="major._id !== selectedMajor._id"
-          [ngClass]="{'bg-blue-500 text-white hover:bg-blue-500' : major._id === selectedMajor._id}">
-            <div class="teacher-card__name">{{major.name}}</div>
-            <span class="font-semibold flex items-center">
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="topic-list lg:col-span-9 col-span-7">
-      <div class="flex justify-between">
-        <div class="title text-blue-600 text-xl">Danh sách giảng viên hướng dẫn</div>
-      </div>
-      <div class="max-h-[550px] py-2 px-2 mt-3">
-          <div class="topic" *ngIf="teacherList && teacherList.length > 0; else emptyTeacher">
-            <ng-container *ngFor="let teacher of teacherList">
-              <div class="topic-subscribtion flex justify-between items-center rounded-xl border-gray-400 hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer">
-                <div class="topic-info_wrapper flex flex-col">
-                  <span class="topic-teacher">
-                    Giảng viên: <span class="text-blue-500">{{teacher?.fullName}}</span>
-                  </span>
-                  <div class="topic-name text-gray-600 italic">
-                    AI, Web Application, Microservice, ...
+<div class="topic-wrapper max-w-7xl mx-auto">
+  <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="registering">
+      <ng-template mat-tab-label>
+        Đăng ký đề tài
+      </ng-template>
+      <div class="tab-content">
+        <ng-template matTabContent>
+            <!-- pending teacher list -->
+            <div class="result-list mt-10 grid grid-cols-12 gap-2">
+              <div class="teacher-list lg:col-span-3 col-span-5 p-3">
+                <div class="title text-blue-600 text-xl">Danh sách Khoa</div>
+                <div class=" py-2 px-2 md:mr-12">
+                  <div *ngFor="let major of majorList" (click)="selectMajor(major)">
+                    <div
+                      class="teacher-card rounded-xl border border-gray-400 mb-3 p-4 cursor-pointer flex justify-between items-center"
+                      [class.hover:bg-gray-100]="major._id !== selectedMajor._id"
+                      [ngClass]="{'bg-blue-500 text-white hover:bg-blue-500' : major._id === selectedMajor._id}">
+                      <div class="teacher-card__name">{{major.name}}</div>
+                      <span class="font-semibold flex items-center">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <button mat-button class="rounded-xl" color="accent" (click)="onRegisterTopic(teacher)">
-                  <mat-icon matPrefix>edit</mat-icon>
-                  Đăng ký
-                </button>
               </div>
-            </ng-container>
-          </div>
-
-          <ng-template #emptyTeacher>
-              <div class="text-gray-600 text-center mt-3">Không có giảng viên nào hướng dẫn trong kỳ này</div>
-          </ng-template>
+              <div class="topic-list lg:col-span-9 col-span-7">
+                <div class="flex justify-between">
+                  <div class="title text-blue-600 text-xl">Danh sách giảng viên hướng dẫn</div>
+                </div>
+                <div class="lg:py-2 px-2 mt-3">
+                  <div class="topic" *ngIf="teacherList && teacherList.length > 0; else emptyTeacher">
+                    <ng-container *ngFor="let teacher of teacherList">
+                      <div
+                        class="topic-subscribtion border border-gray-200 flex justify-between items-center rounded-xl hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer">
+                        <div class="topic-info_wrapper flex flex-col">
+                          <span class="topic-teacher">
+                            Giảng viên: <span class="text-blue-500">{{teacher?.fullName}}</span>
+                          </span>
+                          <div class="topic-name text-gray-600 italic">
+                            AI, Web Application, Microservice, ...
+                          </div>
+                        </div>
+                        <button mat-button class="rounded-xl" color="accent" (click)="onRegisterTopic(teacher)" *ngIf="!registeredWithTeacher(teacher)">
+                          <mat-icon matPrefix>edit</mat-icon>
+                          Đăng ký
+                        </button>
+                        <button mat-button class="rounded-xl" color="accent" disabled *ngIf="registeredWithTeacher(teacher)">
+                          <mat-icon matPrefix>edit</mat-icon>
+                          Đăng ký
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <ng-template #emptyTeacher>
+                    <div class="text-gray-600 text-center mt-3">Không có giảng viên nào hướng dẫn trong kỳ này</div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <!-- end pending teacher list -->
+        </ng-template>
       </div>
-    </div>
+      </mat-tab>
 
-  </div>
+      <mat-tab label="registered">
+      <ng-template mat-tab-label>
+        <span>Đề tài đã đăng ký</span>
+      </ng-template>
+      <div class="tab-content">
+        <ng-template matTabContent>
+          <div class="result-list mt-10 flex justify-center items-start gap-2 flex-col">
+            <div class="col-span-12">Đề tài chờ duyệt</div>
+            <div class="lg:py-2 px-2 mt-3 w-full">
+              <div class="topic" *ngIf="pendingRequest && pendingRequest.length > 0; else emptyPeding">
+                <ng-container *ngFor="let pending of pendingRequest">
+                  <div class="topic-subscribtion w-full border border-gray-200 flex justify-between items-center rounded-xl hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer">
+                    <div class="topic-info_wrapper flex flex-col">
+                      <span class="topic-teacher">
+                        Giảng viên: <span class="text-blue-500">{{pending?.teacher?.fullName}}</span>
+                      </span>
+                      <div class="topic-name text-gray-600 italic">
+                        AI, Web Application, Microservice, ...
+                      </div>
+                    </div>
+                    <div >
+                      <button mat-button class="rounded-xl" color="primary" (click)="onEditTopic(pending)">
+                        <mat-icon matPrefix>edit</mat-icon>
+                        Chỉnh sửa
+                      </button>
+                      <button mat-button class="ml-1 rounded-xl" color="warn" (click)="cancelRegister(pending)">
+                        <mat-icon matPrefix>clear</mat-icon>
+                        Huỷ đăng ký
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <ng-template #emptyPeding>
+                <div class="text-gray-600 text-center mt-3">Bạn chưa đăng ký hướng dẫn với giảng viên nào</div>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </mat-tab>
+
+
+  </mat-tab-group>
+
 </div>

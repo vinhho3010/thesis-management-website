@@ -56,7 +56,23 @@ export class ToastService {
 
   confirmDelete(callback: () => void) {
     return Swal.fire({
-      title: 'Bạn muốn xoá phần tử này?',
+      html: '<h3 class="font-semibold">Bạn có chắc chắn muốn xóa?</h3>',
+      showDenyButton: true,
+      confirmButtonText: 'Có',
+      confirmButtonColor: "#f44336",
+      denyButtonText: 'Không',
+      denyButtonColor: "gray",
+      icon: 'question',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        callback();
+      }
+    })
+  }
+
+  confirmDeleteMessage(message: string, callback: () => void) {
+    return Swal.fire({
+      html: '<h3 class="font-semibold">' + message + '</h3>',
       showDenyButton: true,
       confirmButtonText: 'Có',
       confirmButtonColor: "#f44336",
@@ -72,7 +88,7 @@ export class ToastService {
 
   confirmHandle(title: string, callback: () => void) {
     return Swal.fire({
-      title: title,
+      html: '<h3 class="font-semibold">' + title + '</h3>',
       showDenyButton: true,
       confirmButtonText: 'Có',
       confirmButtonColor: "#f44336",

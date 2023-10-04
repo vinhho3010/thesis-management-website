@@ -34,9 +34,9 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   loadStudentList(): void {
-    this.classService.getClassInfo(this.authService.getUser().instructClass as string).subscribe({
+    this.classService.getStudentInClass(this.authService.getUser().instructClass as string).subscribe({
       next: (res) => {
-        this.dataSource.data = res.student;
+        this.dataSource.data = res;
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);

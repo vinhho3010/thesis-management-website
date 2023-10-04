@@ -18,6 +18,7 @@ export class RegisterTopicComponent implements OnInit {
 
   majorList: any[] = [];
   teacherList: any[] = [];
+  pendingRequest: any[] = [];
   selectedMajor: any;
   selectedTeacher: any;
 
@@ -32,6 +33,9 @@ export class RegisterTopicComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMajorList();
+    this.loadRegisterd();
+    console.log(this.pendingRequest);
+
   }
 
   loadMajorList(){
@@ -58,11 +62,43 @@ export class RegisterTopicComponent implements OnInit {
     })
   }
 
+  loadRegisterd() {
+    this.classService.getPendingRequestOfStudent(this.authService.getUser()._id).subscribe({
+      next: (res) => {
+        this.pendingRequest = res;
+        console.log(this.pendingRequest);
+
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  registeredWithTeacher(teacher: any){
+    return this.pendingRequest.find((value) => value.class._id === teacher.instructClass);
+  }
+
   selectMajor(major: any){
     this.selectedMajor = major;
     this.loadTeacherList();
   }
 
+  cancelRegister(pending: any) {
+    this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn huỷ?',this.cancelRegisterHandler.bind(this, pending));
+  }
+
+  cancelRegisterHandler(pending: any){
+    this.classService.cancelRegister(pending._id).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Hủy đăng ký thành công');
+        this.loadRegisterd();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
 
   onRegisterTopic(teacher: any){
    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
@@ -81,7 +117,6 @@ export class RegisterTopicComponent implements OnInit {
           classId: teacher?.instructClass,
           type: result?.type,
           topic: result?.topic,
-          status: false,
           description: result.description,
           semester: result.semester,
           schoolYear: result.schoolYear
@@ -90,6 +125,43 @@ export class RegisterTopicComponent implements OnInit {
         this.classService.registerToClass(submitData).subscribe({
           next: () => {
             this.toastService.showSuccessToast('Đăng ký thành công');
+            this.loadRegisterd();
+          },
+          error: (err) => {
+            this.toastService.showErrorToast(err.error.message);
+          }
+        });
+      }
+    });
+  }
+
+  onEditTopic(pending: any){
+    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
+      data: {
+        teacher: pending.class.teacher,
+        ...this.authService.getUser(),
+        pending: pending
+      }
+    });
+
+    registerTopic.afterClosed().subscribe(res => {
+      if(res){
+        const result = res.result;
+
+        const submitData: registerToClassData = {
+          studentId: this.authService.getUser()._id,
+          classId: pending.class._id,
+          type: result?.type,
+          topic: result?.topic,
+          description: result.description,
+          semester: result.semester,
+          schoolYear: result.schoolYear
+        }
+
+        this.classService.updateRegister(pending._id, submitData).subscribe({
+          next: () => {
+            this.toastService.showSuccessToast('Cập nhật thành công');
+            this.loadRegisterd();
           },
           error: (err) => {
             this.toastService.showErrorToast(err.error.message);

@@ -36,8 +36,20 @@ export class PendingStudentListComponent {
       }
     })
   }
-  onDeleteRow(row: any): void {
-    console.log(row);
+  onRejectPending(row: any) {
+    this.toastService.confirmHandle('Bạn muốn từ chối sinh viên này?', this.rejectHandler.bind(this, row));
+  }
+
+  rejectHandler(row: any): void {
+    this.classService.rejectPendingItem(row._id).subscribe({
+      next: () => {
+        this.loadPendingStudentList();
+        this.toastService.showSuccessToast('Đã từ chối sinh viên');
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
   }
 
   ngOnInit(): void {

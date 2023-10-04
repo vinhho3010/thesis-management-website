@@ -7,6 +7,8 @@ import { ManageUserService } from 'src/app/services/manage-user.service';
 import { AddAccountDialogComponent } from '../../dialog/add-account-dialog/add-account-dialog.component';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { AddFileAccountComponent } from '../../dialog/add-file-account/add-file-account.component';
+import { Pagination } from 'src/app/Model/pagination';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-table-account',
@@ -19,6 +21,11 @@ export class TableAccountComponent {
   dataSourceInput = new MatTableDataSource();
   @Input() tableType!: RoleAccount;
   roleAccount = RoleAccount;
+  pagination: Pagination = {
+    pageIndex: 0,
+    pageSize: 5,
+    length: 0
+  }
 
   constructor(private dialog: MatDialog, private manageUserService: ManageUserService, private toastService: ToastService) { }
 
@@ -30,6 +37,7 @@ export class TableAccountComponent {
     this.manageUserService.getAllAccount(this.tableType).subscribe({
       next: (response) =>{
         this.dataSourceInput.data = response;
+        this.pagination.length = response.length;
       },
       error: () => {
         this.toastService.showErrorToast('Tải dữ liệu thất bại');
@@ -84,4 +92,9 @@ export class TableAccountComponent {
       }
     });
   }
+
+  // onPageChange(event: PageEvent) {
+  //   this.pagination.pageIndex = event.pageIndex;
+  //   this.pagination.pageSize = event.pageSize;
+  // }
 }
