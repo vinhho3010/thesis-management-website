@@ -75,6 +75,11 @@ export const routesInfoStudent: RouteInfo[] = [
     icon: 'home_outline'
   },
   {
+    path: '/class',
+    title: 'Lớp học',
+    icon: 'book_outline'
+  },
+  {
     path: '/register-topic',
     title: 'Đăng ký đề tài',
     icon: 'assignment'

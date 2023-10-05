@@ -15,6 +15,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['code', 'fullName', 'class', 'actions'];
   dataSource = new MatTableDataSource([]);
+  classOfTeacher = this.authService.getUser().instructClass as string;
 
   constructor(private authService: AuthService, private classService: ClassService, private toastService: ToastService) { }
 
@@ -34,9 +35,27 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   loadStudentList(): void {
-    this.classService.getStudentInClass(this.authService.getUser().instructClass as string).subscribe({
+    this.classService.getStudentInClass(this.classOfTeacher).subscribe({
       next: (res) => {
         this.dataSource.data = res;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  onRemoveStudent(student: any){
+    console.log(student);
+    this.toastService.confirmHandle('Bạn có chắc chắn muốn xóa sinh viên khỏi nhóm?', this.removeStudentHandler.bind(this, student._id));
+
+  }
+
+  removeStudentHandler(studentId: string): void {
+    this.classService.removeStudentFromClass(this.classOfTeacher, studentId).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Xóa sinh viên khỏi nhóm thành công');
+        this.loadStudentList();
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
