@@ -31,7 +31,7 @@ export class AuthService {
     return this.storageService.get(USER_SAVE_KEY) as AccountInfo;
   }
 
-  gtRole(){
+  getRole(){
     const user = this.getUser();
     if(user){
       return user.role;
@@ -46,6 +46,10 @@ export class AuthService {
 
   isLogin(){
     return this.storageService.get(TOKEN_KEY) ? true : false;
+  }
+
+  getClassInfo(){
+    return this.getUser().instructClass ? this.getUser().instructClass : this.getUser().followClass;
   }
 
 }

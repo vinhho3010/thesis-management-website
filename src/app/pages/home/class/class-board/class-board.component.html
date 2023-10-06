@@ -1,18 +1,40 @@
 <div class="board-wrapper mx-auto">
-  <div class="class-info relative text-white w-full md:w-1/2">
-    <div class="class-name absolute bottom-7 left-7 text-3xl">
-      Lớp Test
+  <div class="class-info relative text-white w-full md:w-4/5 lg:w-1/2">
+    <div class="class-name absolute lg:bottom-7 top-7 left-7 text-3xl">
+      {{className}}
+    </div>
+    <div class="class-name absolute bottom-7 right-7 text-base lg:text-lg">
+      Giảng viên hướng dẫn: {{teacher?.fullName}}
     </div>
     <div class="img" src="../../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg"></div>
   </div>
-  <div class="news-list w-full mt-12">
-    <mat-card class="news-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
-      <mat-card-content>Ngày mai nghỉ</mat-card-content>
-      <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+
+  <div class="post-create w-full md:w-4/5 lg:w-1/2" (focusin)="isCreatePostFocused = true" tabindex="-1">
+    <form [formGroup]="createPostForm" class="p-3 mt-4 shadow-md rounded-xl border border-gray-200">
+      <div class="editor text-gray-500">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar" *ngIf="isCreatePostFocused">
+        </ngx-editor-menu>
+        <ngx-editor [placeholder]="'Thông báo cho nhóm hướng dẫn'" [editor]="editor" formControlName="content">
+        </ngx-editor>
+      </div>
+      <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isCreatePostFocused">
+        <button mat-button color="basic" class="rounded-xl" (click)="clearCreatePostForm()">Huỷ</button>
+        <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" *ngIf="!isLoading" (click)="onCreatePost()">Đăng bài</button>
+        <button mat-flat-button color="basic" class="rounded-xl " disabled *ngIf="isLoading">
+          <mat-icon>
+            <mat-spinner diameter="16">
+            </mat-spinner>
+          </mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="post-list w-full mt-12">
+    <mat-card class="post-item" *ngFor="let post of postList" [class.mat-elevation-z0]="true">
+      <mat-card-content [innerHTML]="post?.content"></mat-card-content>
+      <mat-card-content class="text-gray-500 text-sm">{{  post?.createdAt | dateToText }}</mat-card-content>
     </mat-card>
 
   </div>
-
-
-
 </div>

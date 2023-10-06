@@ -16,7 +16,14 @@
     margin-top: 12px;
   }
 
-  .news-list{
+  .docs-item{
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .post-list{
     width: 100%;
     margin-top: 12px;
     display: flex;
@@ -24,7 +31,7 @@
     justify-content: center;
     align-items: center;
 
-    .news-item{
+    .post-item{
       border: 1px solid #ccc;
       border-radius: 12px;
       margin-top: 8px;
@@ -32,4 +39,35 @@
   }
   }
 
+}
+
+::ng-deep {
+  .editor {
+    border-radius: 12px;
+    padding: 0 4px;
+
+    .NgxEditor__MenuBar {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .NgxEditor {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border: none;
+      min-height: 54px;
+    }
+
+    .CodeMirror {
+      border: 1px solid #eee;
+      height: auto;
+      margin-bottom: 0.7rem;
+
+      pre {
+        white-space: pre !important;
+      }
+    }
+
+  }
 }

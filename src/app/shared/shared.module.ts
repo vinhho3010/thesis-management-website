@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { RolePipe } from './pipes/role.pipe';
+import { NgxEditorModule } from 'ngx-editor';
+import { DateToTextPipe } from './pipes/dateToText.pipe';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { RolePipe } from './pipes/role.pipe';
     ThesisCardComponent,
     SemesterPipe,
     DataTableComponent,
-    RolePipe
+    RolePipe,
+    DateToTextPipe
   ],
   imports: [
     CommonModule,
     MatModule,
     ClickOutsideDirective,
     ReactiveFormsModule,
+    NgxEditorModule
   ],
   exports: [
     HeaderComponent,
@@ -36,7 +40,9 @@ import { RolePipe } from './pipes/role.pipe';
     ThesisCardComponent,
     ReactiveFormsModule,
     SemesterPipe,
-    RolePipe
+    RolePipe,
+    NgxEditorModule,
+    DateToTextPipe
   ]
 })
 export class SharedModule { }

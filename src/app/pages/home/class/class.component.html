@@ -1,32 +1,46 @@
-<div class="class-wrapper">
-  <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+<div class="wrapper min-h-[80vh]">
+  <div class="class-wrapper" *ngIf="hasClassInfo; else noCLassInfo">
+    <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+      <mat-tab label="Feed">
+        <ng-template mat-tab-label>
+          Bảng tin
+        </ng-template>
+        <ng-template matTabContent>
 
-    <mat-tab label="Feed">
-      <ng-template mat-tab-label>
-        Bảng tin
-      </ng-template>
-      <div class="tab-content">
-        <app-class-board></app-class-board>
-      </div>
+          <app-class-board></app-class-board>
+        </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Document">
+        <ng-template mat-tab-label>
+          Tài liệu tham khảo
+        </ng-template>
+        <ng-template matTabContent>
+          <app-ref-documents></app-ref-documents>
+        </ng-template>
+      </mat-tab>
+        <mat-tab label="StudentList">
+        <ng-template mat-tab-label>
+          Danh sách sinh viên
+        </ng-template>
+        <ng-template matTabContent>
+          <app-class-overview></app-class-overview>
+        </ng-template>
       </mat-tab>
 
-      <mat-tab label="Document">
-      <ng-template mat-tab-label>
-        Tài liệu tham khảo
-      </ng-template>
-      <div class="tab-content">
-        <app-ref-documents></app-ref-documents>
-      </div>
-    </mat-tab>
+    </mat-tab-group>
+  </div>
 
-      <mat-tab label="StudentList">
-      <ng-template mat-tab-label>
-        Danh sách sinh viên
-      </ng-template>
-      <div class="tab-content">
-        <app-class-overview></app-class-overview>
+  <ng-template #noCLassInfo>
+    <div class="no-class-info mt-9 flex justify-center items-center flex-col">
+      <div class="no-class-info__title text-2xl">
+        <h2>Chưa có lớp học nào</h2>
       </div>
-    </mat-tab>
+      <div class="no-class-info__content">
+        <p *ngIf="isTeacher">Vui lòng liên hệ với giáo vụ để tạo nhóm trong học kỳ này</p>
+        <p *ngIf="!isTeacher">Bạn chưa có nhóm trong học kỳ này, vui lòng đăng ký đề tài với giảng viên trước</p>
+      </div>
+    </div>
+  </ng-template>
 
-  </mat-tab-group>
 </div>
