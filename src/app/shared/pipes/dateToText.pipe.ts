@@ -22,11 +22,11 @@ export class DateToTextPipe implements PipeTransform {
     } else if (hours < 24) {
       return `${hours} giờ trước`;
     } else if (days === 1) {
-      return 'yesterday';
+      return 'hôm qua';
     } else if (days < 7) {
       return `${days} ngày trước`;
     } else if (weeks === 1) {
-      return '1 week ago';
+      return '1 tuần trước';
     } else {
       return `${weeks} tuần trước`;
     }
