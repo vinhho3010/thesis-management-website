@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Class } from 'src/app/Model/class';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
@@ -22,7 +23,7 @@ export class ClassOverviewComponent implements OnInit {
 
   loadStudentList(): void {
     this.classService.getClassInfo(this.classId as string).subscribe({
-      next: (res) => {
+      next: (res: Class) => {
         this.studentList = res.student;
         this.teacher = res.teacher;
       },

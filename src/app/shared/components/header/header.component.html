@@ -23,7 +23,7 @@
         </div>
         <span class="avatar ml-2">
           <img [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-            src="../../../../assets/picture/batman_hero_avatar_comics-512.webp" width="40px" height="40px">
+            [src]="userData.avatar ? userData.avatar : '../../../../assets/picture/default-avatar.svg'" width="40px" height="40px">
         </span>
       </div>
       <mat-menu #userMenu="matMenu" backdropClass="panel-custom">

@@ -13,4 +13,5 @@ export interface AccountInfo {
   followClass?: string;
   instructClass?: string;
   topic?: string;
+  avatar?: string;
 }

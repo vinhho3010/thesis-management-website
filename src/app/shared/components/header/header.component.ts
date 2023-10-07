@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { AccountInfo } from 'src/app/Model/account-info';
 import { AuthService } from 'src/app/services/auth.service';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
 import { ToastService } from 'src/app/services/local/toast.service';
@@ -10,7 +11,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit{
-  userData: any;
+  userData!: AccountInfo;
   isLogin = false;
 
   constructor(

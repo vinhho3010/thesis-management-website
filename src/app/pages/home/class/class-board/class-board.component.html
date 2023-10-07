@@ -1,5 +1,5 @@
-<div class="board-wrapper mx-auto">
-  <div class="class-info relative text-white w-full md:w-4/5 lg:w-1/2">
+<div class="board-wrapper mx-auto pb-6">
+  <div class="class-info relative text-white w-full md:w-4/5 lg:w-3/5">
     <div class="class-name absolute lg:bottom-7 top-7 left-7 text-3xl">
       {{className}}
     </div>
@@ -9,12 +9,12 @@
     <div class="img" src="../../../../../assets/picture/alex-shutin-kKvQJ6rK6S4-unsplash.jpg"></div>
   </div>
 
-  <div class="post-create w-full md:w-4/5 lg:w-1/2" (focusin)="isCreatePostFocused = true" tabindex="-1">
-    <form [formGroup]="createPostForm" class="p-3 mt-4 shadow-md rounded-xl border border-gray-200">
+  <div *ngIf="isTeacher" class="post-create w-full md:w-4/5 lg:w-3/5" (focusin)="isCreatePostFocused = true" tabindex="-1">
+    <form [formGroup]="createPostForm" class="p-3 mt-4 rounded-xl border border-gray-200" [class.shadow-md]="isCreatePostFocused" [class.shadow-sm]="!isCreatePostFocused">
       <div class="editor text-gray-500">
         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar" *ngIf="isCreatePostFocused">
         </ngx-editor-menu>
-        <ngx-editor [placeholder]="'Thông báo cho nhóm hướng dẫn'" [editor]="editor" formControlName="content">
+        <ngx-editor [placeholder]="'Nhập nội dung thông báo'" [editor]="editor" formControlName="content">
         </ngx-editor>
       </div>
       <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isCreatePostFocused">
@@ -30,10 +30,58 @@
     </form>
   </div>
 
-  <div class="post-list w-full mt-12">
-    <mat-card class="post-item" *ngFor="let post of postList" [class.mat-elevation-z0]="true">
-      <mat-card-content [innerHTML]="post?.content"></mat-card-content>
-      <mat-card-content class="text-gray-500 text-sm">{{  post?.createdAt | dateToText }}</mat-card-content>
+  <div class="post-list mt-8 w-full md:w-4/5 lg:w-3/5" *ngIf="postList && postList.length > 0">
+    <div class="title self-start">
+      <h2 class="text-2xl font-medium text-left text-gray-700">Bảng thông báo</h2>
+    </div>
+    <mat-card class="post-item mat-elevation-z0 shadow-sm mt-3 rounded-xl border border-gray-200 w-full" *ngFor="let post of postList">
+      <div class="flex justify-between items-start">
+        <mat-card-header>
+          <div mat-card-avatar class="rounded-full border border-gray-100 p-1">
+            <img [src]="'../../../../../assets/picture/default-avatar.svg'">
+          </div>
+          <mat-card-title>{{post?.user?.fullName}}</mat-card-title>
+          <mat-card-subtitle class="text-sm">{{  post?.createdAt | dateToText }}</mat-card-subtitle>
+        </mat-card-header>
+        <div class="action-button p-3">
+          <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl" *ngIf="isTeacher">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
+            <button mat-menu-item color="primary" (click)="onEditPost(post)">
+              <mat-icon>edit</mat-icon>
+              <span>Sửa</span>
+            </button>
+            <button mat-menu-item color="warn" (click)="onDeltePost(post)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span class="text-red-500">Xoá</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <mat-card-content *ngIf="!isEditPost || selectedEditPost?._id !== post?._id" [innerHTML]="post?.content | sanitizedHtml"></mat-card-content>
+      <mat-card-content>
+        <form *ngIf="isEditPost && selectedEditPost?._id === post?._id" [formGroup]="editPostForm" class="p-3 mt-4 rounded-xl border border-gray-200">
+          <div class="editor text-gray-500 px-3">
+            <ngx-editor-menu [editor]="editEditor" [toolbar]="toolbar" class="editor-toolbar">
+            </ngx-editor-menu>
+            <ngx-editor [placeholder]="'Nhập nội dung thông báo'" [editor]="editEditor" formControlName="content">
+            </ngx-editor>
+          </div>
+          <div class="button-wrapper flex justify-end items-center mt-3 gap-2">
+            <button mat-button color="basic" class="rounded-xl" (click)="clearEditPostForm()">Huỷ</button>
+            <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" *ngIf="!isEditLoading" (click)="onUpdatePost(post)">Cập nhật</button>
+            <button mat-flat-button color="basic" class="rounded-xl" disabled *ngIf="isEditLoading">
+              <mat-icon>
+                <mat-spinner diameter="16">
+                </mat-spinner>
+              </mat-icon>
+            </button>
+          </div>
+          </form>
+      </mat-card-content>
+      <mat-card-content class="text-gray-500 text-sm"></mat-card-content>
     </mat-card>
 
   </div>

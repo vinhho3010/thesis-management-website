@@ -12,6 +12,8 @@ import { DataTableComponent } from './components/data-table/data-table.component
 import { RolePipe } from './pipes/role.pipe';
 import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { DateToTextPipe } from './pipes/dateToText.pipe';
     SemesterPipe,
     DataTableComponent,
     RolePipe,
-    DateToTextPipe
+    DateToTextPipe,
+    SanitizedHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { DateToTextPipe } from './pipes/dateToText.pipe';
     SemesterPipe,
     RolePipe,
     NgxEditorModule,
-    DateToTextPipe
+    DateToTextPipe,
+    SanitizedHtmlPipe
   ]
 })
 export class SharedModule { }

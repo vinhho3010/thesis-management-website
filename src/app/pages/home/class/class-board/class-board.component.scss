@@ -31,14 +31,13 @@
     justify-content: center;
     align-items: center;
 
-    .post-item{
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      margin-top: 8px;
-      width: 80%;
-  }
   }
 
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
 }
 
 ::ng-deep {

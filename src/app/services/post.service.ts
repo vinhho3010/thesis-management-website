@@ -15,4 +15,12 @@ export class PostService {
   getPostByClassId(classId: string) {
     return this.http.get<any>(`/api/post/class/${classId}`);
   }
+
+  deletePost(postId: string) {
+    return this.http.delete<any>(`/api/post/${postId}`);
+  }
+
+  updatePost(postId: string, data: unknown) {
+    return this.http.put<any>(`/api/post/${postId}`, data);
+  }
 }

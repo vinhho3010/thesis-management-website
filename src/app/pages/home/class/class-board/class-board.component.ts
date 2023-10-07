@@ -5,6 +5,7 @@ import { ClassService } from 'src/app/services/class.service';
 import { Validators, Editor, Toolbar } from 'ngx-editor';
 import { PostService } from 'src/app/services/post.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 
 @Component({
   selector: 'app-class-board',
@@ -12,26 +13,29 @@ import { ToastService } from 'src/app/services/local/toast.service';
   styleUrls: ['./class-board.component.scss'],
 })
 export class ClassBoardComponent implements OnInit {
+  defaultAvatar = 'assets/picture/default-avatar.svg';
   className = '';
-  classId = this.authService.getClassInfo() ? this.authService.getClassInfo() : '';
+  classId = this.authService.getClassId() ? this.authService.getClassId() : '';
   teacher: any;
   postList = [] as any[];
+  selectedEditPost = {} as any;
 
   createPostForm: FormGroup;
+  editPostForm: FormGroup;
   editor!: Editor;
+  editEditor!: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['link', 'image'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
   isCreatePostFocused = false;
   isLoading = false;
+  isEditLoading = false;
+  isTeacher = this.authService.getRole() === RoleAccount.TEACHER;
+  isEditPost = false;
 
   constructor(
     private classService: ClassService,
@@ -45,10 +49,17 @@ export class ClassBoardComponent implements OnInit {
         Validators.required()
       ),
     });
+    this.editPostForm = new FormGroup({
+      content: new FormControl(
+        { value: '', disabled: false },
+        Validators.required()
+      ),
+    });
   }
 
   ngOnInit(): void {
     this.editor = new Editor();
+    this.editEditor = new Editor();
     this.initClassInfo();
     this.getPostListByClass();
   }
@@ -67,11 +78,16 @@ export class ClassBoardComponent implements OnInit {
     this.isCreatePostFocused = false;
   }
 
+  clearEditPostForm(): void {
+    this.editPostForm.reset();
+    this.isEditPost = false;
+  }
+
   onCreatePost(): void {
     const data = {
       content: this.createPostForm.get('content')?.value,
       class: this.classId,
-      user: this.teacher.id,
+      user: this.authService.getUser()._id,
     };
     this.isLoading = true;
     this.postService.createPost(data).subscribe({
@@ -94,6 +110,50 @@ export class ClassBoardComponent implements OnInit {
     this.postService.getPostByClassId(this.classId as string).subscribe({
       next: (res) => {
         this.postList = res;
+      },
+    });
+  }
+
+  onDeltePost(post: any): void {
+    this.toastService.confirmHandle('Bạn có chắc chắn muốn xóa thông báo này?', this.deletePostHandler.bind(this, post._id));
+  }
+
+  deletePostHandler(postId: string): void {
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Xóa bài thành công');
+        this.getPostListByClass();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  onEditPost(post: any): void {
+    this.isEditPost = true;
+    this.selectedEditPost = post;
+    this.editPostForm.get('content')?.setValue(post.content);
+  }
+
+  onUpdatePost(post: any): void {
+    const data = {
+      class: this.classId,
+      user: this.authService.getUser()?._id,
+      content: this.editPostForm.get('content')?.value,
+    };
+    this.isEditLoading = true;
+    this.postService.updatePost(post._id, data).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Cập nhật thông báo thành công');
+        this.getPostListByClass();
+        this.isEditPost = false;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+      complete: () => {
+        this.isEditLoading = false;
       },
     });
   }

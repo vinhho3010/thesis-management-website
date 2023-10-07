@@ -48,7 +48,7 @@ export class AuthService {
     return this.storageService.get(TOKEN_KEY) ? true : false;
   }
 
-  getClassInfo(){
+  getClassId(){
     return this.getUser().instructClass ? this.getUser().instructClass : this.getUser().followClass;
   }
 

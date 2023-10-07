@@ -11,6 +11,7 @@ import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 import { AddStudentToClassComponent } from '../../dialog/add-student-to-class/add-student-to-class.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Class } from 'src/app/Model/class';
 
 @Component({
   selector: 'app-class-detail',
@@ -120,7 +121,7 @@ export class ClassDetailComponent {
 
     loadClassInfo(): void {
       this.classService.getClassInfo(this.classId).subscribe({
-        next: (res) => {
+        next: (res: Class) => {
           this.initDetailData(res);
         },
         error: (err) => {

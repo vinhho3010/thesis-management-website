@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Class } from '../Model/class';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ClassService {
   }
 
   getClassInfo(id: string){
-    return this.http.get<any>(`/api/class/${id}`)
+    return this.http.get<Class>(`/api/class/${id}`)
   }
 
   getAllClass(){
