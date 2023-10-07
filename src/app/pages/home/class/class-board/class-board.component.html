@@ -10,7 +10,10 @@
   </div>
 
   <div *ngIf="isTeacher" class="post-create w-full md:w-4/5 lg:w-3/5" (focusin)="isCreatePostFocused = true" tabindex="-1">
-    <form [formGroup]="createPostForm" class="p-3 mt-4 rounded-xl border border-gray-200" [class.shadow-md]="isCreatePostFocused" [class.shadow-sm]="!isCreatePostFocused">
+    <form [formGroup]="createPostForm" class="p-3 mt-4 rounded-xl border border-gray-200"
+     [class.shadow-md]="isCreatePostFocused"
+     [class.shadow-sm]="!isCreatePostFocused"
+     [class.border-red-300]="createPostForm.dirty && createPostForm.invalid">
       <div class="editor text-gray-500">
         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar" *ngIf="isCreatePostFocused">
         </ngx-editor-menu>
@@ -18,9 +21,9 @@
         </ngx-editor>
       </div>
       <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isCreatePostFocused">
-        <button mat-button color="basic" class="rounded-xl" (click)="clearCreatePostForm()">Huỷ</button>
-        <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" *ngIf="!isLoading" (click)="onCreatePost()">Đăng bài</button>
-        <button mat-flat-button color="basic" class="rounded-xl " disabled *ngIf="isLoading">
+        <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearCreatePostForm()">Huỷ</button>
+        <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]" *ngIf="!isLoading" (click)="onCreatePost()">Đăng bài</button>
+        <button mat-flat-button color="basic" class="rounded-xl min-w-[95px]" disabled *ngIf="isLoading">
           <mat-icon>
             <mat-spinner diameter="16">
             </mat-spinner>
@@ -62,7 +65,7 @@
       </div>
       <mat-card-content *ngIf="!isEditPost || selectedEditPost?._id !== post?._id" [innerHTML]="post?.content | sanitizedHtml"></mat-card-content>
       <mat-card-content>
-        <form *ngIf="isEditPost && selectedEditPost?._id === post?._id" [formGroup]="editPostForm" class="p-3 mt-4 rounded-xl border border-gray-200">
+        <form *ngIf="isEditPost && selectedEditPost?._id === post?._id" [formGroup]="editPostForm" [class.border-red-300]="editPostForm.dirty && editPostForm.invalid" class="p-3 mt-4 rounded-xl border border-gray-200">
           <div class="editor text-gray-500 px-3">
             <ngx-editor-menu [editor]="editEditor" [toolbar]="toolbar" class="editor-toolbar">
             </ngx-editor-menu>
@@ -70,9 +73,9 @@
             </ngx-editor>
           </div>
           <div class="button-wrapper flex justify-end items-center mt-3 gap-2">
-            <button mat-button color="basic" class="rounded-xl" (click)="clearEditPostForm()">Huỷ</button>
-            <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" *ngIf="!isEditLoading" (click)="onUpdatePost(post)">Cập nhật</button>
-            <button mat-flat-button color="basic" class="rounded-xl" disabled *ngIf="isEditLoading">
+            <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearEditPostForm()">Huỷ</button>
+            <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]" *ngIf="!isEditLoading" (click)="onUpdatePost(post)">Cập nhật</button>
+            <button mat-flat-button color="basic" class="rounded-xl min-w-[95px]" disabled *ngIf="isEditLoading">
               <mat-icon>
                 <mat-spinner diameter="16">
                 </mat-spinner>

@@ -75,15 +75,22 @@ export class ClassBoardComponent implements OnInit {
 
   clearCreatePostForm(): void {
     this.createPostForm.reset();
+    this.createPostForm.markAsPristine();
     this.isCreatePostFocused = false;
   }
 
   clearEditPostForm(): void {
     this.editPostForm.reset();
+    this.editPostForm.markAsPristine();
     this.isEditPost = false;
   }
 
   onCreatePost(): void {
+    if(this.createPostForm.invalid) {
+      this.createPostForm.markAsDirty();
+      this.toastService.showErrorToast('Vui lòng nhập nội dung');
+      return;
+    };
     const data = {
       content: this.createPostForm.get('content')?.value,
       class: this.classId,
@@ -121,7 +128,7 @@ export class ClassBoardComponent implements OnInit {
   deletePostHandler(postId: string): void {
     this.postService.deletePost(postId).subscribe({
       next: () => {
-        this.toastService.showSuccessToast('Xóa bài thành công');
+        this.toastService.showSuccessToast('Xóa thông báo thành công');
         this.getPostListByClass();
       },
       error: (err) => {
@@ -137,6 +144,11 @@ export class ClassBoardComponent implements OnInit {
   }
 
   onUpdatePost(post: any): void {
+    if(this.editPostForm.invalid) {
+      this.editPostForm.markAsDirty();
+      this.toastService.showErrorToast('Nội dung không được để trống');
+      return;
+    };
     const data = {
       class: this.classId,
       user: this.authService.getUser()?._id,
@@ -145,6 +157,7 @@ export class ClassBoardComponent implements OnInit {
     this.isEditLoading = true;
     this.postService.updatePost(post._id, data).subscribe({
       next: () => {
+        this.clearEditPostForm();
         this.toastService.showSuccessToast('Cập nhật thông báo thành công');
         this.getPostListByClass();
         this.isEditPost = false;
