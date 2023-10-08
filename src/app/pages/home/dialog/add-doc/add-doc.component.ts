@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FileUpload } from 'src/app/Model/fileUpload';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
   selector: 'app-add-doc',
@@ -19,7 +21,7 @@ export class AddDocComponent {
 
   addRefDocForm: FormGroup;
 
-  constructor(private firebaseService: FirebaseService) {
+  constructor(private firebaseService: FirebaseService, private refDialog: MatDialogRef<AddDocComponent>, private toastService: ToastService) {
     this.addRefDocForm = new FormGroup({
       type: new FormControl(''),
       fileName: new FormControl(''),
@@ -42,16 +44,17 @@ export class AddDocComponent {
 
       if (file) {
         this.currentFileUpload = new FileUpload(file);
-        this.firebaseService.pushFileToStorage(this.currentFileUpload).subscribe({
-          next: (percentage) => {
+        this.firebaseService.addDocForClass(this.currentFileUpload).subscribe({
+          next: (percentage: any) => {
             this.percentage = Math.round(percentage ? percentage : 0);
           },
-          error: (err) => {
-            console.log(err);
+          error: (err: any) => {
+            this.toastService.showErrorToast(err.error.message);
           },
           complete: () => {
             this.isShowLoading = false;
             this.uploadSuccess = true;
+            this.refDialog.close();
           }
         });
       }

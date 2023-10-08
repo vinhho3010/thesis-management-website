@@ -19,18 +19,22 @@
       <div class="docs-header">
         Tag 1
       </div>
-      <mat-card class="docs-item" *ngFor="let refDoc of refDocsList" [class.mat-elevation-z0]="true" >
-        <mat-card-content class="text-gray-600">{{refDoc.title}}</mat-card-content>
-        <mat-card-content class="text-gray-500 text-m">{{refDoc.createdAt | dateToText}}</mat-card-content>
+      <mat-card class="docs-item flex item-center justify-between flex-row" *ngFor="let refDoc of refDocsList" [class.mat-elevation-z0]="true" >
+        <div class="">
+          <mat-card-content class="text-gray-600 font-medium">{{refDoc.title}}</mat-card-content>
+        <mat-card-content class="text-gray-500 text-sm">{{refDoc.createdAt | dateToText}}</mat-card-content>
+        </div>
 
         <mat-card-actions class="docs-item__action flex justify-end items-center">
-          <button mat-button color="accent" class="rounded-xl" (click)="downloadDoc.click()">
-            <span>Tải xuống</span>
+          <button mat-icon-button color="accent" class="rounded-xl" matTooltip="Xoá tài liệu" (click)="onDeleteDoc(refDoc)">
+            <mat-icon color="accent">delete</mat-icon>
           </button>
-          <button mat-button color="primary" class="rounded-xl" (click)="docDetail.click()">
-            <span>Xem chi tiết</span>
+          <button mat-icon-button color="accent" class="rounded-xl" matTooltip="Tải xuống" (click)="downloadDoc.click()">
+            <mat-icon color="accent">save_alt</mat-icon>
           </button>
-
+          <button mat-icon-button color="primary" class="rounded-xl" matTooltip="Xem tài liệu" (click)="docDetail.click()">
+            <mat-icon color="primary">keyboard_arrow_right</mat-icon>
+          </button>
           <a #docDetail class="hidden" target="_blank" rel="noopener noreferrer" [href]="refDoc.url"></a>
           <a #downloadDoc class="hidden" [href]="refDoc.url" download></a>
         </mat-card-actions>

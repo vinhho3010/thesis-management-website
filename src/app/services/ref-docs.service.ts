@@ -22,4 +22,8 @@ export class RefDocsService {
   getDocsForClass(classId: string) {
     return this.http.get(`/api/ref-docs/class/${classId}`);
   }
+
+  deleteDocForClass(docId: string) {
+    return this.http.delete(`/api/ref-docs/${docId}`);
+  }
 }
