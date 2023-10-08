@@ -1,20 +1,32 @@
-<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
+<div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
   <div class="min-h-[100px] flex justify-center items-center border-b-[1px] border-gray-400 px-2 mb-2">
     <div class="upload-field">
       <input type="file" class="hidden" (change)="onFileSelected($event)" #fileUpload>
-      <button mat-flat-button color="primary" class="py-7 px-8 rounded-xl" (click)="fileUpload.click()">
+      <button mat-flat-button color="primary" class="py-7 px-6 rounded-xl max-w-xs"
+       (click)="fileUpload.click()"
+       [matTooltip]="fileName"
+       [matTooltipDisabled]="!fileName">
         <mat-icon>insert_drive_file_outline</mat-icon>
-        <span class="line-clamp-1">{{fileName ? fileName : "Chọn tập tin"}}</span>
+        <span class="line-clamp-1 max-w-[250px]">{{fileName ? fileName : "Chọn tập tin"}}</span>
       </button>
     </div>
   </div>
   <div class="flex justify-center items-center flex-col">
-    <mat-progress-bar *ngIf="isShowLoading" class="w-1/2" mode="determinate" [value]="percentage"></mat-progress-bar>
+    <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
+      <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate" [value]="percentage"></mat-progress-bar>
+      <span class="ml-2 font-medium">{{percentage}}%</span>
+    </div>
     <div *ngIf="!isShowLoading && uploadSuccess" class="">
       Tập tin tải lên thành công
     </div>
     <div class="flex justify-end items-center w-full">
-      <button mat-flat-button color="primary" (click)="upload()">Upload</button>
+      <button mat-button color="basic" class="rounded-xl mr-2 py-5 px-6" mat-dialog-close>
+        <span>Hủy</span>
+      </button>
+      <button mat-flat-button color="primary" class="rounded-xl shadow-md py-5 px-6" (click)="upload()" [disabled]="uploadSuccess">
+        <mat-icon>upload</mat-icon>
+        <span>Tải lên</span>
+      </button>
     </div>
   </div>
 

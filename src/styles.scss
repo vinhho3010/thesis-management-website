@@ -11,6 +11,7 @@
 $thesis-management-website-primary: mat.define-palette(mat.$indigo-palette, A700, A200, A100);
 $thesis-management-website-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $thesis-management-website-warn: mat.define-palette(mat.$red-palette, A400);
+$thesis-management-website-success: mat.define-palette(mat.$green-palette, A400);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -19,6 +20,7 @@ $thesis-management-website-theme: mat.define-light-theme((
     primary: $thesis-management-website-primary,
     accent: $thesis-management-website-accent,
     warn: $thesis-management-website-warn,
+    success: $thesis-management-website-success,
   )
 ));
 

@@ -8,7 +8,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" class="rounded-xl px-6 py-6 bg-blue-600" (click)="onAddDoc()">
+    <button *ngIf="isTeacher" mat-raised-button color="primary" class="rounded-xl px-6 py-6 bg-blue-600" (click)="onAddDoc()">
       <mat-icon>add</mat-icon>
       <span>Thêm tài liệu</span>
     </button>
@@ -19,19 +19,23 @@
       <div class="docs-header">
         Tag 1
       </div>
-      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
-        <mat-card-content>Ngày mai nghỉ</mat-card-content>
-        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
+      <mat-card class="docs-item" *ngFor="let refDoc of refDocsList" [class.mat-elevation-z0]="true" >
+        <mat-card-content class="text-gray-600">{{refDoc.title}}</mat-card-content>
+        <mat-card-content class="text-gray-500 text-m">{{refDoc.createdAt | dateToText}}</mat-card-content>
+
+        <mat-card-actions class="docs-item__action flex justify-end items-center">
+          <button mat-button color="accent" class="rounded-xl" (click)="downloadDoc.click()">
+            <span>Tải xuống</span>
+          </button>
+          <button mat-button color="primary" class="rounded-xl" (click)="docDetail.click()">
+            <span>Xem chi tiết</span>
+          </button>
+
+          <a #docDetail class="hidden" target="_blank" rel="noopener noreferrer" [href]="refDoc.url"></a>
+          <a #downloadDoc class="hidden" [href]="refDoc.url" download></a>
+        </mat-card-actions>
       </mat-card>
     </div>
-    <div class="docs-item-wrapper w-full">
-      <div class="docs-header">
-        Tag 1
-      </div>
-      <mat-card class="docs-item" *ngFor="let i of [1,2,3,4,5,6,7]" [class.mat-elevation-z0]="true" >
-        <mat-card-content>Ngày mai nghỉ</mat-card-content>
-        <mat-card-content class="text-gray-500 text-m">Hôm qua</mat-card-content>
-      </mat-card>
-    </div>
+
   </div>
 </div>

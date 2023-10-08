@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FileUpload } from 'src/app/Model/fileUpload';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-add-doc',
   templateUrl: './add-doc.component.html',
-  styleUrls: ['./add-doc.component.scss']
+  styleUrls: ['./add-doc.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddDocComponent {
   fileName = '';
@@ -15,8 +17,14 @@ export class AddDocComponent {
   isShowLoading = false;
   uploadSuccess = false;
 
-  constructor(private firebaseService: FirebaseService) {
+  addRefDocForm: FormGroup;
 
+  constructor(private firebaseService: FirebaseService) {
+    this.addRefDocForm = new FormGroup({
+      type: new FormControl(''),
+      fileName: new FormControl(''),
+      file: new FormControl({}),
+    });
    }
 
   onFileSelected(event: any) {
