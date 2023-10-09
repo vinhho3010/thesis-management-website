@@ -18,6 +18,7 @@ import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
 import { RegisterTopicDialogComponent } from 'src/app/pages/home/dialog/register-topic/register-topic.component';
+import { RefDocTypesComponent } from 'src/app/pages/home/class/ref-doc-types/ref-doc-types.component';
 
 
 
@@ -39,7 +40,8 @@ import { RegisterTopicDialogComponent } from 'src/app/pages/home/dialog/register
     ProcessComponent,
     RegisterTopicComponent,
     MyThesisComponent,
-    RegisterTopicDialogComponent
+    RegisterTopicDialogComponent,
+    RefDocTypesComponent,
   ],
   imports: [
     CommonModule,

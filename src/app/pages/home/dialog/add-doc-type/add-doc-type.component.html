@@ -1,0 +1,59 @@
+<div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
+  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Thêm loại tài liệu</h1>
+  <div class="w-full flex flex-col justify-center items-start">
+    <mat-form-field class="w-full">
+      <mat-label>Chủ đề tài liệu</mat-label>
+      <input type="text" matInput [formControl]="typeName" placeholder="Nhập tên loại">
+    </mat-form-field>
+  </div>
+  <!-- <div class="min-h-[100px] flex justify-center items-center border-b-[1px] border-gray-400 px-2 mb-2">
+    <div class="upload-field">
+      <input type="file" class="hidden" (change)="onFileSelected($event)" #fileUpload>
+      <button mat-flat-button color="primary" class="py-7 px-6 rounded-xl max-w-xs"
+        (click)="fileUpload.click()"
+        [matTooltip]="fileName"
+        [matTooltipDisabled]="!fileName">
+        <mat-icon>insert_drive_file_outline</mat-icon>
+        <span class="line-clamp-1 max-w-[250px]">{{fileName ? fileName : "Chọn tập tin"}}</span>
+      </button>
+    </div>
+  </div> -->
+
+  <div class="">
+    <div class="upload-field w-full flex justify-start items-center bg-gray-100 rounded-xl p-2">
+      <input type="file" class="hidden" (change)="onFileSelected($event)" #fileUpload>
+      <button mat-flat-button color="primary" class="py-6 px-6 rounded-xl max-w-xs"
+        (click)="fileUpload.click()"
+        [matTooltip]="fileName"
+        [matTooltipDisabled]="!fileName">
+        <mat-icon>insert_drive_file_outline</mat-icon>
+        <span>Chọn tập tin</span>
+      </button>
+      <span class="line-clamp-1 ml-2">{{fileName ? fileName : "Chưa có tập tin nào được chọn"}}</span>
+    </div>
+  </div>
+  <div class="flex justify-center items-center flex-col">
+    <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
+      <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate" [value]="percentage"></mat-progress-bar>
+      <span class="ml-2 font-medium">{{percentage}}%</span>
+    </div>
+    <div *ngIf="!isShowLoading && uploadSuccess" class="text-gray-600 text-base">
+      Tập tin tải lên thành công
+    </div>
+    <div class="flex justify-end items-center w-full mt-2">
+      <button mat-button color="basic" class="rounded-xl mr-2 py-5 px-6" mat-dialog-close>
+        <span>Hủy</span>
+      </button>
+      <button *ngIf="!isShowLoading" mat-flat-button color="primary" class="rounded-xl shadow-md py-5 px-6 min-w-[100px]" (click)="onSubmit()">
+        <mat-icon>add</mat-icon>
+        <span>Tạo</span>
+      </button>
+      <button *ngIf="isShowLoading" mat-flat-button color="primary" class="rounded-xl shadow-md py-5 px-6 min-w-[100px]" [disabled]="true">
+        <mat-icon class="ml-1">
+          <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

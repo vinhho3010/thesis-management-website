@@ -3,9 +3,9 @@
     <div class="upload-field">
       <input type="file" class="hidden" (change)="onFileSelected($event)" #fileUpload>
       <button mat-flat-button color="primary" class="py-7 px-6 rounded-xl max-w-xs"
-       (click)="fileUpload.click()"
-       [matTooltip]="fileName"
-       [matTooltipDisabled]="!fileName">
+        (click)="fileUpload.click()"
+        [matTooltip]="fileName"
+        [matTooltipDisabled]="!fileName">
         <mat-icon>insert_drive_file_outline</mat-icon>
         <span class="line-clamp-1 max-w-[250px]">{{fileName ? fileName : "Chọn tập tin"}}</span>
       </button>
@@ -19,7 +19,7 @@
     <div *ngIf="!isShowLoading && uploadSuccess" class="">
       Tập tin tải lên thành công
     </div>
-    <div class="flex justify-end items-center w-full">
+    <div class="flex justify-end items-center w-full mt-2">
       <button mat-button color="basic" class="rounded-xl mr-2 py-5 px-6" mat-dialog-close>
         <span>Hủy</span>
       </button>

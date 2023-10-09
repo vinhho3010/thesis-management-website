@@ -21,8 +21,8 @@ export class FirebaseService {
     private toastService: ToastService
     ) { }
 
-  addDocForClass(fileUpload: FileUpload): any {
-    return this.pushFileToStorage(fileUpload, this.saveFileDataToRefDoc.bind(this, fileUpload));
+  addDocForClass(fileUpload: FileUpload, typeId:string): any {
+    return this.pushFileToStorage(fileUpload, this.saveFileDataToRefDoc.bind(this, fileUpload, typeId));
   }
 
   pushFileToStorage(fileUpload: FileUpload, storeUrlFile: Function): Observable<number | undefined> {
@@ -41,10 +41,10 @@ export class FirebaseService {
     ).subscribe();
 
     return uploadTask.percentageChanges();
-  }
+}
 
-  private saveFileDataToRefDoc(fileUpload: FileUpload): void {
-    this.refDocsService.createDocForClass(fileUpload).subscribe({
+  private saveFileDataToRefDoc(fileUpload: FileUpload, typeId: string): void {
+    this.refDocsService.createDocForClass(fileUpload, typeId).subscribe({
       next: (res) => {
         this.toastService.showSuccessToast('Upload file thành công');
       },
@@ -59,11 +59,14 @@ export class FirebaseService {
       ref.limitToLast(numberItems));
   }
 
-  deleteFile(fileUpload: any): void {
+  deleteFile(fileUpload: any, reloadCallback?: Function): void {
     this.refDocsService.deleteDocForClass(fileUpload._id as string).subscribe({
       next: (res) => {
         this.deleteFileStorage(fileUpload.title);
         this.toastService.showSuccessToast('Xóa file thành công');
+        if(reloadCallback){
+          reloadCallback();
+        }
       },
       error: (err) => {
         this.toastService.showErrorToast('Xóa file thất bại');

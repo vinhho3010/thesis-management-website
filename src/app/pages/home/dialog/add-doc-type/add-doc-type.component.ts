@@ -1,43 +1,43 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { FileUpload } from 'src/app/Model/fileUpload';
+import { ClassService } from 'src/app/services/class.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { RefDocsService } from 'src/app/services/ref-docs.service';
 
 @Component({
-  selector: 'app-add-doc',
-  templateUrl: './add-doc.component.html',
-  styleUrls: ['./add-doc.component.scss'],
+  selector: 'app-add-doc-type',
+  templateUrl: './add-doc-type.component.html',
+  styleUrls: ['./add-doc-type.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AddDocComponent {
+export class AddDocTypeComponent {
   fileName = '';
   percentage = 0;
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
   isShowLoading = false;
   uploadSuccess = false;
+  typeName: FormControl = new FormControl('', [Validators.required]);
+  typeId = '';
 
   addRefDocForm: FormGroup;
-  route: ActivatedRoute;
-  typeId = '';
 
   constructor(
     private firebaseService: FirebaseService,
-    private refDialog: MatDialogRef<AddDocComponent>,
+    private refDialog: MatDialogRef<AddDocTypeComponent>,
     private toastService: ToastService,
-    @Inject(MAT_DIALOG_DATA) data: {route: ActivatedRoute}
+    private refDocService: RefDocsService,
+    private route: ActivatedRoute
   ) {
     this.addRefDocForm = new FormGroup({
       type: new FormControl(''),
       fileName: new FormControl(''),
       file: new FormControl({}),
     });
-
-    this.route = data.route;
-    this.typeId = this.route.snapshot.paramMap.get('typeId') as string;
   }
 
   onFileSelected(event: any) {
@@ -48,6 +48,10 @@ export class AddDocComponent {
   }
 
   upload(): void {
+    if (!this.typeName.value) {
+      this.toastService.showErrorToast('Vui lòng nhập tên loại tài liệu');
+      return;
+    }
     this.isShowLoading = true;
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
@@ -65,11 +69,36 @@ export class AddDocComponent {
               this.toastService.showErrorToast(err.error.message);
             },
             complete: () => {
-              this.isShowLoading = false;
+              this.resetForm();
               this.uploadSuccess = true;
             },
           });
       }
     }
+  }
+
+  onSubmit() {
+    this.refDocService.createDocTypeForClass(this.typeName.value).subscribe({
+      next: (res: any) => {
+        this.typeId = res._id;
+        if (this.selectedFiles) {
+          this.upload();
+        } else {
+          this.toastService.showSuccessToast('Thêm loại tài liệu thành công');
+          this.refDialog.close();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  resetForm() {
+    this.fileName = '';
+    this.percentage = 0;
+    this.selectedFiles = undefined;
+    this.currentFileUpload = undefined;
+    this.isShowLoading = false;
   }
 }

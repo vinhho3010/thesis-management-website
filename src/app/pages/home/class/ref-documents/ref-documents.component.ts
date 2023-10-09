@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ref-documents',
@@ -15,32 +16,40 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class RefDocumentsComponent implements OnInit {
   classId = this.authService.getClassId() ? this.authService.getClassId() : '';
   isTeacher = this.authService.getRole() === RoleAccount.TEACHER;
+  typeId = '';
   refDocsList = [] as any[];
+  docType: any;
 
   constructor(
     private dialog: MatDialog,
     private refDocsService: RefDocsService,
     private authService: AuthService,
     private toastService: ToastService,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.typeId = this.route.snapshot.paramMap.get('typeId') as string;
     this.getRefDocs();
+    this.loadType();
   }
 
   onAddDoc() {
-    this.dialog.open(AddDocComponent).afterClosed().subscribe({
+    const dialogConfig = {
+      data: {
+        route: this.route
+      }
+    }
+    this.dialog.open(AddDocComponent, dialogConfig).afterClosed().subscribe({
       next: (res: any) => {
-        setTimeout(() => {
-          this.getRefDocs();
-        }, 200 );
+        this.getRefDocs();
       },
     });
   }
 
   getRefDocs() {
-    this.refDocsService.getDocsForClass(this.classId as string).subscribe({
+    this.refDocsService.getDocsOfType(this.typeId).subscribe({
       next: (res: any) => {
         this.refDocsList = res;
       },
@@ -51,8 +60,17 @@ export class RefDocumentsComponent implements OnInit {
   }
 
   onDeleteDoc(doc: any) {
-    this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn xóa tài liệu này?', this.firebaseService.deleteFile.bind(this.firebaseService, doc)).then(() => {
-      this.getRefDocs();
+    this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn xóa tài liệu này?', this.firebaseService.deleteFile.bind(this.firebaseService, doc, this.getRefDocs.bind(this)));
+  }
+
+  loadType() {
+    this.refDocsService.getType(this.typeId).subscribe({
+      next: (res: any) => {
+        this.docType = res;
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
     });
   }
 }

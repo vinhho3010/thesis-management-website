@@ -10,6 +10,7 @@ import { StudentListComponent } from 'src/app/pages/home/student-list/student-li
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
+import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'my-thesis',
         component: MyThesisComponent
+      },
+      {
+        path: 'class/documents/type/:typeId',
+        component: RefDocumentsComponent
       }
 
     ]
