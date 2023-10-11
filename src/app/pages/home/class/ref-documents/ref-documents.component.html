@@ -1,6 +1,6 @@
 <div class="document-wrapper max-w-5xl mx-auto">
   <div class="filter-wrapper w-full flex justify-between items-center pr-3 pt-4">
-    <div class="text-2xl font-medium text-blue-600">
+    <div class="text-3xl font-medium text-blue-600">
       {{docType?.name}}
     </div>
     <button *ngIf="isTeacher" mat-raised-button color="primary" class="rounded-xl px-6 py-6 bg-blue-600" (click)="onAddDoc()">
@@ -9,15 +9,19 @@
     </button>
   </div>
 
-  <div *ngIf="refDocsList && refDocsList.length > 0; else emptyRefDocs" class="docs-list w-full flex justify-start flex-col">
+  <div class="text-2xl mt-8 text-blue-600 w-full text-left">
+    Danh sách tài liệu
+  </div>
+
+  <div *ngIf="refDocsList && refDocsList.length > 0; else emptyRefDocs" class="docs-list w-full flex justify-start flex-col mt-3">
     <div class="docs-item-wrapper w-full">
       <mat-card class="docs-item flex item-center justify-between flex-row" *ngFor="let refDoc of refDocsList" [class.mat-elevation-z0]="true" >
-        <div class="">
-          <mat-card-content class="text-gray-600 font-medium">{{refDoc.title}}</mat-card-content>
-        <mat-card-content class="text-gray-500 text-sm">{{refDoc.createdAt | dateToText}}</mat-card-content>
+        <div class="p-3 flex flex-col items-start">
+          <p class="text-gray-600 font-medium line-clamp-1">{{refDoc.title}}</p>
+          <span class="text-gray-500 text-sm">{{refDoc.createdAt | dateToText}}</span>
         </div>
 
-        <mat-card-actions class="docs-item__action flex justify-end items-center">
+        <div class="docs-item__action flex justify-end items-center">
           <button *ngIf="isTeacher" mat-icon-button color="accent" class="rounded-xl" matTooltip="Xoá tài liệu" (click)="onDeleteDoc(refDoc)">
             <mat-icon color="accent">delete</mat-icon>
           </button>
@@ -26,7 +30,7 @@
           </button>
           <a #docDetail class="hidden" target="_blank" rel="noopener noreferrer" [href]="refDoc.url"></a>
           <a #downloadDoc class="hidden" [href]="refDoc.url" download></a>
-        </mat-card-actions>
+        </div>
       </mat-card>
     </div>
   </div>

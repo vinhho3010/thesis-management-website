@@ -1,0 +1,21 @@
+<div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[30vw]">
+  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Cập nhật tên chủ đề</h1>
+  <div class="w-full flex flex-col justify-center items-start">
+    <mat-form-field class="w-full">
+      <mat-label>Chủ đề tài liệu</mat-label>
+      <input type="text" matInput [formControl]="typeName" placeholder="Nhập tên loại">
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-center items-center flex-col">
+    <div class="flex justify-end items-center w-full mt-2">
+      <button mat-button color="basic" class="rounded-xl mr-2 py-5 px-6" mat-dialog-close>
+        <span>Hủy</span>
+      </button>
+      <button mat-flat-button color="primary" class="rounded-xl shadow-md py-5 px-6 min-w-[100px]" (click)="onSubmit()">
+        <span>Cập nhật</span>
+      </button>
+    </div>
+  </div>
+
+</div>

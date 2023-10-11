@@ -44,6 +44,13 @@ export class RefDocsService {
     return this.http.post(`/api/ref-docs/class/${this.authService.getClassId()}/type`, data);
   }
 
+  updateDocType(docId: string, docTypeName: string) {
+    const data = {
+      name: docTypeName
+    }
+    return this.http.put(`/api/ref-docs/class/type/${docId}`, data);
+  }
+
   deleteDocType(docId: string) {
     return this.http.delete(`/api/ref-docs/class/type/${docId}`);
   }

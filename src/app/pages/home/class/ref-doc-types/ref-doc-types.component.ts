@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { RefDocsService } from 'src/app/services/ref-docs.service';
 import { AddDocTypeComponent } from '../../dialog/add-doc-type/add-doc-type.component';
 import { Router } from '@angular/router';
+import { EditTypeNameComponent } from '../../dialog/edit-type-name/edit-type-name.component';
 
 @Component({
   selector: 'app-ref-doc-types',
@@ -51,15 +52,45 @@ export class RefDocTypesComponent {
     });
   }
 
-  onDeleteDoc(event: any, docType: any) {
+  onDeleteDocType(event: any, docType: any) {
     event.stopPropagation();
-   this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn xóa tài liệu này?', this.deleteDocTypeHandle.bind(this, docType));
+   this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn xóa chủ đề này?', this.deleteDocTypeHandle.bind(this, docType));
+  }
+
+  onEditDocTypeName(event: any, docType: any) {
+    event.stopPropagation();
+    const dialogConfig = {
+      data: {
+        docType: docType,
+      },
+    };
+    this.dialog.open(EditTypeNameComponent, dialogConfig).afterClosed().subscribe({
+      next: (res: any) => {
+        const docTypeRes = res
+
+        if(docTypeRes.name === docType.name) return;
+        this.editDocTypeHandle(docTypeRes);
+        this.getRefDocsType();
+      },
+    });
   }
 
   deleteDocTypeHandle(docType: any) {
     this.refDocsService.deleteDocType(docType._id).subscribe({
       next: (res: any) => {
-        this.toastService.showSuccessToast('Xóa loại tài liệu thành công');
+        this.toastService.showSuccessToast('Xóa chủ đề tài liệu thành công');
+        this.getRefDocsType();
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  editDocTypeHandle(docType: any) {
+    this.refDocsService.updateDocType(docType._id, docType.name).subscribe({
+      next: (res: any) => {
+        this.toastService.showSuccessToast('Sửa tên chủ đề tài liệu thành công');
         this.getRefDocsType();
       },
       error: (err: any) => {

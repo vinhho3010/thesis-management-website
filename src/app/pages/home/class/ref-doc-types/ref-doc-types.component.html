@@ -1,36 +1,46 @@
 <div class="document-wrapper max-w-5xl mx-auto">
-  <div class="filter-wrapper w-full flex justify-between items-center pr-3 pt-4">
-    <mat-form-field appearance="outline" class="lg:w-1/3 w-1/2">
-      <mat-label>Chủ đề tài liệu</mat-label>
-      <mat-select panelClass="panel-custom">
-        <mat-option *ngFor="let food of [1, 2, 3, 4,45,5]" [value]="food">
-          {{food}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button *ngIf="isTeacher" mat-raised-button color="primary" class="rounded-xl px-6 py-6 bg-blue-600" (click)="onAddDoc()">
+  <div class="filter-wrapper w-full flex justify-between items-center flex-col md:flex-col lg:flex-row pr-3 pt-4 mt-3">
+    <span class="text-3xl text-blue-600">
+      Danh sách chủ đề
+    </span>
+    <button *ngIf="isTeacher" mat-raised-button color="primary" class="rounded-xl mt-3 lg:mt-0 px-6 py-6 bg-blue-600" (click)="onAddDoc()">
       <mat-icon>add</mat-icon>
       <span>Thêm chủ đề tài liệu</span>
     </button>
   </div>
 
-  <div *ngIf="refDocsTypeList && refDocsTypeList.length > 0; else emptyRefDocs" class="docs-list w-full flex justify-start flex-col">
+  <div *ngIf="refDocsTypeList && refDocsTypeList.length > 0; else emptyRefDocs"
+        class="docs-list mt-4 w-full flex justify-start flex-col">
     <div class="docs-typ-item-wrapper w-full">
-      <mat-card class="docs-type-item flex item-center justify-between flex-row hover:bg-gray-100 cursor-pointer"
-       *ngFor="let refTypeDoc of refDocsTypeList"
-        [class.mat-elevation-z0]="true"
+      <div
+        class="docs-type-item cursor-pointer mt-4 border-b-2 rounded-t-lg border-blue-700 hover:bg-blue-50"
+        *ngFor="let refTypeDoc of refDocsTypeList" [class.mat-elevation-z0]="true"
         (click)="handleClickNavigate(refTypeDoc)">
-        <div class="">
-          <mat-card-content class="text-gray-600 font-medium">{{refTypeDoc.name}}</mat-card-content>
-        <mat-card-content class="text-gray-500 text-sm">{{'Đã tạo '}} {{refTypeDoc.createdAt | dateToText}}</mat-card-content>
-        </div>
+        <div class="p-3 flex item-center justify-between">
+          <div class="">
+            <div class="text-blue-600 font-light text-2xl">{{refTypeDoc.name}}</div>
+            <div class="text-gray-500 text-xs">{{'Đã tạo '}} {{refTypeDoc.createdAt | dateToText}}</div>
+          </div>
 
-        <mat-card-actions class="docs-item__action flex justify-end items-center">
-          <button *ngIf="isTeacher" mat-icon-button color="accent" class="rounded-xl" matTooltip="Xoá tài liệu" (click)="onDeleteDoc($event, refTypeDoc)">
-            <mat-icon color="accent">delete</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+          <div class="docs-item__action flex justify-end items-center">
+            <button *ngIf="isTeacher" [matMenuTriggerFor]="docMenu" mat-icon-button color="basic" class="rounded-xl" (click)="$event.stopPropagation()">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu class="mt-1 rounded-xl" #docMenu="matMenu" xPosition="before">
+              <button mat-menu-item color="primary" (click)="onEditDocTypeName($event, refTypeDoc)">
+                <mat-icon>edit</mat-icon>
+                <span>Sửa tên chủ đề</span>
+              </button>
+              <button mat-menu-item color="warn" class="rounded-xl"
+              (click)="onDeleteDocType($event, refTypeDoc)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span class="text-red-500">Xoá chủ đề</span>
+            </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

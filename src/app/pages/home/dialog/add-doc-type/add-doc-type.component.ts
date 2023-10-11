@@ -71,6 +71,7 @@ export class AddDocTypeComponent {
             complete: () => {
               this.resetForm();
               this.uploadSuccess = true;
+              this.refDialog.close();
             },
           });
       }
@@ -95,6 +96,7 @@ export class AddDocTypeComponent {
   }
 
   resetForm() {
+    this.addRefDocForm.reset();
     this.fileName = '';
     this.percentage = 0;
     this.selectedFiles = undefined;
