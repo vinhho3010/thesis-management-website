@@ -34,8 +34,6 @@ export class RegisterTopicComponent implements OnInit {
   ngOnInit(): void {
     this.loadMajorList();
     this.loadRegisterd();
-    console.log(this.pendingRequest);
-
   }
 
   loadMajorList(){
@@ -66,8 +64,6 @@ export class RegisterTopicComponent implements OnInit {
     this.classService.getPendingRequestOfStudent(this.authService.getUser()._id).subscribe({
       next: (res) => {
         this.pendingRequest = res;
-        console.log(this.pendingRequest);
-
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -101,6 +97,8 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onRegisterTopic(teacher: any){
+    console.log(teacher);
+
    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
         teacher: teacher,
@@ -117,6 +115,7 @@ export class RegisterTopicComponent implements OnInit {
           classId: teacher?.instructClass,
           type: result?.type,
           topic: result?.topic,
+          topicEng: result?.topicEng,
           description: result.description,
           semester: result.semester,
           schoolYear: result.schoolYear
@@ -136,6 +135,8 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onEditTopic(pending: any){
+    console.log(pending);
+
     const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
         teacher: pending.class.teacher,
@@ -153,6 +154,7 @@ export class RegisterTopicComponent implements OnInit {
           classId: pending.class._id,
           type: result?.type,
           topic: result?.topic,
+          topicEng: result?.topicEng,
           description: result.description,
           semester: result.semester,
           schoolYear: result.schoolYear

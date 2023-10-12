@@ -3,6 +3,7 @@ export interface registerToClassData {
   classId: string;
   type: string;
   topic: string;
+  topicEng: string;
   status?: boolean;
   description?: string;
   semester?: string;

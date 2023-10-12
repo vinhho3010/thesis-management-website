@@ -26,7 +26,7 @@
         <td mat-cell *matCellDef="let row" class="text-center">
           <div class="flex items-center justify-start">
             {{row.topic}}
-            <mat-icon>remove_red_eye</mat-icon>
+
           </div>
         </td>
       </ng-container>
@@ -34,6 +34,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
         <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="accent" (click)="onViewDetail(row)"><mat-icon>remove_red_eye</mat-icon></button>
           <button mat-icon-button color="primary" (click)="onApprovePending(row)"><mat-icon>check</mat-icon></button>
           <button mat-icon-button color="warn" (click)="onRejectPending(row)"><mat-icon>close</mat-icon></button>
         </td>

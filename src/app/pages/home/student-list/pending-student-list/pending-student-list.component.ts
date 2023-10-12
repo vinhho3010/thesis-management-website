@@ -4,6 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { RegisterTopicComponent } from '../../register-topic/register-topic.component';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterTopicDialogComponent } from '../../dialog/register-topic/register-topic.component';
 
 @Component({
   selector: 'app-pending-student-list',
@@ -15,7 +18,7 @@ export class PendingStudentListComponent {
   displayedColumns: string[] = ['studentCode', 'fullName', 'class', 'topic', 'actions'];
   dataSource = new MatTableDataSource([]);
 
-  constructor(private classService: ClassService, private authService: AuthService, private toastService: ToastService) { }
+  constructor(private classService: ClassService, private authService: AuthService, private toastService: ToastService, private dialog: MatDialog) { }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -68,13 +71,25 @@ export class PendingStudentListComponent {
     })
   }
 
+  onViewDetail(row: any): void {
+    console.log(row);
+
+    const dialogConfig = {
+      data: {
+        ...row,
+        isTeacherViewDetail: true
+      }
+    }
+    this.dialog.open(RegisterTopicDialogComponent, dialogConfig)
+  }
+
   loadPendingStudentList(){
     this.classService.getPendingStudents(this.authService.getUser().instructClass as string).subscribe({
       next: (res) => {
         this.dataSource.data = this.standardizeData(res);
       },
       error: (err) => {
-        console.log(err);
+        this.toastService.showErrorToast(err.error.message);
       }
     })
   }
