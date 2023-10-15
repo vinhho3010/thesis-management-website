@@ -66,11 +66,13 @@ export class RefDocTypesComponent {
     };
     this.dialog.open(EditTypeNameComponent, dialogConfig).afterClosed().subscribe({
       next: (res: any) => {
-        const docTypeRes = res
+        if(res) {
+          const docTypeRes = res
 
-        if(docTypeRes.name === docType.name) return;
-        this.editDocTypeHandle(docTypeRes);
-        this.getRefDocsType();
+          if(docTypeRes.name === docType.name) return;
+          this.editDocTypeHandle(docTypeRes);
+          this.getRefDocsType();
+        }
       },
     });
   }

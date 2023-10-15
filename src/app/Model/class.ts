@@ -1,6 +1,8 @@
 import { AccountInfo } from "./account-info";
+import { Major } from "./major.model";
 
 export interface Class {
+  _id: string;
   name: string;
   student: AccountInfo[];
   teacher: AccountInfo;
@@ -8,6 +10,6 @@ export interface Class {
   thesisList?: string[];
   semester: string;
   schoolYear: string;
-  major: string;
+  major: string | Major;
   description: string;
 }

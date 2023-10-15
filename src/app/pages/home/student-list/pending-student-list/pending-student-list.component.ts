@@ -63,17 +63,15 @@ export class PendingStudentListComponent {
     return data.map((item: any) => {
       return {
         ...item,
-        studentCode: item.student.code,
-        fullName: item.student.fullName,
-        class: item.student.class,
-        topic: item.topic
+        studentCode: item?.student?.code,
+        fullName: item?.student?.fullName,
+        class: item?.student?.class,
+        topic: item?.topic
       }
     })
   }
 
   onViewDetail(row: any): void {
-    console.log(row);
-
     const dialogConfig = {
       data: {
         ...row,
@@ -84,7 +82,7 @@ export class PendingStudentListComponent {
   }
 
   loadPendingStudentList(){
-    this.classService.getPendingStudents(this.authService.getUser().instructClass as string).subscribe({
+    this.classService.getPendingStudents(this.authService.getClassId() as string).subscribe({
       next: (res) => {
         this.dataSource.data = this.standardizeData(res);
       },

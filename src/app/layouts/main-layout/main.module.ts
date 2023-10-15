@@ -20,6 +20,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
 import { RegisterTopicDialogComponent } from 'src/app/pages/home/dialog/register-topic/register-topic.component';
 import { RefDocTypesComponent } from 'src/app/pages/home/class/ref-doc-types/ref-doc-types.component';
 import { EditTypeNameComponent } from 'src/app/pages/home/dialog/edit-type-name/edit-type-name.component';
+import { PendingCardComponent } from 'src/app/pages/home/register-topic/pending-card/pending-card.component';
 
 
 
@@ -43,7 +44,8 @@ import { EditTypeNameComponent } from 'src/app/pages/home/dialog/edit-type-name/
     MyThesisComponent,
     RegisterTopicDialogComponent,
     RefDocTypesComponent,
-    EditTypeNameComponent
+    EditTypeNameComponent,
+    PendingCardComponent
   ],
   imports: [
     CommonModule,

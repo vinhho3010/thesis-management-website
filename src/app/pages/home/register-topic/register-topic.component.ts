@@ -8,6 +8,8 @@ import { RegisterTopicDialogComponent } from '../dialog/register-topic/register-
 import { AuthService } from 'src/app/services/auth.service';
 import { registerToClassData } from 'src/app/Model/register-topic';
 import { ClassService } from 'src/app/services/class.service';
+import { RegisteredTopic } from 'src/app/Model/registerTopic/registerTopic';
+import { PendingStatus } from 'src/app/Model/enum/pendingStatus';
 
 @Component({
   selector: 'app-register-topic',
@@ -19,6 +21,9 @@ export class RegisterTopicComponent implements OnInit {
   majorList: any[] = [];
   teacherList: any[] = [];
   pendingRequest: any[] = [];
+  approvedRequest: any[] = [];
+  rejectedRequest: any[] = [];
+  hasApprovedRequest= true;
   selectedMajor: any;
   selectedTeacher: any;
 
@@ -62,8 +67,17 @@ export class RegisterTopicComponent implements OnInit {
 
   loadRegisterd() {
     this.classService.getPendingRequestOfStudent(this.authService.getUser()._id).subscribe({
-      next: (res) => {
-        this.pendingRequest = res;
+      next: (res: RegisteredTopic[]) => {
+          if(res){
+            this.pendingRequest = res.filter((value) => value.status === PendingStatus.PENDING);
+            this.approvedRequest = res.filter((value) => value.status === PendingStatus.APPROVED);
+            this.rejectedRequest = res.filter((value) => value.status === PendingStatus.REJECTED);
+            if(this.approvedRequest.length > 0){
+              this.hasApprovedRequest = true;
+            } else {
+              this.hasApprovedRequest = false;
+            }
+          }
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -72,7 +86,8 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   registeredWithTeacher(teacher: any){
-    return this.pendingRequest.find((value) => value.class._id === teacher.instructClass);
+    const request = [...this.pendingRequest, ...this.rejectedRequest]
+    return request.find((value) => value.class._id === teacher.instructClass);
   }
 
   selectMajor(major: any){
@@ -97,19 +112,15 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onRegisterTopic(teacher: any){
-    console.log(teacher);
-
    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
         teacher: teacher,
         ...this.authService.getUser()
       }
     });
-
     registerTopic.afterClosed().subscribe(res => {
       if(res){
         const result = res.result;
-
         const submitData: registerToClassData = {
           studentId: this.authService.getUser()._id,
           classId: teacher?.instructClass,
@@ -120,7 +131,6 @@ export class RegisterTopicComponent implements OnInit {
           semester: result.semester,
           schoolYear: result.schoolYear
         }
-
         this.classService.registerToClass(submitData).subscribe({
           next: () => {
             this.toastService.showSuccessToast('Đăng ký thành công');
@@ -135,8 +145,6 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onEditTopic(pending: any){
-    console.log(pending);
-
     const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
         teacher: pending.class.teacher,
@@ -148,7 +156,6 @@ export class RegisterTopicComponent implements OnInit {
     registerTopic.afterClosed().subscribe(res => {
       if(res){
         const result = res.result;
-
         const submitData: registerToClassData = {
           studentId: this.authService.getUser()._id,
           classId: pending.class._id,

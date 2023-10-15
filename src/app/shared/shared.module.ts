@@ -14,6 +14,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
+import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
     DataTableComponent,
     RolePipe,
     DateToTextPipe,
-    SanitizedHtmlPipe
+    SanitizedHtmlPipe,
+    ThesisStatusPipe
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
     RolePipe,
     NgxEditorModule,
     DateToTextPipe,
-    SanitizedHtmlPipe
+    SanitizedHtmlPipe,
+    ThesisStatusPipe
   ]
 })
 export class SharedModule { }

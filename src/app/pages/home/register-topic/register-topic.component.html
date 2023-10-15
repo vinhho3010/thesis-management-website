@@ -1,6 +1,6 @@
 <div class="topic-wrapper max-w-7xl mx-auto">
-  <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
-    <mat-tab label="registering">
+  <mat-tab-group  [selectedIndex]="0" animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="registering" [class.hidden]="hasApprovedRequest">
       <ng-template mat-tab-label>
         Đăng ký đề tài
       </ng-template>
@@ -41,11 +41,11 @@
                             AI, Web Application, Microservice, ...
                           </div>
                         </div>
-                        <button mat-button class="rounded-xl" color="accent" (click)="onRegisterTopic(teacher)" *ngIf="!registeredWithTeacher(teacher)">
+                        <button mat-button class="rounded-xl" color="accent" (click)="onRegisterTopic(teacher)" *ngIf="!registeredWithTeacher(teacher) && !hasApprovedRequest">
                           <mat-icon matPrefix>edit</mat-icon>
                           Đăng ký
                         </button>
-                        <button mat-button class="rounded-xl" color="accent" disabled *ngIf="registeredWithTeacher(teacher)">
+                        <button mat-button class="rounded-xl" color="accent" disabled *ngIf="registeredWithTeacher(teacher) || hasApprovedRequest">
                           <mat-icon matPrefix>edit</mat-icon>
                           Đăng ký
                         </button>
@@ -70,36 +70,45 @@
       <div class="tab-content">
         <ng-template matTabContent>
           <div class="result-list mt-10 flex justify-center items-start gap-2 flex-col">
-            <div class="col-span-12">Đề tài chờ duyệt</div>
             <div class="lg:py-2 px-2 mt-3 w-full">
-              <div class="topic" *ngIf="pendingRequest && pendingRequest.length > 0; else emptyPeding">
+              <div class="topic mb-4" *ngIf="approvedRequest && approvedRequest.length > 0">
+                <ng-container *ngFor="let pending of approvedRequest">
+                    <app-pending-card
+                    [pending]="pending"
+                    (onEdit)="onEditTopic($event)"
+                    (onCancel)="cancelRegister($event)"
+                    ></app-pending-card>
+                </ng-container>
+              </div>
+              <div class="topic mb-4" *ngIf="pendingRequest && pendingRequest.length > 0 && approvedRequest.length <= 0">
+                <div class="col-span-12 pb-2">
+                  <span class="text-xl text-gray-700 font-medium" >Đề tài chờ duyệt</span> <span class="text-sm" [matBadge]="pendingRequest.length" matBadgeOverlap="false" matBadgeSize="small"></span>
+                </div>
                 <ng-container *ngFor="let pending of pendingRequest">
-                  <div class="topic-subscribtion w-full border border-gray-200 flex justify-between items-center rounded-xl hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer">
-                    <div class="topic-info_wrapper flex flex-col">
-                      <span class="topic-teacher">
-                        Giảng viên: <span class="text-blue-500">{{pending?.teacher?.fullName}}</span>
-                      </span>
-                      <div class="topic-name text-gray-600 italic">
-                        AI, Web Application, Microservice, ...
-                      </div>
-                    </div>
-                    <div >
-                      <button mat-button class="rounded-xl" color="primary" (click)="onEditTopic(pending)">
-                        <mat-icon matPrefix>edit</mat-icon>
-                        Chỉnh sửa
-                      </button>
-                      <button mat-button class="ml-1 rounded-xl" color="warn" (click)="cancelRegister(pending)">
-                        <mat-icon matPrefix>clear</mat-icon>
-                        Huỷ đăng ký
-                      </button>
-                    </div>
-                  </div>
+                    <app-pending-card
+                    [pending]="pending"
+                    (onEdit)="onEditTopic($event)"
+                    (onCancel)="cancelRegister($event)"
+                    ></app-pending-card>
+                </ng-container>
+              </div>
+              <div class="topic mb-4" *ngIf="rejectedRequest && rejectedRequest.length > 0 && approvedRequest.length <= 0">
+                <div class="col-span-12 pb-2">
+                  <span class="text-xl text-gray-700 font-medium">Đề tài bị từ chối</span>
+                  <span class="text-sm" [matBadge]="rejectedRequest.length" matBadgeOverlap="false" matBadgeSize="small"></span>
+                </div>
+                <ng-container *ngFor="let pending of rejectedRequest">
+                    <app-pending-card
+                    [pending]="pending"
+                    (onEdit)="onEditTopic($event)"
+                    (onCancel)="cancelRegister($event)"
+                    ></app-pending-card>
                 </ng-container>
               </div>
 
-              <ng-template #emptyPeding>
+              <div *ngIf="approvedRequest.length <= 0 && pendingRequest.length <= 0 && rejectedRequest.length <= 0">
                 <div class="text-gray-600 text-center mt-3">Bạn chưa đăng ký hướng dẫn với giảng viên nào</div>
-              </ng-template>
+              </div>
             </div>
           </div>
         </ng-template>

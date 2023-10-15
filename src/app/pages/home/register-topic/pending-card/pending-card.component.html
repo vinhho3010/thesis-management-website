@@ -1,0 +1,33 @@
+<div
+  class="topic-subscribtion w-full border border-gray-200 flex justify-between items-center rounded-xl hover:bg-gray-100 mb-3 line-clamp-1 p-3 cursor-pointer"
+  [class.rejected]="pending.status===PENDING_STATUS.REJECTED"
+  [class.flex-col]="pending.status===PENDING_STATUS.APPROVED"
+  (click)="onClickCard()">
+  <div *ngIf="pending.status===PENDING_STATUS.APPROVED">
+    <span class="text-gray-800 text-lg font-medium text-center">Đề tài: {{pending.topic}}</span>
+  </div>
+  <div class="topic-info_wrapper flex flex-col">
+    <div *ngIf="!(pending.status===PENDING_STATUS.APPROVED)">
+      <span class="text-gray-800 text-base font-medium text-center">Đề tài đăng ký: {{pending.topic}}</span>
+    </div>
+    <span class="topic-teacher">
+      Giảng viên hướng dẫn: <span class="text-blue-500">{{pending.class?.teacher?.fullName}}</span>
+    </span>
+    <div *ngIf="pending.status===PENDING_STATUS.PENDING" class="topic-name text-gray-600 italic">
+      AI, Web Application, Microservice, ...
+    </div>
+  </div>
+  <div *ngIf="pending.status===PENDING_STATUS.APPROVED" class="text-center text-gray-500">
+      Đề tài của bạn đã được chấp nhận. Vui lòng cập nhật thông tin ở bảng tin lớp học
+  </div>
+  <div *ngIf="!(pending.status===PENDING_STATUS.APPROVED)">
+    <button mat-button class="rounded-xl" color="primary" (click)="onEditTopic(pending)" [disabled]="!(pending.status === PENDING_STATUS.PENDING)">
+      <mat-icon matPrefix>edit</mat-icon>
+      Chỉnh sửa
+    </button>
+    <button mat-button class="ml-1 rounded-xl" color="warn" (click)="cancelRegister(pending)" [disabled]="!(pending.status === PENDING_STATUS.PENDING)">
+      <mat-icon matPrefix>clear</mat-icon>
+      Huỷ đăng ký
+    </button>
+  </div>
+</div>

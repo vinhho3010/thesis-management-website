@@ -31,6 +31,18 @@ export class AuthService {
     return this.storageService.get(USER_SAVE_KEY) as AccountInfo;
   }
 
+  refreshUserData(){
+    this.http.get<AccountInfo>(`/api/user/${this.getUser()._id}`).subscribe({
+      next: (res)=> {
+        this.storageService.save(USER_SAVE_KEY, res as AccountInfo)
+      },
+      error: (err)=> {
+        console.log(err);
+
+      }
+    })
+  }
+
   getRole(){
     const user = this.getUser();
     if(user){
@@ -49,6 +61,7 @@ export class AuthService {
   }
 
   getClassId(){
+    this.refreshUserData();
     return this.getUser().instructClass ? this.getUser().instructClass : this.getUser().followClass;
   }
 
