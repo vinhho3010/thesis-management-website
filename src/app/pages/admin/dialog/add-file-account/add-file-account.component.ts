@@ -95,11 +95,9 @@ export class AddFileAccountComponent {
   }
 
   onViewData(data: any) {
-    const dialogRef = this.dialog.open(AddAccountDialogComponent, {
+    this.dialog.open(AddAccountDialogComponent, {
       data: {...data, isView: true,},
     });
-    dialogRef.afterClosed().subscribe(result => {});
-
   }
 
   onDeleteRow(index: number) {

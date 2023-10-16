@@ -99,6 +99,9 @@ export class AddAccountDialogComponent implements OnInit {
     if(this.newAccountForm.contains('major')){
       this.newAccountForm.controls['major'].setValue(data.major._id);
     }
+    if(data?.major){
+      this.newAccountForm.get('major')?.setValue(data.major);
+    }
   }
 
   onChangeType(event: MatSelectChange) {

@@ -4,7 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
+import { ExcelHandleService } from 'src/app/services/local/excel-handle.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { studentListHeader } from 'src/app/shared/utilities/excel-schema';
 
 @Component({
   selector: 'app-active-student-list',
@@ -17,7 +19,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource([]);
   classOfTeacher = this.authService.getUser().instructClass as string;
 
-  constructor(private authService: AuthService, private classService: ClassService, private toastService: ToastService) { }
+  constructor(private authService: AuthService, private classService: ClassService, private toastService: ToastService, private excelHandleService: ExcelHandleService) { }
 
   ngOnInit(): void {
     this.loadStudentList();
@@ -28,9 +30,6 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   onEditRow(row: any): void {
-    console.log(row);
-  }
-  onDeleteRow(row: any): void {
     console.log(row);
   }
 
@@ -46,9 +45,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   onRemoveStudent(student: any){
-    console.log(student);
     this.toastService.confirmHandle('Bạn có chắc chắn muốn xóa sinh viên khỏi nhóm?', this.removeStudentHandler.bind(this, student._id));
-
   }
 
   removeStudentHandler(studentId: string): void {
@@ -61,5 +58,19 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
         this.toastService.showErrorToast(err.error.message);
       }
     })
+  }
+
+  onExportData(data: any[]) {
+    const schema = studentListHeader;
+    const standardlizedData = data.map((item, index)=> {
+      return {
+        index: index + 1,
+        code: item?.code,
+        fullName: item?.fullName,
+        major: item?.major.name,
+        class: item?.class
+      }
+  })
+    this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema);
   }
 }

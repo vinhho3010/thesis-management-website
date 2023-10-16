@@ -1,18 +1,19 @@
 <div class="active-wrapper">
-  <div class="active-list-header flex justify-between items-center mt-9 p-3">
-    <div class="list-title w-1/2 text-3xl text-blue-800">
-      Danh sách sinh viên
-    </div>
-    <div class="search-wrapper w-1/3 p-3 flex justify-between items-center gap-3">
-      <button mat-flat-button color="primary" class="bg-blue-600 rounded-xl py-5 px-3 min-w-[128px]">
-        <mat-icon>file</mat-icon>
-        <span>Xuất danh sách</span>
-      </button>
+  <div class="active-list-header flex justify-end items-center mt-9 p-3">
+    <div class="search-wrapper lg:w-2/5 w-full p-3 gap-3">
       <mat-form-field floatLabel="always" subscriptSizing="dynamic" appearance="outline" class="w-full">
         <mat-label>Tìm kiếm</mat-label>
         <input matInput type="text" placeholder="Nhập tên sinh viên">
       </mat-form-field>
     </div>
+  </div>
+  <div class="list-title w-full flex justify-start items-center flex-wrap p-3">
+    <div class="text-3xl text-blue-800">Danh sách sinh viên ({{dataSource.data.length}})</div>
+    <button mat-flat-button color="primary" class="bg-orange-600 ml-3 rounded-xl py-5 px-3 min-w-[160px] shadow-md"
+    (click)="onExportData(dataSource.data)">
+      <mat-icon>unarchive</mat-icon>
+      <span>Xuất danh sách</span>
+    </button>
   </div>
 
 
