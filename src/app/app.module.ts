@@ -20,14 +20,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './shared/utilities/customPaginator';
 import { NgxEditorModule } from 'ngx-editor';
-import { AddDocComponent } from './pages/home/dialog/add-doc/add-doc.component';
-import { AddDocTypeComponent } from './pages/home/dialog/add-doc-type/add-doc-type.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddDocComponent,
-    AddDocTypeComponent,
   ],
   imports: [
     HttpClientModule,

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
@@ -11,17 +12,24 @@ import { studentListHeader } from 'src/app/shared/utilities/excel-schema';
 @Component({
   selector: 'app-active-student-list',
   templateUrl: './active-student-list.component.html',
-  styleUrls: ['./active-student-list.component.scss']
+  styleUrls: ['./active-student-list.component.scss'],
 })
 export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['code', 'fullName', 'class', 'actions'];
   dataSource = new MatTableDataSource([]);
-  classOfTeacher = this.authService.getUser().instructClass as string;
+  classOfTeacher!: string;
 
-  constructor(private authService: AuthService, private classService: ClassService, private toastService: ToastService, private excelHandleService: ExcelHandleService) { }
+  constructor(
+    private authService: AuthService,
+    private classService: ClassService,
+    private toastService: ToastService,
+    private excelHandleService: ExcelHandleService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.classOfTeacher = this.authService.getClassId() as string;
     this.loadStudentList();
   }
 
@@ -30,7 +38,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   onEditRow(row: any): void {
-    console.log(row);
+    this.router.navigate(['/students/thesis-detail']);
   }
 
   loadStudentList(): void {
@@ -40,37 +48,44 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
-      }
-    })
+      },
+    });
   }
 
-  onRemoveStudent(student: any){
-    this.toastService.confirmHandle('Bạn có chắc chắn muốn xóa sinh viên khỏi nhóm?', this.removeStudentHandler.bind(this, student._id));
+  onRemoveStudent(student: any) {
+    this.toastService.confirmHandle(
+      'Bạn có chắc chắn muốn xóa sinh viên khỏi nhóm?',
+      this.removeStudentHandler.bind(this, student._id)
+    );
   }
 
   removeStudentHandler(studentId: string): void {
-    this.classService.removeStudentFromClass(this.classOfTeacher, studentId).subscribe({
-      next: () => {
-        this.toastService.showSuccessToast('Xóa sinh viên khỏi nhóm thành công');
-        this.loadStudentList();
-      },
-      error: (err) => {
-        this.toastService.showErrorToast(err.error.message);
-      }
-    })
+    this.classService
+      .removeStudentFromClass(this.classOfTeacher, studentId)
+      .subscribe({
+        next: () => {
+          this.toastService.showSuccessToast(
+            'Xóa sinh viên khỏi nhóm thành công'
+          );
+          this.loadStudentList();
+        },
+        error: (err) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
   }
 
   onExportData(data: any[]) {
     const schema = studentListHeader;
-    const standardlizedData = data.map((item, index)=> {
+    const standardlizedData = data.map((item, index) => {
       return {
         index: index + 1,
         code: item?.code,
         fullName: item?.fullName,
         major: item?.major.name,
-        class: item?.class
-      }
-  })
+        class: item?.class,
+      };
+    });
     this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema);
   }
 }

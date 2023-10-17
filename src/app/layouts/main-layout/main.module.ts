@@ -21,6 +21,9 @@ import { RegisterTopicDialogComponent } from 'src/app/pages/home/dialog/register
 import { RefDocTypesComponent } from 'src/app/pages/home/class/ref-doc-types/ref-doc-types.component';
 import { EditTypeNameComponent } from 'src/app/pages/home/dialog/edit-type-name/edit-type-name.component';
 import { PendingCardComponent } from 'src/app/pages/home/register-topic/pending-card/pending-card.component';
+import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
+import { AddDocComponent } from 'src/app/pages/home/dialog/add-doc/add-doc.component';
+import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-doc-type.component';
 
 
 
@@ -45,7 +48,10 @@ import { PendingCardComponent } from 'src/app/pages/home/register-topic/pending-
     RegisterTopicDialogComponent,
     RefDocTypesComponent,
     EditTypeNameComponent,
-    PendingCardComponent
+    PendingCardComponent,
+    AddDocComponent,
+    AddDocTypeComponent,
+    ThesisDetailListComponent
   ],
   imports: [
     CommonModule,

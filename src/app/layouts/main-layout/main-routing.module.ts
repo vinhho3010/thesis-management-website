@@ -11,6 +11,7 @@ import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
+import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: 'students',
         component: StudentListComponent
+      },
+      {
+        path: 'students/thesis-detail',
+        component: ThesisDetailListComponent
       },
       {
         path: 'process',

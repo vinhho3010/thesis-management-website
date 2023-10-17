@@ -13,6 +13,8 @@ export class ThesisStatusPipe implements PipeTransform {
         return "Đã hoàn thành"
       case ThesisStatus.CANCELED:
         return "Từ chối bảo vệ"
+      case ThesisStatus.ACCEPTED:
+        return "Được chấp nhận bảo vệ"
       default:
         return "Không xác định"
 
