@@ -86,7 +86,7 @@ export class ThesisDetailListComponent implements OnInit {
 
   onChangeStudent(student: any): void {
     this.selectedStudent = student;
-    this.thesisService.getStudentThesis(student._id, true).subscribe({
+    this.thesisService.getStudentThesis(student._id).subscribe({
       next: (res) => {
         this.fillDataStudent(student);
         this.detailThesisForm.patchValue(res);

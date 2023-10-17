@@ -9,12 +9,8 @@ export class ThesisService {
 
   constructor(private http:HttpClient) { }
 
-  getStudentThesis(id: string, withStudent?: boolean){
-    let params = new HttpParams();
-    if(withStudent){
-      params = params.set('withStudent', withStudent);
-    }
-    return this.http.get<Thesis>(`/api/thesis/student/${id}`, {params});
+  getStudentThesis(id: string){
+    return this.http.get<Thesis>(`/api/thesis/student/${id}`);
   }
 
   updateStudentThesis(id: string, data: any){
