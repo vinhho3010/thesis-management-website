@@ -13,7 +13,7 @@ import { RolePipe } from './pipes/role.pipe';
 import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
+import { DomUrlPipe, SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
 
 @NgModule({
@@ -27,7 +27,8 @@ import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
     RolePipe,
     DateToTextPipe,
     SanitizedHtmlPipe,
-    ThesisStatusPipe
+    ThesisStatusPipe,
+    DomUrlPipe
   ],
   imports: [
     CommonModule,
@@ -49,7 +50,8 @@ import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
     NgxEditorModule,
     DateToTextPipe,
     SanitizedHtmlPipe,
-    ThesisStatusPipe
+    ThesisStatusPipe,
+    DomUrlPipe
   ]
 })
 export class SharedModule { }

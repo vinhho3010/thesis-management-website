@@ -12,12 +12,14 @@ import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/regist
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
+import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
 
 
 const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',

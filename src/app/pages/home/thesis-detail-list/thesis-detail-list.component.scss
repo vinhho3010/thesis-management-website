@@ -1,0 +1,13 @@
+.input-field{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .input-field{
+    display: block !important;
+  }
+
+}

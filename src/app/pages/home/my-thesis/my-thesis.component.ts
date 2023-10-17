@@ -16,10 +16,8 @@ export class MyThesisComponent implements OnInit {
 
   ngOnInit(): void {
       const userId = this.authService.getUser()._id;
-      this.thesisService.getStudentThesis(userId).subscribe({
+      this.thesisService.getStudentThesis(userId, false).subscribe({
         next: (res)=> {
-          console.log(res);
-
           this.thesisInfo = res as Thesis;
         },
         error: (err)=> {

@@ -5,14 +5,19 @@
       <div class="title">Danh sách sinh viên</div>
       <div class="students-list">
         <mat-card *ngFor="let student of studentList"
-         class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 hover:bg-gray-200 cursor-pointer"
+         class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 shadow-sm"
+         [class.bg-blue-500]="student._id === selectedStudent._id"
+         [class.text-white]="student._id === selectedStudent._id"
+         [class.hover:bg-blue-400]="student._id === selectedStudent._id"
+         [class.hover:bg-gray-200]="student._id !== selectedStudent._id"
          (click)="onChangeStudent(student)">
           <mat-card-header class="w-full">
-            <div mat-card-avatar class="student-avatar flex items-center">
+            <div mat-card-avatar class="student-avatar flex items-center rounded-full bg-white p-1">
               <img src="../../../../assets/picture/default-avatar.svg" alt="avatar" />
             </div>
               <mat-card-title>{{student.fullName}}</mat-card-title>
-              <mat-card-subtitle>{{student.class}}</mat-card-subtitle>
+              <mat-card-subtitle class="text-xs mt-1"
+              [class.text-gray-200]="student._id === selectedStudent._id">{{student.class}}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
@@ -35,9 +40,15 @@
             </mat-form-field>
           </div>
           <div class="input-field w-full gap-2">
+            <mat-form-field class="w-full">
+              <mat-label>Email </mat-label>
+              <input matInput placeholder="email" formControlName="email" readonly>
+            </mat-form-field>
+          </div>
+          <div class="input-field w-full gap-2">
             <mat-form-field class="lg:w-2/3 w-full">
               <mat-label>Ngành </mat-label>
-              <mat-select formControlName="major" placeholder="Chọn ngành học">
+              <mat-select [panelClass]="'hidden'" formControlName="major" placeholder="Chọn ngành học">
                 <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -83,7 +94,7 @@
         </div>
         </ng-container>
         <div class="flex justify-end items-center gap-4">
-          <button class="custom-btn rounded-xl" mat-flat-button>Huỷ</button>
+          <button class="custom-btn rounded-xl" mat-flat-button (click)="onGoBack()">Huỷ</button>
           <button class="custom-btn rounded-xl bg-blue-600 text-white" mat-flat-button
           (click)="onSubmit($event)">Cập nhật</button>
         </div>

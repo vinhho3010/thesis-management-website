@@ -5,11 +5,13 @@ import { ClassListComponent } from 'src/app/pages/ministry/class-list/class-list
 import { PublicThesisComponent } from 'src/app/pages/ministry/public-thesis/public-thesis.component';
 import { CouncilComponent } from 'src/app/pages/ministry/council/council.component';
 import { ClassDetailComponent } from 'src/app/pages/ministry/class-list/class-detail/class-detail.component';
+import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MinistryLayoutComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',

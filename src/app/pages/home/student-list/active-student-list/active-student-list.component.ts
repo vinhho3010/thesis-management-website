@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Pagination } from 'src/app/Model/pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
 import { ExcelHandleService } from 'src/app/services/local/excel-handle.service';
@@ -19,6 +21,11 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['code', 'fullName', 'class', 'actions'];
   dataSource = new MatTableDataSource([]);
   classOfTeacher!: string;
+  pagination: Pagination = {
+    pageIndex: 0,
+    pageSize: 5,
+    length: 0
+  }
 
   constructor(
     private authService: AuthService,
@@ -38,13 +45,19 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   onEditRow(row: any): void {
-    this.router.navigate(['/students/thesis-detail']);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        selectedStudent: row,
+      },
+    };
+    this.router.navigate(['/students/thesis-detail'], navigationExtras);
   }
 
   loadStudentList(): void {
     this.classService.getStudentInClass(this.classOfTeacher).subscribe({
       next: (res) => {
         this.dataSource.data = res;
+        this.pagination.length = res.length;
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -87,5 +100,10 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
       };
     });
     this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema);
+  }
+
+    onPageChange(event: PageEvent) {
+    this.pagination.pageIndex = event.pageIndex;
+    this.pagination.pageSize = event.pageSize;
   }
 }

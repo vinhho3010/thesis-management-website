@@ -1,8 +1,11 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import {  Router } from '@angular/router';
 import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
+import { RouterExtService } from 'src/app/services/ex-router.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
 import { ThesisService } from 'src/app/services/thesis.service';
@@ -26,7 +29,10 @@ export class ThesisDetailListComponent implements OnInit {
     private classService: ClassService,
     private thesisService: ThesisService,
     private toastService: ToastService,
-    private majorService: MajorService
+    private majorService: MajorService,
+    private location: Location,
+    private routerExService: RouterExtService,
+    private router: Router
   ) {
     this.detailThesisForm = new FormGroup({
       type: new FormControl(''),
@@ -42,11 +48,16 @@ export class ThesisDetailListComponent implements OnInit {
       class: new FormControl(''),
       major: new FormControl(''),
       code: new FormControl(''),
+      email: new FormControl(''),
     })
   }
 
   ngOnInit(): void {
     this.classId = this.authService.getClassId() as string;
+    const retrievedData = this.location.getState() as any;
+    if(retrievedData?.selectedStudent) {
+      this.onChangeStudent(retrievedData.selectedStudent);
+    }
     this.loadMajorList();
     this.loadStudentList();
   }
@@ -107,5 +118,10 @@ export class ThesisDetailListComponent implements OnInit {
       },
     });
 
+  }
+
+  onGoBack(): void {
+    const previous = this.routerExService.getPreviousUrl() ? this.routerExService.getPreviousUrl() as string : '/students';
+    this.router.navigateByUrl(previous);
   }
 }

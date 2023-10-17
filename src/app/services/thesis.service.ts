@@ -12,7 +12,7 @@ export class ThesisService {
   getStudentThesis(id: string, withStudent?: boolean){
     let params = new HttpParams();
     if(withStudent){
-      params = params.append('withStudent', withStudent);
+      params = params.set('withStudent', withStudent);
     }
     return this.http.get<Thesis>(`/api/thesis/student/${id}`, {params});
   }
