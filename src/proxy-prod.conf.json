@@ -1,0 +1,6 @@
+{
+  "/api/*": {
+    "target": "https://ctu-tms.cyclic.app/",
+    "secure": false
+  }
+}
