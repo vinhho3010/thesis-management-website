@@ -5,8 +5,8 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable, timer } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { LoaderService } from '../loader.service';
 
 @Injectable()
@@ -19,19 +19,13 @@ export class LoadingInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('caught')
     this.totalRequests++;
     this.loadingService.setLoading(true);
-
-    const loadingTimeout = timer(200); // 0.2 seconds
-
     return next.handle(request).pipe(
       finalize(() => {
         this.totalRequests--;
-        if (this.totalRequests === 0) {
-          loadingTimeout.pipe(takeUntil(next.handle(request))).subscribe(() => {
-            this.loadingService.setLoading(false);
-          });
+        if (this.totalRequests == 0) {
+          this.loadingService.setLoading(false);
         }
       })
     );
