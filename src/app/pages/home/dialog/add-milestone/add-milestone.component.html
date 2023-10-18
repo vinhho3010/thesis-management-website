@@ -1,0 +1,56 @@
+<div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
+  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Thêm mốc thời gian</h1>
+  <div class="form-wrapper">
+    <form action="" [formGroup]="milestoneForm">
+      <div class="input-field">
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Tiêu đề </mat-label>
+          <input type="text" matInput placeholder="Nhập tên mốc thời gian" formControlName="title">
+        </mat-form-field>
+      </div>
+      <div class="input-field">
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Chọn khoảng thời gian</mat-label>
+          <mat-date-range-input [rangePicker]="rangePicker" [min]="today">
+            <!-- min day is today -->
+            <input matStartDate placeholder="Ngày bắt đầu" formControlName="startDate">
+            <input matEndDate placeholder="Ngày kết thúc" formControlName="endDate">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker>
+            <mat-date-range-picker-actions>
+              <button mat-button matDateRangePickerCancel class="rounded-xl">Huỷ</button>
+              <button mat-flat-button color="primary" class="rounded-xl shadow-md" matDateRangePickerApply>Xác nhận</button>
+            </mat-date-range-picker-actions>
+          </mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="input-field rounded-xl border border-gray-400 mb-5"
+      [class.border-red-300]="milestoneForm.get('description')?.dirty && milestoneForm.get('description')?.invalid">
+        <div class="editor text-gray-500 px-3">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar">
+          </ngx-editor-menu>
+          <ngx-editor [placeholder]="'Nhập mô tả'" [editor]="editor" formControlName="description">
+          </ngx-editor>
+        </div>
+      </div>
+    <hr class="text-gray-400 my-3">
+      <div class="input-field">
+        <mat-checkbox color="primary" formControlName="isSendMail">
+          <div class="flex justify-center items-center">
+            <span>Thông báo cho tất cả sinh viên &nbsp; </span>
+            <mat-icon class="text-gray-500">mail</mat-icon>
+          </div>
+        </mat-checkbox>
+      </div>
+      <div class="flex justify-end items-center w-full mt-2">
+        <button mat-button color="basic" class="rounded-xl mr-2 py-5 px-6" mat-dialog-close>
+          <span>Hủy</span>
+        </button>
+        <button mat-flat-button color="primary" class="rounded-xl shadow-md py-5 px-6 min-w-[100px]" (click)="onSubmit()">
+          <span>Xác nhận</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

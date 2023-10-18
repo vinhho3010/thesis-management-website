@@ -20,6 +20,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './shared/utilities/customPaginator';
 import { NgxEditorModule } from 'ngx-editor';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {CUSTOM_DATE_FORMAT} from './shared/utilities/customDateFormat';
 
 @NgModule({
   declarations: [
@@ -50,9 +53,12 @@ import { NgxEditorModule } from 'ngx-editor';
         ...new MatDialogConfig(),
         maxHeight: "95vh",
         panelClass: 'custom-dialog',
+        autoFocus: false,
       } as MatDialogConfig,
     },
-    { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() }
+    { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT }
   ],
   bootstrap: [AppComponent]
 })

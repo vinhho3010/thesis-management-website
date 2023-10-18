@@ -24,6 +24,7 @@ import { PendingCardComponent } from 'src/app/pages/home/register-topic/pending-
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 import { AddDocComponent } from 'src/app/pages/home/dialog/add-doc/add-doc.component';
 import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-doc-type.component';
+import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/add-milestone.component';
 
 
 
@@ -51,7 +52,8 @@ import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-
     PendingCardComponent,
     AddDocComponent,
     AddDocTypeComponent,
-    ThesisDetailListComponent
+    ThesisDetailListComponent,
+    AddMilestoneComponent,
   ],
   imports: [
     CommonModule,

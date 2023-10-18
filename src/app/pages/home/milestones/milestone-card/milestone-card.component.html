@@ -1,12 +1,30 @@
 
-<div class="milestone-card border border-gray-100 rounded-xl p-2 bg-blue-100 hover:bg-blue-50 cursor-pointer">
-  <div class="card-title my-2 line-clamp-1 text-gray-700 font-medium">
-    Viết phần 1 chương mở đầu
+<div class="milestone-card border border-gray-100 rounded-xl p-2 pl-4 pb-4 bg-blue-100 hover:bg-blue-50 hover:shadow-md cursor-pointer">
+  <div class="flex justify-between items-center">
+    <div class="card-title my-2 line-clamp-1 text-gray-700 font-medium">
+      {{ milestone.title }}
+    </div>
+    <div class="action-button">
+      <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
+        <button mat-menu-item color="primary" (click)="onEditeMilestone()">
+          <mat-icon>edit</mat-icon>
+          <span>Sửa</span>
+        </button>
+        <button mat-menu-item color="warn" (click)="onDeleteMilestone()">
+          <mat-icon color="warn">delete</mat-icon>
+          <span class="text-red-500">Xoá</span>
+        </button>
+      </mat-menu>
+    </div>
   </div>
   <div class="card-period text-gray-600">
-    12/12/2020 - 12/12/2020
+    {{ milestone.startDate | date: 'dd/MM/yyyy' }} - {{ milestone.endDate | date: 'dd/MM/yyyy' }}
   </div>
   <div class="card-description pt-3">
-    Sinh viên hoàn thành 20/20
+   Số bài đã nộp: {{ milestone?.thesisVersionList.length}}
   </div>
 </div>

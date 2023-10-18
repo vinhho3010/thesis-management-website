@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './local/storage.service';
 import { AccountInfo } from '../Model/account-info';
 import { Router } from '@angular/router';
+import { RoleAccount } from '../Model/enum/roleEnum';
 
 const USER_SAVE_KEY = 'user';
 const TOKEN_KEY = 'token';
@@ -61,7 +62,9 @@ export class AuthService {
   }
 
   getClassId(){
-    this.refreshUserData();
+    if((this.getRole() === RoleAccount.STUDENT && !this.getUser().followClass) || (this.getRole() === RoleAccount.TEACHER && !this.getUser().instructClass)){
+      this.refreshUserData();
+    }
     return this.getUser().instructClass ? this.getUser().instructClass : this.getUser().followClass;
   }
 
