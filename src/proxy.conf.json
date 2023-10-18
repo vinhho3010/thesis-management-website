@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://eager-ox-outerwear.cyclic.app/",
+    "target": "https://ctu-tms.cyclic.app/",
     "secure": false
   }
 }
