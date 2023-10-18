@@ -7,7 +7,7 @@ import { firebaseConfig } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule }     from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule }     from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './layouts/authentication-layout/auth.module';
@@ -23,10 +23,13 @@ import { NgxEditorModule } from 'ngx-editor';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {CUSTOM_DATE_FORMAT} from './shared/utilities/customDateFormat';
+import { SpinnerComponent } from './pages/spinner/spinner.component';
+import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SpinnerComponent,
   ],
   imports: [
     HttpClientModule,
@@ -58,7 +61,10 @@ import {CUSTOM_DATE_FORMAT} from './shared/utilities/customDateFormat';
     },
     { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT }
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
