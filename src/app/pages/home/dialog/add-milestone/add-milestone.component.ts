@@ -20,7 +20,6 @@ export class AddMilestoneComponent implements OnInit {
   ];
   milestoneForm: FormGroup;
   FORM_ACTIONS = FormAction;
-  today = new Date();
 
   constructor(
     private dialogRef: MatDialogRef<AddMilestoneComponent>,

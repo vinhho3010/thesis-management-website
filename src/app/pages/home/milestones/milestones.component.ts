@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { AddMilestoneComponent } from '../dialog/add-milestone/add-milestone.component';
 import { MilestoneService } from 'src/app/services/milestone.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-milestones',
@@ -17,7 +18,8 @@ export class MilestonesComponent implements OnInit {
     private authService: AuthService,
     private toastService: ToastService,
     private dialog: MatDialog,
-    private milestoneService: MilestoneService
+    private milestoneService: MilestoneService,
+    private loadingService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -25,12 +27,15 @@ export class MilestonesComponent implements OnInit {
   }
 
   loadMilestones() {
+    this.loadingService.setLoading(true);
     const classId = this.authService.getClassId();
     this.milestoneService.getClassMilestones(classId as string).subscribe({
       next: (res) => {
+        this.loadingService.setLoading(false);
         this.milestonesList = res;
       },
       error: (err) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast('Không tải được danh sách');
       }
     })

@@ -7,25 +7,41 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { RegisterTopicComponent } from '../../register-topic/register-topic.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterTopicDialogComponent } from '../../dialog/register-topic/register-topic.component';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-pending-student-list',
   templateUrl: './pending-student-list.component.html',
-  styleUrls: ['./pending-student-list.component.scss']
+  styleUrls: ['./pending-student-list.component.scss'],
 })
 export class PendingStudentListComponent {
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['studentCode', 'fullName', 'class', 'topic', 'actions'];
+  displayedColumns: string[] = [
+    'studentCode',
+    'fullName',
+    'class',
+    'topic',
+    'actions',
+  ];
   dataSource = new MatTableDataSource([]);
 
-  constructor(private classService: ClassService, private authService: AuthService, private toastService: ToastService, private dialog: MatDialog) { }
+  constructor(
+    private classService: ClassService,
+    private authService: AuthService,
+    private toastService: ToastService,
+    private dialog: MatDialog,
+    private loadingService: LoaderService
+  ) {}
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
   onApprovePending(row: any): void {
-    this.toastService.confirmHandle('Bạn có chắc chắn muốn chấp nhận sinh viên này?', this.approveHandler.bind(this, row));
+    this.toastService.confirmHandle(
+      'Bạn có chắc chắn muốn chấp nhận sinh viên này?',
+      this.approveHandler.bind(this, row)
+    );
   }
 
   approveHandler(row: any): void {
@@ -36,11 +52,14 @@ export class PendingStudentListComponent {
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
-      }
-    })
+      },
+    });
   }
   onRejectPending(row: any) {
-    this.toastService.confirmHandle('Bạn muốn từ chối sinh viên này?', this.rejectHandler.bind(this, row));
+    this.toastService.confirmHandle(
+      'Bạn muốn từ chối sinh viên này?',
+      this.rejectHandler.bind(this, row)
+    );
   }
 
   rejectHandler(row: any): void {
@@ -51,44 +70,47 @@ export class PendingStudentListComponent {
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
-      }
-    })
+      },
+    });
   }
 
   ngOnInit(): void {
     this.loadPendingStudentList();
   }
 
-  standardizeData(data: any){
+  standardizeData(data: any) {
     return data.map((item: any) => {
       return {
         ...item,
         studentCode: item?.student?.code,
         fullName: item?.student?.fullName,
         class: item?.student?.class,
-        topic: item?.topic
-      }
-    })
+        topic: item?.topic,
+      };
+    });
   }
 
   onViewDetail(row: any): void {
     const dialogConfig = {
       data: {
         ...row,
-        isTeacherViewDetail: true
-      }
-    }
-    this.dialog.open(RegisterTopicDialogComponent, dialogConfig)
+        isTeacherViewDetail: true,
+      },
+    };
+    this.dialog.open(RegisterTopicDialogComponent, dialogConfig);
   }
 
-  loadPendingStudentList(){
+  loadPendingStudentList() {
+    this.loadingService.setLoading(true);
     this.classService.getPendingStudents(this.authService.getClassId() as string).subscribe({
-      next: (res) => {
-        this.dataSource.data = this.standardizeData(res);
-      },
-      error: (err) => {
-        this.toastService.showErrorToast(err.error.message);
-      }
-    })
+        next: (res) => {
+          this.loadingService.setLoading(false);
+          this.dataSource.data = this.standardizeData(res);
+        },
+        error: (err) => {
+          this.loadingService.setLoading(false);
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
   }
 }

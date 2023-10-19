@@ -10,6 +10,7 @@ import { registerToClassData } from 'src/app/Model/register-topic';
 import { ClassService } from 'src/app/services/class.service';
 import { RegisteredTopic } from 'src/app/Model/registerTopic/registerTopic';
 import { PendingStatus } from 'src/app/Model/enum/pendingStatus';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-register-topic',
@@ -33,7 +34,8 @@ export class RegisterTopicComponent implements OnInit {
     private toastService: ToastService,
     private matDialog: MatDialog,
     private authService: AuthService,
-    private classService: ClassService
+    private classService: ClassService,
+    private loadingService: LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -66,8 +68,10 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   loadRegisterd() {
+    this.loadingService.setLoading(true);
     this.classService.getPendingRequestOfStudent(this.authService.getUser()._id).subscribe({
       next: (res: RegisteredTopic[]) => {
+        this.loadingService.setLoading(false);
           if(res){
             this.pendingRequest = res.filter((value) => value.status === PendingStatus.PENDING);
             this.approvedRequest = res.filter((value) => value.status === PendingStatus.APPROVED);
@@ -80,6 +84,7 @@ export class RegisterTopicComponent implements OnInit {
           }
       },
       error: (err) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       }
     })

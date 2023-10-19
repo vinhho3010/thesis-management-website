@@ -62,9 +62,6 @@ import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
     { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
-    {
-      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-    }
   ],
   bootstrap: [AppComponent]
 })

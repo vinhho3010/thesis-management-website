@@ -6,6 +6,7 @@ import { AddClassComponent } from '../dialog/add-class/add-class.component';
 import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-class-list',
@@ -17,18 +18,21 @@ export class ClassListComponent implements OnInit {
   displayedColumns: string[] = [ 'position', 'name', 'semester', 'major', 'supervisor', 'count', 'actions'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService, private router: Router) { }
+  constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService, private router: Router, private loadingService: LoaderService) { }
 
   ngOnInit(): void {
     this.loadClassList();
   }
 
   loadClassList(): void {
+    this.loadingService.setLoading(true);
     this.classService.getAllClass().subscribe({
       next: (res) => {
+        this.loadingService.setLoading(false);
         this.dataSource.data = this.standardizeData(res);
       },
       error: (err) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       }
     })

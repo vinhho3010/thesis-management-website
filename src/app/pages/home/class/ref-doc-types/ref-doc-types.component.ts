@@ -9,6 +9,7 @@ import { RefDocsService } from 'src/app/services/ref-docs.service';
 import { AddDocTypeComponent } from '../../dialog/add-doc-type/add-doc-type.component';
 import { Router } from '@angular/router';
 import { EditTypeNameComponent } from '../../dialog/edit-type-name/edit-type-name.component';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-ref-doc-types',
@@ -26,6 +27,7 @@ export class RefDocTypesComponent {
     private authService: AuthService,
     private toastService: ToastService,
     private firebaseService: FirebaseService,
+    private loadingService: LoaderService,
     private router: Router
   ) {}
 
@@ -42,11 +44,14 @@ export class RefDocTypesComponent {
   }
 
   getRefDocsType() {
+    this.loadingService.setLoading(true);
     this.refDocsService.getDocsTypesOfClass(this.classId as string).subscribe({
       next: (res: any) => {
+        this.loadingService.setLoading(false);
         this.refDocsTypeList = res;
       },
       error: (err: any) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       },
     });

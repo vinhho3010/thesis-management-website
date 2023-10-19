@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { AddFileAccountComponent } from '../../dialog/add-file-account/add-file-account.component';
 import { Pagination } from 'src/app/Model/pagination';
 import { PageEvent } from '@angular/material/paginator';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-table-account',
@@ -27,20 +28,23 @@ export class TableAccountComponent {
     length: 0
   }
 
-  constructor(private dialog: MatDialog, private manageUserService: ManageUserService, private toastService: ToastService) { }
+  constructor(private dialog: MatDialog, private manageUserService: ManageUserService, private toastService: ToastService, private loadingService: LoaderService) { }
 
   ngOnInit(): void {
     this.initDataSource();
   }
 
   initDataSource(): void {
+    this.loadingService.setLoading(true);
     this.manageUserService.getAllAccount(this.tableType).subscribe({
       next: (response) =>{
         this.dataSourceInput.data = response;
         this.pagination.length = response.length;
+        this.loadingService.setLoading(false);
       },
       error: () => {
         this.toastService.showErrorToast('Tải dữ liệu thất bại');
+        this.loadingService.setLoading(false);
       }
     });
   }

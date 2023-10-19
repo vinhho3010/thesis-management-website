@@ -7,6 +7,7 @@ import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-ref-documents',
@@ -26,7 +27,8 @@ export class RefDocumentsComponent implements OnInit {
     private authService: AuthService,
     private toastService: ToastService,
     private firebaseService: FirebaseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loadingService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -49,11 +51,14 @@ export class RefDocumentsComponent implements OnInit {
   }
 
   getRefDocs() {
+    this.loadingService.setLoading(true);
     this.refDocsService.getDocsOfType(this.typeId).subscribe({
       next: (res: any) => {
+        this.loadingService.setLoading(false);
         this.refDocsList = res;
       },
       error: (err: any) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       },
     });

@@ -5,7 +5,6 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { HomeComponent } from 'src/app/pages/home/home/home.component';
 import { MilestonesComponent } from 'src/app/pages/home/milestones/milestones.component';
 import { ClassComponent } from 'src/app/pages/home/class/class.component';
-import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { StudentListComponent } from 'src/app/pages/home/student-list/student-list.component';
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
@@ -32,10 +31,6 @@ const routes: Routes = [
       {
         path: 'class',
         component: ClassComponent
-      },
-      {
-        path: 'topics',
-        component: TopicComponent
       },
       {
         path: 'students',

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Pagination } from 'src/app/Model/pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
+import { LoaderService } from 'src/app/services/loader.service';
 import { ExcelHandleService } from 'src/app/services/local/excel-handle.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { studentListHeader } from 'src/app/shared/utilities/excel-schema';
@@ -32,7 +33,8 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
     private classService: ClassService,
     private toastService: ToastService,
     private excelHandleService: ExcelHandleService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -54,12 +56,15 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
   loadStudentList(): void {
+    this.loadingService.setLoading(true);
     this.classService.getStudentInClass(this.classOfTeacher).subscribe({
       next: (res) => {
+        this.loadingService.setLoading(false);
         this.dataSource.data = res;
         this.pagination.length = res.length;
       },
       error: (err) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       },
     });
