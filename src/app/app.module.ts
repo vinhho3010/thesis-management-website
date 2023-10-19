@@ -24,7 +24,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {CUSTOM_DATE_FORMAT} from './shared/utilities/customDateFormat';
 import { SpinnerComponent } from './pages/spinner/spinner.component';
-import { LoadingInterceptor } from './services/interceptor/loading.interceptor';
+
 
 @NgModule({
   declarations: [

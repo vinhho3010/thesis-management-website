@@ -1,5 +1,5 @@
 
-<div class="milestone-card border border-gray-100 rounded-xl p-2 pl-4 pb-4 bg-blue-100 hover:bg-blue-50 hover:shadow-md cursor-pointer">
+<div class="milestone-card border border-gray-100 rounded-xl p-2 pl-4 pb-4 bg-blue-100 hover:bg-blue-50 hover:shadow-md cursor-pointer" (click)="onNavigateToMilestone()">
   <div class="flex justify-between items-center">
     <div class="card-title my-2 line-clamp-1 text-gray-700 font-medium">
       {{ milestone.title }}
@@ -9,12 +9,12 @@
         <mat-icon>more_vert</mat-icon>
       </button>
 
-      <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
-        <button mat-menu-item color="primary" (click)="onEditeMilestone()">
+      <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">d
+        <button mat-menu-item color="primary" (click)="onEditeMilestone($event)">
           <mat-icon>edit</mat-icon>
           <span>Sửa</span>
         </button>
-        <button mat-menu-item color="warn" (click)="onDeleteMilestone()">
+        <button mat-menu-item color="warn" (click)="onDeleteMilestone($event)">
           <mat-icon color="warn">delete</mat-icon>
           <span class="text-red-500">Xoá</span>
         </button>

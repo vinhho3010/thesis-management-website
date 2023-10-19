@@ -24,6 +24,9 @@ import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list
 import { AddDocComponent } from 'src/app/pages/home/dialog/add-doc/add-doc.component';
 import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-doc-type.component';
 import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/add-milestone.component';
+import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
+import { MilestoneDocsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-docs/milestone-docs.component';
+import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-students/milestone-students.component';
 
 
 
@@ -52,6 +55,9 @@ import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/a
     AddDocTypeComponent,
     ThesisDetailListComponent,
     AddMilestoneComponent,
+    MilestoneDetailComponent,
+    MilestoneStudentsComponent,
+    MilestoneDocsComponent,
   ],
   imports: [
     CommonModule,

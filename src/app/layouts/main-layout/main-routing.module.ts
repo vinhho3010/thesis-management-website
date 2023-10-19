@@ -12,6 +12,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
+import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'milestones',
         component: MilestonesComponent
+      },
+      {
+        path: 'milestones/:id',
+        component: MilestoneDetailComponent
       },
       {
         path: 'class',
