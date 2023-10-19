@@ -5,7 +5,6 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { HomeComponent } from 'src/app/pages/home/home/home.component';
 import { MilestonesComponent } from 'src/app/pages/home/milestones/milestones.component';
 import { ClassComponent } from 'src/app/pages/home/class/class.component';
-import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { StudentListComponent } from 'src/app/pages/home/student-list/student-list.component';
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
 import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/register-topic.component';
@@ -13,6 +12,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
+import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
 
 
 const routes: Routes = [
@@ -30,12 +30,12 @@ const routes: Routes = [
         component: MilestonesComponent
       },
       {
-        path: 'class',
-        component: ClassComponent
+        path: 'milestones/:id',
+        component: MilestoneDetailComponent
       },
       {
-        path: 'topics',
-        component: TopicComponent
+        path: 'class',
+        component: ClassComponent
       },
       {
         path: 'students',

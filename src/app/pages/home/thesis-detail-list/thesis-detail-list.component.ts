@@ -6,6 +6,7 @@ import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
 import { RouterExtService } from 'src/app/services/ex-router.service';
+import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
 import { ThesisService } from 'src/app/services/thesis.service';
@@ -32,7 +33,8 @@ export class ThesisDetailListComponent implements OnInit {
     private majorService: MajorService,
     private location: Location,
     private routerExService: RouterExtService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoaderService
   ) {
     this.detailThesisForm = new FormGroup({
       type: new FormControl(''),
@@ -74,11 +76,14 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   loadStudentList(): void {
+    this.loadingService.setLoading(true);
     this.classService.getStudentInClass(this.classId).subscribe({
       next: (res) => {
+        this.loadingService.setLoading(false);
         this.studentList = res;
       },
       error: (err) => {
+        this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       },
     });

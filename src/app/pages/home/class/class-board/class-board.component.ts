@@ -6,6 +6,7 @@ import { Validators, Editor, Toolbar } from 'ngx-editor';
 import { PostService } from 'src/app/services/post.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-class-board',
@@ -41,7 +42,8 @@ export class ClassBoardComponent implements OnInit {
     private classService: ClassService,
     private authService: AuthService,
     private postService: PostService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loadingService: LoaderService
   ) {
     this.createPostForm = new FormGroup({
       content: new FormControl(
@@ -65,11 +67,17 @@ export class ClassBoardComponent implements OnInit {
   }
 
   initClassInfo(): void {
+    this.loadingService.setLoading(true);
     this.classService.getClassInfo(this.classId as string).subscribe({
       next: (res) => {
+        this.loadingService.setLoading(false);
         this.className = res?.name ?? 'Nhóm 1';
         this.teacher = res.teacher;
       },
+      error: (err) => {
+        this.loadingService.setLoading(false);
+        this.toastService.showErrorToast(err.error.message);
+      }
     });
   }
 

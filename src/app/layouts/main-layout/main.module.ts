@@ -11,7 +11,6 @@ import { MilestonesComponent } from 'src/app/pages/home/milestones/milestones.co
 import { ActiveStudentListComponent } from 'src/app/pages/home/student-list/active-student-list/active-student-list.component';
 import { PendingStudentListComponent } from 'src/app/pages/home/student-list/pending-student-list/pending-student-list.component';
 import { StudentListComponent } from 'src/app/pages/home/student-list/student-list.component';
-import { TopicComponent } from 'src/app/pages/home/topic/topic.component';
 import { ClassOverviewComponent } from 'src/app/pages/home/class/class-overview/class-overview.component';
 import { MilestoneCardComponent } from 'src/app/pages/home/milestones/milestone-card/milestone-card.component';
 import { ProcessComponent } from 'src/app/pages/home/process/process.component';
@@ -25,6 +24,9 @@ import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list
 import { AddDocComponent } from 'src/app/pages/home/dialog/add-doc/add-doc.component';
 import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-doc-type.component';
 import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/add-milestone.component';
+import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
+import { MilestoneDocsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-docs/milestone-docs.component';
+import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-students/milestone-students.component';
 
 
 
@@ -35,7 +37,6 @@ import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/a
     HomeComponent,
     ClassComponent,
     MilestonesComponent,
-    TopicComponent,
     StudentListComponent,
     ClassBoardComponent,
     RefDocumentsComponent,
@@ -54,6 +55,9 @@ import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/a
     AddDocTypeComponent,
     ThesisDetailListComponent,
     AddMilestoneComponent,
+    MilestoneDetailComponent,
+    MilestoneStudentsComponent,
+    MilestoneDocsComponent,
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 <div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
-  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Thêm mốc thời gian</h1>
+  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">{{data?.milestone ? 'Chỉnh sửa mốc thời gian' : 'Thêm mốc thời gian'}}</h1>
   <div class="form-wrapper">
     <form action="" [formGroup]="milestoneForm">
       <div class="input-field">
@@ -11,7 +11,7 @@
       <div class="input-field">
         <mat-form-field class="w-full" floatLabel="always">
           <mat-label>Chọn khoảng thời gian</mat-label>
-          <mat-date-range-input [rangePicker]="rangePicker" [min]="today">
+          <mat-date-range-input [rangePicker]="rangePicker">
             <!-- min day is today -->
             <input matStartDate placeholder="Ngày bắt đầu" formControlName="startDate">
             <input matEndDate placeholder="Ngày kết thúc" formControlName="endDate">

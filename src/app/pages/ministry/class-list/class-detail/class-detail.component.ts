@@ -12,6 +12,7 @@ import { ManageUserService } from 'src/app/services/manage-user.service';
 import { AddStudentToClassComponent } from '../../dialog/add-student-to-class/add-student-to-class.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Class } from 'src/app/Model/class';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-class-detail',
@@ -36,7 +37,9 @@ export class ClassDetailComponent {
         private majorService: MajorService,
         private manageUserService: ManageUserService,
         private dialog: MatDialog,
-        private router: Router) {
+        private router: Router,
+        private loadingService: LoaderService
+        ) {
       this.classDetailForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
         semester: new FormControl('', [Validators.required]),
@@ -120,11 +123,14 @@ export class ClassDetailComponent {
     }
 
     loadClassInfo(): void {
+      this.loadingService.setLoading(true);
       this.classService.getClassInfo(this.classId).subscribe({
         next: (res: Class) => {
+          this.loadingService.setLoading(false);
           this.initDetailData(res);
         },
         error: (err) => {
+          this.loadingService.setLoading(false);
           this.toastService.showErrorToast(err.error.message);
         },
         complete: () => {

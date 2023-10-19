@@ -12,6 +12,10 @@ export class MilestoneService {
     return this.http.get<any>(`/api/milestone/class/${classId}`);
   }
 
+  getMilestone(id: string) {
+    return this.http.get<any>(`/api/milestone/${id}`);
+  }
+
   createMilestone(classId: string, milestone: any){
     return this.http.post<any>(`/api/milestone/class/${classId}`, milestone);
   }
