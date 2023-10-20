@@ -1,6 +1,6 @@
 <div class="wrapper min-h-[80vh]">
   <div class="class-wrapper" *ngIf="hasClassInfo; else noCLassInfo">
-    <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+    <mat-tab-group mat-stretch-tabs animationDuration="0ms" [selectedIndex]="selectedTab">
       <mat-tab label="Feed">
         <ng-template mat-tab-label>
           Bảng tin

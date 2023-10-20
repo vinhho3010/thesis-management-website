@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { FileUpload } from '../Model/fileUpload';
 import { RefDocsService } from './ref-docs.service';
 import { ToastService } from './local/toast.service';
+import { Thesis } from '../Model/thesis';
+import { ThesisVersionService } from './thesis-version.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,16 @@ export class FirebaseService {
     private db: AngularFireDatabase,
     private storage: AngularFireStorage,
     private refDocsService: RefDocsService,
+    private thesisVersionService: ThesisVersionService,
     private toastService: ToastService
     ) { }
 
   addDocForClass(fileUpload: FileUpload, typeId:string): any {
     return this.pushFileToStorage(fileUpload, this.saveFileDataToRefDoc.bind(this, fileUpload, typeId));
+  }
+
+  addDocForThesisVersion(fileUpload: FileUpload, thesisVersionId: string): any {
+    return this.pushFileToStorage(fileUpload, this.updateUrlForThesisVersion.bind(this, fileUpload, thesisVersionId));
   }
 
   pushFileToStorage(fileUpload: FileUpload, storeUrlFile: Function): Observable<number | undefined> {
@@ -54,6 +61,17 @@ export class FirebaseService {
     });
   }
 
+  updateUrlForThesisVersion(fileUpload: FileUpload, thesisVersionId: string): void {
+    this.thesisVersionService.updateThesisVersionUrl(thesisVersionId, fileUpload).subscribe({
+      next: (res) => {
+        this.toastService.showSuccessToast('Upload file thành công');
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Upload file thất bại');
+      }
+    });
+  }
+
   getFiles(numberItems: number): AngularFireList<FileUpload> {
     return this.db.list(this.basePath, ref =>
       ref.limitToLast(numberItems));
@@ -66,6 +84,21 @@ export class FirebaseService {
         this.toastService.showSuccessToast('Xóa file thành công');
         if(reloadCallback){
           reloadCallback();
+        }
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Xóa file thất bại');
+      }
+    });
+  }
+
+  deleteThesisVersionFile(thesisVersionId: string, fileName: string, reloadCallback?: Function): void {
+    this.thesisVersionService.updateThesisVersionUrl(thesisVersionId, {url: '', title: ''}).subscribe({
+      next: (res) => {
+        this.deleteFileStorage(fileName);
+        this.toastService.showSuccessToast('Xóa file thành công');
+        if(reloadCallback){
+          setTimeout(() => reloadCallback(), 0);
         }
       },
       error: (err) => {

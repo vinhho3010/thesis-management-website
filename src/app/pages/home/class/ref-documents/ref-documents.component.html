@@ -1,4 +1,10 @@
 <div class="document-wrapper max-w-5xl mx-auto">
+  <div class="flex justify-start items-center mt-3">
+    <button mat-button color="basic" (click)="onGoBack()" class="rounded-xl">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      Trở về
+    </button>
+  </div>
   <div class="filter-wrapper w-full flex justify-between items-center pr-3 pt-4">
     <div class="text-3xl font-medium text-blue-600">
       {{docType?.name}}

@@ -6,7 +6,7 @@
       </div>
       <mat-card class="mat-elevation-z0 info-card p-3">
         <div class="flex flex-row justify-start items-center">
-          <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="avatar-info">
+          <img [src]="'../../../../../assets/picture/default-avatar.svg'" class="avatar-info">
           <span class="name-info"> {{teacher?.fullName}} </span>
         </div>
       </mat-card>
@@ -20,7 +20,7 @@
       <mat-card *ngFor="let student of studentList" class="mat-elevation-z0 info-card p-3">
         <div class="flex justify-between">
           <div class="flex flex-row justify-start items-center">
-            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="avatar-info">
+            <img [src]="'../../../../../assets/picture/default-avatar.svg'" class="avatar-info">
             <span class="name-info"> {{student?.fullName}} </span>
           </div>
           <div class="flex items-center pr-2">

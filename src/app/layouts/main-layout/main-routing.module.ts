@@ -13,6 +13,7 @@ import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/re
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
 import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
+import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path: 'process',
         component: ProcessComponent
+      },
+      {
+        path: 'process/:id',
+        component: ProcessDetailComponent
       },
       {
         path: 'register-topic',

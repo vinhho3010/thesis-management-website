@@ -27,6 +27,7 @@ import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/a
 import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
 import { MilestoneDocsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-docs/milestone-docs.component';
 import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-students/milestone-students.component';
+import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 
 
 
@@ -58,6 +59,7 @@ import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milest
     MilestoneDetailComponent,
     MilestoneStudentsComponent,
     MilestoneDocsComponent,
+    ProcessDetailComponent
   ],
   imports: [
     CommonModule,

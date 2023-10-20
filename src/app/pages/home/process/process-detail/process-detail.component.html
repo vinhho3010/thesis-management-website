@@ -1,0 +1,83 @@
+<div class="milestone-student mx-auto max-w-5xl px-2 mt-9">
+  <div class="flex justify-start items-center">
+    <button mat-button color="basic" class="rounded-xl" (click)="onNavigateBack()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      Trở về
+    </button>
+  </div>
+  <div class="milestone-info mt-1 text-gray-600 text-lg border-b border-gray-300 p-3">
+    <div class="milestone-info-head mb-2 flex items-center justify-start">
+      <span class="text-xl text-blue-600 mr-2">Chi tiết mốc thời gian</span>
+    </div>
+    <div class="milestone-info__title">
+      <span>
+        <span class="font-medium">Tiêu đề:</span>
+        {{currentMilestone?.title ?? 'Không có'}}
+      </span>
+    </div>
+    <div class="milestone-info__period">
+      <span>
+        <span class="font-medium"> Thời gian thực hiện: </span>
+        {{currentMilestone?.startDate | date: 'dd/MM/yyyy'}} - {{currentMilestone?.endDate | date: 'dd/MM/yyyy'}}
+      </span>
+    </div>
+    <div class="milestone-info__submitted">
+      <span>
+        <span class="font-medium"> Trạng thái: &nbsp;</span>
+        <span *ngIf="currentVersion?.url" class="text-green-400">Đã nộp bài</span>
+        <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa nộp bài</span>
+      </span>
+    </div>
+    <div class="description" *ngIf="currentMilestone?.description">
+      <span class="font-medium">Yêu cầu:</span>
+      <div class="description-content">
+        <p [innerHTML]="currentMilestone?.description | sanitizedHtml"></p>
+      </div>
+    </div>
+  </div>
+  <div class="submit-field p-3">
+    <div class="title text-blue-600 text-xl my-3">
+      Đính kèm tài liệu
+    </div>
+    <div class="input-file-field">
+      <div class="upload-field w-full flex items-center justify-start bg-gray-100 rounded-xl p-2">
+        <input type="file" class="hidden" (change)="onFileSelected($event)" accept=".pdf" #fileUpload>
+        <button *ngIf="!(currentVersion?.url || isShowLoading)" mat-flat-button color="primary" class="py-6 px-6 rounded-xl max-w-xs"
+          (click)="fileUpload.click()"
+          [matTooltip]="fileName"
+          [matTooltipDisabled]="!fileName">
+          <mat-icon>insert_drive_file_outline</mat-icon>
+          <span>Chọn tập tin</span>
+        </button>
+        <div class="flex flex-col" *ngIf="!isShowLoading">
+          <span class="line-clamp-1 ml-2">{{fileName ? fileName : "Chưa có tập tin nào được chọn"}}</span>
+          <span *ngIf="currentVersion?.url" class="text-gray-500 ml-2">{{currentVersion?.updateUrlAt | dateToText}}</span>
+        </div>
+
+        <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
+          <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate" [value]="percentage"></mat-progress-bar>
+          <span class="ml-2 font-medium">{{percentage}}%</span>
+        </div>
+
+
+        <div class="ml-2 flex-grow flex justify-end">
+          <button *ngIf="!(currentVersion?.url || isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" (click)="clearFileInput()">
+            <mat-icon>clear</mat-icon>
+          </button>
+
+          <button *ngIf="currentVersion?.url" mat-icon-button matTooltip="Xem tài liệu" (click)="viewSubmitDoc.click()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+
+          <a #viewSubmitDoc [href]="currentVersion?.url" rel="noopener noreferrer" target="_blank" class="hidden"></a>
+        </div>
+      </div>
+    </div>
+    <button *ngIf="!currentVersion?.url" mat-flat-button color="primary" class="px-4 py-3 rounded-xl bg-blue-600 min-w-[125px] mt-3 shadow-md" (click)="onSubmitFile()" [disabled]="isShowLoading">
+      <span>Gửi bài</span>
+    </button>
+    <button *ngIf="currentVersion?.url" mat-flat-button color="warn" class="px-4 py-3 rounded-xl min-w-[125px] mt-3 shadow-md" (click)="onCancelFile()">
+      <span>Huỷ bài nộp</span>
+    </button>
+  </div>
+</div>

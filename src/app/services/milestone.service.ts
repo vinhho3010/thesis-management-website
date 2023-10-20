@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Milestone } from '../Model/milestone';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MilestoneService {
   }
 
   getMilestone(id: string) {
-    return this.http.get<any>(`/api/milestone/${id}`);
+    return this.http.get<Milestone>(`/api/milestone/${id}`);
   }
 
   createMilestone(classId: string, milestone: any){

@@ -28,7 +28,7 @@
     <div class="milestone-info__submitted">
       <span>
         <span class="font-medium"> Số bài đã nộp:</span>
-        {{currentMilestone?.thesisVersionList.length ?? 0}}
+        {{submittedStudentCount}}/{{currentMilestone?.thesisVersionList?.length}}
       </span>
     </div>
   </div>
@@ -40,7 +40,7 @@
       <div class="mt-2">
         <mat-form-field class="w-full md:w-1/2 lg:w-1/4">
           <mat-label>Lựa chọn</mat-label>
-          <mat-select value="all">
+          <mat-select value="all" (selectionChange)="onChangeFilter($event)">
             <mat-option value="all">Tất cả sinh viên</mat-option>
             <mat-option value="completed">Sinh viên đã hoàn thành</mat-option>
             <mat-option value="notComplete">Sinh viên chưa hoàn thành</mat-option>
@@ -48,20 +48,26 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="submit-list">
-      <mat-card *ngFor="let student of [1, 2, 3]" class="mat-elevation-z0 info-card p-3">
+    <div class="submit-list" *ngIf="thesisVersionList && thesisVersionList.length > 0; else emptyStudent">
+      <mat-card *ngFor="let item of thesisVersionList" class="mat-elevation-z0 info-card p-3">
         <div class="flex justify-between">
           <div class="flex flex-row justify-start items-center">
-            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="avatar-info">
-            <span class="name-info"> {{student}} </span>
+            <img src="../../../../../../assets/picture/default-avatar.svg" class="avatar-info">
+            <span class="name-info"> {{item?.student?.fullName}} </span>
           </div>
           <div class="flex items-center pr-2">
-            <button mat-icon-button color="primary">
+            <button mat-icon-button color="primary" [disabled]="!item?.url">
               <mat-icon class="text-gray-700">keyboard_arrow_right</mat-icon>
             </button>
           </div>
         </div>
       </mat-card>
     </div>
+
+    <ng-template #emptyStudent>
+      <div class="flex justify-center items-center mt-3">
+        <span class="text-gray-500">Không có sinh viên nào</span>
+      </div>
+    </ng-template>
   </div>
 </div>

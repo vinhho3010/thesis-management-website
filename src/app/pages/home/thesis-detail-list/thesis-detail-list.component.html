@@ -5,7 +5,7 @@
       <div class="title">Danh sách sinh viên</div>
       <div class="students-list">
         <mat-card *ngFor="let student of studentList"
-         class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 shadow-sm"
+         class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 hover:shadow-md"
          [class.bg-blue-500]="student._id === selectedStudent._id"
          [class.text-white]="student._id === selectedStudent._id"
          [class.hover:bg-blue-400]="student._id === selectedStudent._id"
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="w-full md:w-5/12 px-2">
+  <div class="w-full md:w-4/12 px-2">
     <!-- Second component with 5 columns -->
     <div class="w-full rounded-xl px-2 py-3 border border-gray-300 min-h-[50vh]">
       <form class="form-wrapper">
@@ -101,7 +101,7 @@
       </form>
     </div>
   </div>
-  <div class="w-full md:w-5/12 px-2">
+  <div class="w-full md:w-6/12 px-2">
     <!-- Third component with 5 columns -->
     <div class="w-full bg-gray-500 min-h-[50vh]">
       <!-- iframe to see pdf document -->

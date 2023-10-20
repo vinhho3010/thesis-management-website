@@ -6,6 +6,8 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { MilestoneService } from 'src/app/services/milestone.service';
 import { AddMilestoneComponent } from '../../../dialog/add-milestone/add-milestone.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ThesisVersion } from 'src/app/Model/milestone';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-milestone-students',
@@ -15,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class MilestoneStudentsComponent implements OnInit {
   milestoneId: string;
   currentMilestone: any;
+  submittedStudentCount = 0;
+  thesisVersionList: ThesisVersion[] = [];
 
   constructor(
     private milestoneService: MilestoneService,
@@ -37,12 +41,22 @@ export class MilestoneStudentsComponent implements OnInit {
       next: (res) => {
         this.loadingService.setLoading(false);
         this.currentMilestone = res;
+        this.thesisVersionList = this.currentMilestone.thesisVersionList;
+        this.countSubmittedStudent();
       },
       error: (err) => {
         this.loadingService.setLoading(false);
         this.toastService.showErrorToast(err.error.message);
       },
     });
+  }
+
+  countSubmittedStudent() {
+    this.thesisVersionList.forEach((version: any) => {
+      if (version.url) {
+        this.submittedStudentCount++;
+      }
+    })
   }
 
   onEditMilestone(milestone: any) {
@@ -68,6 +82,23 @@ export class MilestoneStudentsComponent implements OnInit {
         this.toastService.showErrorToast('Không cập nhật được');
       }
     })
+  }
+
+  onChangeFilter(event: MatSelectChange) {
+    const filter = event.source.value;
+    if(filter === 'completed') {
+      this.thesisVersionList = this.currentMilestone.thesisVersionList.filter((version: any) => {
+        return version?.url;
+      }
+      );
+    } else if (filter === 'notCompleted') {
+      this.thesisVersionList = this.currentMilestone.thesisVersionList.filter((version: any) => {
+        return !version?.url;
+      }
+      );
+    } else {
+      this.thesisVersionList = this.currentMilestone.thesisVersionList;
+    }
   }
 
   onGoBack() {

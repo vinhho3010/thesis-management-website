@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
@@ -28,7 +28,8 @@ export class RefDocumentsComponent implements OnInit {
     private toastService: ToastService,
     private firebaseService: FirebaseService,
     private route: ActivatedRoute,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -77,5 +78,14 @@ export class RefDocumentsComponent implements OnInit {
         this.toastService.showErrorToast(err.error.message);
       },
     });
+  }
+
+  onGoBack(){
+    const navigationExtra: NavigationExtras = {
+      state: {
+        previousIndex: 1
+      }
+    }
+    this.router.navigate(['class'], navigationExtra);
   }
 }
