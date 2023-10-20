@@ -5,11 +5,11 @@
       {{ milestone.title }}
     </div>
     <div class="action-button">
-      <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl">
+      <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>
 
-      <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">d
+      <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
         <button mat-menu-item color="primary" (click)="onEditeMilestone($event)">
           <mat-icon>edit</mat-icon>
           <span>Sửa</span>
