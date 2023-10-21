@@ -24,8 +24,8 @@
     <div class="milestone-info__submitted">
       <span>
         <span class="font-medium"> Trạng thái: &nbsp;</span>
-        <span *ngIf="currentVersion?.url" class="text-green-400">Đã nộp bài</span>
-        <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa nộp bài</span>
+        <span *ngIf="currentVersion?.url" class="text-green-400">Đã hoàn thành</span>
+        <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa hoàn thành</span>
       </span>
     </div>
     <div class="description" *ngIf="currentMilestone?.description">
@@ -61,7 +61,7 @@
 
 
         <div class="ml-2 flex-grow flex justify-end">
-          <button *ngIf="!(currentVersion?.url || isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" (click)="clearFileInput()">
+          <button *ngIf="!(currentVersion?.url || isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" color="warn" (click)="clearFileInput()">
             <mat-icon>clear</mat-icon>
           </button>
 
@@ -73,7 +73,9 @@
         </div>
       </div>
     </div>
-    <button *ngIf="!currentVersion?.url" mat-flat-button color="primary" class="px-4 py-3 rounded-xl bg-blue-600 min-w-[125px] mt-3 shadow-md" (click)="onSubmitFile()" [disabled]="isShowLoading">
+    <button *ngIf="!currentVersion?.url" mat-flat-button color="primary" class="px-4 py-3 rounded-xl bg-blue-600 min-w-[125px] mt-3 shadow-md"
+    [class.bg-gray-300]="isShowLoading"
+     (click)="onSubmitFile()" [disabled]="isShowLoading">
       <span>Gửi bài</span>
     </button>
     <button *ngIf="currentVersion?.url" mat-flat-button color="warn" class="px-4 py-3 rounded-xl min-w-[125px] mt-3 shadow-md" (click)="onCancelFile()">

@@ -12,10 +12,10 @@ export interface Milestone {
 }
 
 export interface ThesisVersion {
+  _id: string;
   url: string;
   fileName: string;
   milestone: Milestone;
-  _id: string;
   student: any;
   updatedAt: Date;
   createdAt: Date;

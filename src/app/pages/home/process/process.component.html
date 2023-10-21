@@ -1,18 +1,25 @@
 <div class="document-wrapper max-w-5xl mx-auto">
-  <div class="docs-list w-full flex justify-start flex-col">
+  <div *ngIf="classId; else nonClass" class="docs-list w-full flex justify-start flex-col">
     <div class="title text-blue-600 text-2xl my-3">
       Danh sách mốc thời gian
     </div>
     <div class="docs-item-wrapper w-full">
-      <mat-card class="docs-item hover:bg-gray-100 hover:shadow-md" *ngFor="let milestone of milestoneList" [class.mat-elevation-z0]="true"  (click)="onViewDetail(milestone)">
-        <mat-card-content>Tiêu đề: {{milestone.title}}</mat-card-content>
+      <mat-card class="docs-item hover:bg-gray-100 hover:shadow-md cursor-pointer" *ngFor="let version of thesisVersionsList" [class.mat-elevation-z0]="true"  (click)="onViewDetail(version)">
+        <mat-card-content>Tiêu đề: {{version?.milestone.title}}</mat-card-content>
         <mat-card-content class="text-gray-500 text-sm">
-          Thời gian thực hiện: {{milestone.startDate | date: 'dd/MM/yyyy'}} - {{milestone.endDate | date: 'dd/MM/yyyy'}}
+          Thời gian thực hiện: {{version?.milestone.startDate | date: 'dd/MM/yyyy'}} - {{version?.milestone.endDate | date: 'dd/MM/yyyy'}}
         </mat-card-content>
         <mat-card-content class="text-gray-500 text-sm">
-          Trạng thái: {{milestone.status ?? 'Chưa nộp bài'}}
+          Trạng thái:
+          <span *ngIf="version?.url" class="text-green-400">Đã hoàn thành</span>
+          <span *ngIf="!version?.url" class="text-red-400">Chưa hoàn thành</span>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
+  <ng-template #nonClass>
+    <div class="non-class flex justify-center items-center rounded-xl border border-gray-300 mt-3 p-3">
+      <span class="text-lg text-gray-500">Vui lòng đăng ký và tham gia một nhóm hướng dẫn</span>
+    </div>
+  </ng-template>
 </div>

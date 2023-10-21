@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { StorageService } from 'src/app/services/local/storage.service';
@@ -50,12 +51,27 @@ export class LoginComponent {
           this.loadingService.setLoading(false);
           this.authService.saveUser(res.data);
           this.toast.showSuccessToast('Đăng nhập thành công');
-          this.router.navigate(['/home']);
+          this.navigateBaseOnRole(this.authService.getRole());
         },
         error: (err) => {
           this.loadingService.setLoading(false);
           this.toast.showErrorToast('Đăng nhập thất bại');
         },
       });
+  }
+
+  navigateBaseOnRole(role: RoleAccount | null) {
+    switch (role) {
+      case RoleAccount.ADMIN:
+        this.router.navigate(['/admin']);
+        break;
+      case RoleAccount.TEACHER:
+      case RoleAccount.STUDENT:
+        this.router.navigate(['/student']);
+        break;
+      case RoleAccount.MINISTRY:
+        this.router.navigate(['/ministry']);
+        break;
+    }
   }
 }

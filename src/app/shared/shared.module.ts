@@ -15,6 +15,7 @@ import { DateToTextPipe } from './pipes/dateToText.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DomUrlPipe, SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
     DateToTextPipe,
     SanitizedHtmlPipe,
     ThesisStatusPipe,
-    DomUrlPipe
+    DomUrlPipe,
+    SafePipe
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
     DateToTextPipe,
     SanitizedHtmlPipe,
     ThesisStatusPipe,
-    DomUrlPipe
+    DomUrlPipe,
+    SafePipe
   ]
 })
 export class SharedModule { }

@@ -17,6 +17,16 @@ export class ThesisService {
     return this.http.put(`/api/thesis/student/${id}`, data);
   }
 
+  updateThesisCustomUrl(id: string, fileData: any, isCustomUrl: boolean){
+    const data = {
+      url: fileData.url,
+      customFileName: fileData.title,
+      isCustomUrl: isCustomUrl,
+      customUrl: fileData.url
+    }
+    return this.http.put(`/api/thesis/${id}/custom-url`, data);
+  }
+
   getThesisVersion(studentId: string, milestoneId: string){
     return this.http.get(`/api/thesis/student/${studentId}/milestone/${milestoneId}`);
   }

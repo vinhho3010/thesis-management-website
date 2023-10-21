@@ -1,11 +1,6 @@
-<div class="wrapper max-w-5xl mx-auto">
-  <div class="thesis-info">
-    <div class="thesis-info__cover flex justify-center">
-      <div class="cover-wrapper rounded-xl overflow-hidden">
-        <img src="https://picsum.photos/200/300" alt="cover" />
-      </div>
-    </div>
-    <div class="info-wrapper border border-gray-300 rounded-xl mt-3 p-3">
+<div class="wrapper max-w-6xl mx-auto">
+  <div class="thesis-info lg:w-2/5 w-full" *ngIf="thesisInfo; else nonThesis">
+    <div class="info-wrapper border border-gray-300 rounded-xl mt-3 p-3 flex flex-col gap-3">
       <div class="thesis-info__title">
         <span class="text-lg font-bold text-gray-600">Đề tài: </span>
         <span class="text-lg text-gray-500">{{thesisInfo.topic}}</span>
@@ -26,6 +21,62 @@
         <span class="text-lg font-bold text-gray-600">Trạng thái: </span>
         <span class="text-lg text-gray-500">{{thesisInfo.status | thesisStatus}}</span>
       </div>
+      <div class="thesis-info__status">
+        <span class="text-lg font-bold text-gray-600">Tập tin hiển thị:</span>
+        <mat-form-field class="w-full mt-2" subscriptSizing="dynamic" *ngIf="!isCustomFile.value">
+          <mat-select [panelClass]="'panel-custom'" placeholder="Chọn tập tin hiển thị" [formControl]="selectedVersion"
+            (selectionChange)="onChangeMilestoneFile($event)">
+            <mat-option [value]="version" *ngFor="let version of versionsHasDocs; let index=index">
+              {{index + 1}}. {{version?.milestone?.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="self-uploadFile mt-2" *ngIf="isCustomFile.value">
+          <div class="upload-field w-full flex items-center justify-start bg-gray-100 rounded-xl p-2">
+            <input type="file" class="hidden" (change)="onFileSelected($event)" accept=".pdf" #fileUpload>
+            <button mat-flat-button color="primary" class="py-6 px-4 rounded-xl max-w-xs"
+              *ngIf="!(isShowLoading || fileName)" (click)="fileUpload.click()" [matTooltip]="fileName"
+              [matTooltipDisabled]="!fileName">
+              <mat-icon>insert_drive_file_outline</mat-icon>
+              <span>Chọn tập tin</span>
+            </button>
+            <div class="flex flex-col" *ngIf="!isShowLoading">
+              <span class="line-clamp-1 ml-2">{{fileName ? fileName : "Chưa có tập tin nào được chọn"}}</span>
+            </div>
+
+            <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
+              <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate"
+                [value]="percentage"></mat-progress-bar>
+              <span class="ml-2 font-medium">{{percentage}}%</span>
+            </div>
+
+            <div class="ml-2 flex-grow flex justify-end">
+              <button *ngIf="!(isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" color="warn"
+                (click)="clearFileInput()">
+                <mat-icon>clear</mat-icon>
+              </button>
+              <button *ngIf="!(isShowLoading || (!fileName && !(thesisInfo?.url === thesisInfo?.customUrl)) )"
+                mat-icon-button color="primary" matTooltip="Tải lên tài liệu"
+                (click)="onSubmitFile()">
+                <mat-icon>cloud_upload</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <mat-checkbox [formControl]="isCustomFile" (change)="onCheckBoxCustomFileChange($event)">
+            Tải lên tập tin
+          </mat-checkbox>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="lg:w-3/5 w-full doc-view mt-3 px-3" *ngIf="thesisInfo.url">
+    <iframe [src]="thesisInfo.url | safe:'resourceUrl' " ></iframe>
+  </div>
+  <ng-template #nonThesis>
+    <div class="non-thesis flex justify-center items-center rounded-xl border border-gray-300 mt-3 p-3">
+      <span class="text-lg text-gray-500">Chưa có đề tài</span>
+    </div>
+  </ng-template>
 </div>

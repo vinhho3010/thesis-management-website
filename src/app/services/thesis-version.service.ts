@@ -13,6 +13,10 @@ export class ThesisVersionService {
     return this.http.get<any>(`/api/thesis-version/milestone/${milestoneId}/student/${studentId}`);
   }
 
+  getStudentThesisVersion(studentId: string) {
+    return this.http.get<any>(`/api/thesis-version/student/${studentId}`);
+  }
+
   updateThesisVersionUrl(id: string, fileData: FileUpload | any) {
     const data = {
       url: fileData.url,

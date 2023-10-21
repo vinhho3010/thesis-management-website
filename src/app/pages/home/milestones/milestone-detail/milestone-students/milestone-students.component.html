@@ -34,10 +34,10 @@
   </div>
   <div class="mt-3 p-3">
     <div class="title">
-      <div class="text-xl text-blue-600">
-        <span>Danh sách sinh viên</span>
+      <div class="text-xl text-blue-600 ">
+        <span>Danh sách sinh viên ({{thesisVersionList.length ? thesisVersionList.length : 0}})</span>
       </div>
-      <div class="mt-2">
+      <div class="mt-4">
         <mat-form-field class="w-full md:w-1/2 lg:w-1/4">
           <mat-label>Lựa chọn</mat-label>
           <mat-select value="all" (selectionChange)="onChangeFilter($event)">
@@ -49,20 +49,44 @@
       </div>
     </div>
     <div class="submit-list" *ngIf="thesisVersionList && thesisVersionList.length > 0; else emptyStudent">
-      <mat-card *ngFor="let item of thesisVersionList" class="mat-elevation-z0 info-card p-3">
-        <div class="flex justify-between">
-          <div class="flex flex-row justify-start items-center">
-            <img src="../../../../../../assets/picture/default-avatar.svg" class="avatar-info">
-            <span class="name-info"> {{item?.student?.fullName}} </span>
-          </div>
-          <div class="flex items-center pr-2">
-            <button mat-icon-button color="primary" [disabled]="!item?.url" (click)="viewSubmitDoc.click()">
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-            <a #viewSubmitDoc [href]="item?.url" rel="noopener noreferrer" target="_blank" class="hidden"></a>
-          </div>
+      <div *ngIf="submittedStudentList.length > 0 && (filterSelected==='all' || filterSelected==='completed')" class="mb-4">
+        <div class="list-title">
+          <span class="text-lg mb-2 text-blue-600">Đã hoàn thành ({{submittedStudentList.length}})</span>
         </div>
-      </mat-card>
+        <mat-card *ngFor="let item of submittedStudentList" class="mat-elevation-z0 info-card p-3">
+          <div class="flex justify-between">
+            <div class="flex flex-row justify-start items-center">
+              <img src="../../../../../../assets/picture/default-avatar.svg" class="avatar-info">
+              <span class="name-info"> {{item?.student?.fullName}} </span>
+            </div>
+            <div class="flex items-center pr-2">
+              <button mat-icon-button color="primary" [disabled]="!item?.url" matTooltip="Xem tài liệu" (click)="onViewSubmitDoc(item?.url)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div *ngIf="notSubmittedStudentList.length > 0 && (filterSelected==='all' || filterSelected==='notComplete')">
+        <div class="list-title">
+          <span class="text-lg mb-2 text-orange-600">Chưa hoàn thành ({{notSubmittedStudentList.length}})</span>
+        </div>
+        <mat-card *ngFor="let item of notSubmittedStudentList" class="mat-elevation-z0 info-card p-3">
+          <div class="flex justify-between">
+            <div class="flex flex-row justify-start items-center">
+              <img src="../../../../../../assets/picture/default-avatar.svg" class="avatar-info">
+              <span class="name-info"> {{item?.student?.fullName}} </span>
+            </div>
+            <div class="flex items-center pr-2">
+              <button mat-icon-button color="primary" [disabled]="!item?.url" (click)="onViewSubmitDoc(item?.url)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+              <!-- <a #viewSubmitDoc [href]="item?.url" rel="noopener noreferrer" target="_blank" class="hidden"></a> -->
+            </div>
+          </div>
+        </mat-card>
+      </div>
     </div>
 
     <ng-template #emptyStudent>

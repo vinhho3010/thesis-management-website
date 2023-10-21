@@ -25,6 +25,6 @@
     {{ milestone.startDate | date: 'dd/MM/yyyy' }} - {{ milestone.endDate | date: 'dd/MM/yyyy' }}
   </div>
   <div class="card-description pt-3">
-   Số bài đã nộp: {{ milestone?.thesisVersionList.length}}
+   Số bài đã nộp: {{submittedStudentCount}} / {{ milestone?.thesisVersionList.length}}
   </div>
 </div>

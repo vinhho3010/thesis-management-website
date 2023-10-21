@@ -1,11 +1,18 @@
 .wrapper{
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   width: 100%;
   overflow: hidden;
   background-color: white;
   padding: 16px;
+
+  .doc-view {
+    iframe {
+      min-height: 80vh;
+      width: 100%;
+      border-radius: 12px;
+    }
+  }
   }
 

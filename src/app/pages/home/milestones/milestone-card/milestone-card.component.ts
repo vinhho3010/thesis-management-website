@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,12 +6,17 @@ import { Router } from '@angular/router';
   templateUrl: './milestone-card.component.html',
   styleUrls: ['./milestone-card.component.scss']
 })
-export class MilestoneCardComponent {
+export class MilestoneCardComponent implements OnInit {
   @Input() milestone: any;
   @Output() deleteMilestone = new EventEmitter<any>();
   @Output() editeMilestone = new EventEmitter<any>();
+  submittedStudentCount = 0;
 
   constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    this.countSubmittedStudent();
+  }
 
   onDeleteMilestone(event: any) {
     event.stopPropagation();
@@ -25,6 +30,14 @@ export class MilestoneCardComponent {
 
   onNavigateToMilestone() {
     this.router.navigate(['/milestones', this.milestone._id]);
+  }
+
+  countSubmittedStudent() {
+    this.milestone.thesisVersionList.forEach((version: any) => {
+      if (version.url) {
+        this.submittedStudentCount++;
+      }
+    })
   }
 
 }

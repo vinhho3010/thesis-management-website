@@ -1,0 +1,9 @@
+<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
+  <div class="text-2xl font-medium mb-3">Xem tài liệu</div>
+  <div class="min-h-[80vh] mt-3 doc-wrapper">
+    <iframe [src]="url | safe:'resourceUrl' " scrolling="auto"></iframe>
+  </div>
+  <div class="mt-4 flex justify-end items-center">
+    <button mat-flat-button color="basic" class="rounded-xl px-4 py-5 min-w-[125px]" mat-dialog-close>Đóng</button>
+  </div>
+</div>

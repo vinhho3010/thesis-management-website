@@ -8,6 +8,7 @@ import { AddMilestoneComponent } from '../../../dialog/add-milestone/add-milesto
 import { MatDialog } from '@angular/material/dialog';
 import { ThesisVersion } from 'src/app/Model/milestone';
 import { MatSelectChange } from '@angular/material/select';
+import { ViewDocsComponent } from '../../../dialog/view-docs/view-docs.component';
 
 @Component({
   selector: 'app-milestone-students',
@@ -19,6 +20,9 @@ export class MilestoneStudentsComponent implements OnInit {
   currentMilestone: any;
   submittedStudentCount = 0;
   thesisVersionList: ThesisVersion[] = [];
+  filterSelected = 'all';
+  submittedStudentList: any[] = [];
+  notSubmittedStudentList: any[] = [];
 
   constructor(
     private milestoneService: MilestoneService,
@@ -42,6 +46,7 @@ export class MilestoneStudentsComponent implements OnInit {
         this.loadingService.setLoading(false);
         this.currentMilestone = res;
         this.thesisVersionList = this.currentMilestone.thesisVersionList;
+        this.loadStudentList();
         this.countSubmittedStudent();
       },
       error: (err) => {
@@ -49,6 +54,20 @@ export class MilestoneStudentsComponent implements OnInit {
         this.toastService.showErrorToast(err.error.message);
       },
     });
+  }
+
+  loadStudentList(): void {
+    const submitList = [] as any[];
+    const notSubmitList = [] as any[];
+    this.thesisVersionList.forEach((version: any) => {
+      if (version?.url) {
+        submitList.push(version);
+      } else {
+        notSubmitList.push(version);
+      }
+    });
+    this.submittedStudentList = submitList;
+    this.notSubmittedStudentList = notSubmitList;
   }
 
   countSubmittedStudent() {
@@ -86,22 +105,19 @@ export class MilestoneStudentsComponent implements OnInit {
 
   onChangeFilter(event: MatSelectChange) {
     const filter = event.source.value;
-    if(filter === 'completed') {
-      this.thesisVersionList = this.currentMilestone.thesisVersionList.filter((version: any) => {
-        return version?.url;
-      }
-      );
-    } else if (filter === 'notCompleted') {
-      this.thesisVersionList = this.currentMilestone.thesisVersionList.filter((version: any) => {
-        return !version?.url;
-      }
-      );
-    } else {
-      this.thesisVersionList = this.currentMilestone.thesisVersionList;
-    }
+    this.filterSelected = filter;
   }
 
   onGoBack() {
     this.router.navigate(['/home/milestones']);
+  }
+
+  onViewSubmitDoc(url: string) {
+    const docsConfig = {
+      data: {
+        url: url,
+      }
+    }
+    this.dialog.open(ViewDocsComponent, docsConfig)
   }
 }

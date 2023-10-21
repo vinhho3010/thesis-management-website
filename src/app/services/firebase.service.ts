@@ -7,8 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { FileUpload } from '../Model/fileUpload';
 import { RefDocsService } from './ref-docs.service';
 import { ToastService } from './local/toast.service';
-import { Thesis } from '../Model/thesis';
 import { ThesisVersionService } from './thesis-version.service';
+import { ThesisService } from './thesis.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class FirebaseService {
     private storage: AngularFireStorage,
     private refDocsService: RefDocsService,
     private thesisVersionService: ThesisVersionService,
+    private thesisService: ThesisService,
     private toastService: ToastService
     ) { }
 
@@ -30,6 +31,10 @@ export class FirebaseService {
 
   addDocForThesisVersion(fileUpload: FileUpload, thesisVersionId: string): any {
     return this.pushFileToStorage(fileUpload, this.updateUrlForThesisVersion.bind(this, fileUpload, thesisVersionId));
+  }
+
+  addCustomDocThesis(fileUpload: FileUpload, thesisId: string, reloadCallback?: Function) {
+    return this.pushFileToStorage(fileUpload, this.updateThesisUrl.bind(this, fileUpload, thesisId));
   }
 
   pushFileToStorage(fileUpload: FileUpload, storeUrlFile: Function): Observable<number | undefined> {
@@ -72,6 +77,20 @@ export class FirebaseService {
     });
   }
 
+  updateThesisUrl(fileUpload: FileUpload, thesisId: string, reloadCallback?: Function) {
+    this.thesisService.updateThesisCustomUrl(thesisId, fileUpload, true).subscribe({
+      next: (res) => {
+        this.toastService.showSuccessToast('Upload file thành công');
+        if(reloadCallback){
+          setTimeout(() => reloadCallback(), 0);
+        }
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Upload file thất bại');
+      }
+    });
+  }
+
   getFiles(numberItems: number): AngularFireList<FileUpload> {
     return this.db.list(this.basePath, ref =>
       ref.limitToLast(numberItems));
@@ -94,6 +113,25 @@ export class FirebaseService {
 
   deleteThesisVersionFile(thesisVersionId: string, fileName: string, reloadCallback?: Function): void {
     this.thesisVersionService.updateThesisVersionUrl(thesisVersionId, {url: '', title: ''}).subscribe({
+      next: (res) => {
+        this.deleteFileStorage(fileName);
+        this.toastService.showSuccessToast('Xóa file thành công');
+        if(reloadCallback){
+          setTimeout(() => reloadCallback(), 0);
+        }
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Xóa file thất bại');
+      }
+    });
+  }
+
+  deleteCustomThesisFile(thesisId: string, fileName: string, reloadCallback?: Function): void {
+    const emptyData = {
+      url: '',
+      title: '',
+    }
+    this.thesisService.updateThesisCustomUrl(thesisId, emptyData, false).subscribe({
       next: (res) => {
         this.deleteFileStorage(fileName);
         this.toastService.showSuccessToast('Xóa file thành công');

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {  Router } from '@angular/router';
 import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
+import { Thesis } from 'src/app/Model/thesis';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
 import { RouterExtService } from 'src/app/services/ex-router.service';
@@ -23,6 +24,7 @@ export class ThesisDetailListComponent implements OnInit {
   detailThesisForm: FormGroup;
   studentForm: FormGroup;
   majorList: any[] = [];
+  selectedThesis: Thesis | undefined;
   thesisStatusArray = Object.values(ThesisStatus);
 
   constructor(
@@ -95,6 +97,7 @@ export class ThesisDetailListComponent implements OnInit {
       next: (res) => {
         this.fillDataStudent(student);
         this.detailThesisForm.patchValue(res);
+        this.selectedThesis = res;
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
