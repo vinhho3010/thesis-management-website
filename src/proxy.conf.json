@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://ctu-tms.cyclic.app/",
+    "target": "http://localhost:8000",
     "secure": false
   }
 }
