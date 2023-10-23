@@ -1,0 +1,27 @@
+.wrapper{
+  max-height: 100%;
+  overflow-y: auto;
+  .form-wrapper{
+    .input-field{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.custom-btn{
+  border-radius: 12px;
+  padding: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper{
+    .form-wrapper{
+      .input-field{
+        display: block !important;
+      }
+    }
+  }
+
+}

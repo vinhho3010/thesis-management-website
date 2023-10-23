@@ -13,6 +13,7 @@ import { AddStudentToClassComponent } from '../../dialog/add-student-to-class/ad
 import { MatDialog } from '@angular/material/dialog';
 import { Class } from 'src/app/Model/class';
 import { LoaderService } from 'src/app/services/loader.service';
+import { schoolYear } from 'src/app/Model/enum/schoolYear';
 
 @Component({
   selector: 'app-class-detail',
@@ -24,12 +25,13 @@ export class ClassDetailComponent {
   classDetailForm: FormGroup;
   majorsAndTeacher: any[] = [];
   teacher$!: Observable<any[]>;
-  selectedTeacher!: AccountInfo;;
+  selectedTeacher!: AccountInfo;
 
   majors: any[] = [];
   teacherList: any[] = [];
   displayedColumns: string[] = ['studentCode', 'fullName', 'class', 'topic', 'actions'];
   dataSource = new MatTableDataSource();
+  schoolYear = schoolYear;
 
     constructor(private activatedRoute: ActivatedRoute,
        private classService: ClassService,

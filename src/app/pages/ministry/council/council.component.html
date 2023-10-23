@@ -1,1 +1,109 @@
-<p>council works!</p>
+<div class="council-wrapper">
+  <div class="council-list-header flex justify-between items-center mt-9 p-3">
+    <div class="list-title w-1/2 text-3xl text-blue-800">
+      Danh sách nhóm hội đồng
+    </div>
+
+  </div>
+<div class="lg:flex block justify-between items-center">
+  <div [formGroup]="filterOptionForm" class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
+    <mat-form-field floatLabel="always" appearance="outline" class="w-full">
+      <mat-label>Ngành</mat-label>
+      <mat-select placeholder="Chọn ngành học" formControlName="major">
+        <mat-option [value]="null">Chọn ngành học</mat-option>
+        <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" appearance="outline" class="w-full">
+      <mat-label>Niên khoá</mat-label>
+      <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
+        <mat-option [value]="null">Chọn niên khoá</mat-option>
+        <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full">
+      <mat-label>Học kỳ</mat-label>
+      <mat-select placeholder="Chọn học kỳ" formControlName="semester">
+        <mat-option [value]="null">Chọn học kỳ</mat-option>
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button mat-flat-button class="bg-blue-600 p-6 mb-4 rounded-xl text-white lg:mr-12 shadow-md" (click)="onCreateCouncil()">
+    <mat-icon>add</mat-icon>
+    <span class="ml-2">Thêm nhóm</span>
+  </button>
+</div>
+
+
+ <div class="council-list table-wrapper">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> STT </th>
+      <td mat-cell *matCellDef="let element; let i = dataIndex">
+        <span class="mobile-label">STT: </span>
+        {{dataSource.filteredData.indexOf(element) + 1}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên nhóm </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Tên nhóm: </span>
+        {{element.name}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="major">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngành </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Ngành: </span>
+         {{element.major.name}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="semester">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Học kỳ - Niên khoá </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Học kỳ: </span>
+        {{element?.semester}}/{{element?.schoolYear}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Số lượng: </span>
+        {{element?.student?.length ?? 0}}
+         </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+      <td mat-cell *matCellDef="let row">
+        <div class="button-wrapper">
+          <button mat-icon-button color="primary" (click)="onEditRow(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteRow(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="6">
+        <p class="text-lg text-gray-500 text-center p-4">Không có dữ liệu</p>
+      </td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>
+
+</div>

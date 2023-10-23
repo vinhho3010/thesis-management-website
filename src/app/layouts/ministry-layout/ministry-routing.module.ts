@@ -6,6 +6,7 @@ import { PublicThesisComponent } from 'src/app/pages/ministry/public-thesis/publ
 import { CouncilComponent } from 'src/app/pages/ministry/council/council.component';
 import { ClassDetailComponent } from 'src/app/pages/ministry/class-list/class-detail/class-detail.component';
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
+import { CouncilDetailComponent } from 'src/app/pages/ministry/council/council-detail/council-detail.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'council',
         component: CouncilComponent
+      },
+      {
+        path: 'council/:id',
+        component: CouncilDetailComponent
       }
     ]
   },

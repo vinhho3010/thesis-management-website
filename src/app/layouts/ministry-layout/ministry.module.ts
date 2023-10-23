@@ -12,6 +12,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ThesisCardComponent } from 'src/app/pages/ministry/public-thesis/thesis-card/thesis-card.component';
 import { AddStudentToClassComponent } from 'src/app/pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
 import { FormsModule } from '@angular/forms';
+import { AddCouncilComponent } from 'src/app/pages/ministry/dialog/add-council/add-council.component';
+import { CouncilDetailComponent } from 'src/app/pages/ministry/council/council-detail/council-detail.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     AddClassComponent,
     ClassDetailComponent,
     ThesisCardComponent,
-    AddStudentToClassComponent
+    AddStudentToClassComponent,
+    AddCouncilComponent,
+    CouncilDetailComponent,
   ],
   imports: [
     CommonModule,
