@@ -77,6 +77,10 @@ $thesis-management-website-theme: mat.define-light-theme((
   background-color: #adadad;
 }
 
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
 
 html, body { height: 100%; }
 body {

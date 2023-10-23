@@ -3,13 +3,13 @@
   aria-label="Sidebar"
   [ngClass]="getMobileMenuClass()">
   <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-    <ul class="space-y-2 font-medium">
+    <ul class="space-y-1 font-medium">
       <ng-container *ngFor="let routeInfo of routesInfo">
         <li>
           <a [ngClass]=""
             (click)="handleRouting(routeInfo)"
             [class.active]="isOnRoute(routeInfo.path)"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
+            class="flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
             <mat-icon>{{routeInfo.icon}}</mat-icon>
             <span class="ml-3">{{routeInfo.title}}</span>
           </a>
