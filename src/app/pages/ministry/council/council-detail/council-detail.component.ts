@@ -80,7 +80,7 @@ export class CouncilDetailComponent implements OnInit {
       member: data.member._id,
       schoolYear: data.schoolYear,
       semester: data.semester,
-    }, {emitEvent: true});
+    });
 
     //trigger onChangeMajor to fill select teacher
     this.onChangeMajor();
@@ -111,8 +111,20 @@ export class CouncilDetailComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  get submitData() {
+    return this.councilInfoForm.value;
+  }
 
+  onSubmit() {
+    this.councilService.updateCouncil(this.councilId, this.submitData).subscribe({
+      next: (res) => {
+        this.toastService.showSuccessToast('Cập nhật thành công');
+        this.loadCouncilInfo();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
   }
 
   onRemoveStudent(studentId: string) {}

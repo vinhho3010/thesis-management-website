@@ -14,10 +14,26 @@
 
 
 .table-wrapper {
+  padding: 8px;
   table {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    border-spacing: 0;
+    border-collapse: separate;
+    overflow: hidden;
+
     .mobile-label {
       display: none;
     }
+    .mat-mdc-row:nth-child(even) {
+      background: #f0f9ff;
+    }
+
+    .mat-mdc-header-row {
+      background: #60a5fa;
+      color: white;
+    }
+
   }
 }
 

@@ -4,48 +4,50 @@
   </div>
 
   <div class="pending-list">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
 
-      <ng-container matColumnDef="studentCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
-        <td mat-cell *matCellDef="let element"> {{element.studentCode}} </td>
-      </ng-container>
+        <ng-container matColumnDef="studentCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
+          <td mat-cell *matCellDef="let element"> {{element.studentCode}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="fullName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
-        <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
-      </ng-container>
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
+          <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="class">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
-        <td mat-cell *matCellDef="let element"> {{element.class}} </td>
-      </ng-container>
+        <ng-container matColumnDef="class">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
+          <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="topic">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài đăng ký </th>
-        <td mat-cell *matCellDef="let row" class="text-center">
-          <div class="flex items-center justify-start">
-            {{row.topic}}
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài đăng ký </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <div class="flex items-center justify-start">
+              {{row.topic}}
 
-          </div>
-        </td>
-      </ng-container>
+            </div>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="accent" (click)="onViewDetail(row)"><mat-icon>remove_red_eye</mat-icon></button>
-          <button mat-icon-button color="primary" (click)="onApprovePending(row)"><mat-icon>check</mat-icon></button>
-          <button mat-icon-button color="warn" (click)="onRejectPending(row)"><mat-icon>close</mat-icon></button>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="accent" (click)="onViewDetail(row)"><mat-icon>remove_red_eye</mat-icon></button>
+            <button mat-icon-button color="primary" (click)="onApprovePending(row)"><mat-icon>check</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="onRejectPending(row)"><mat-icon>close</mat-icon></button>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr class="text-center" *matNoDataRow>
-        <td class="mat-cell py-4" colspan="10" *ngIf="dataSource?.data?.length === 0">Không có dữ liệu</td>
-      </tr>
-    </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="text-center" *matNoDataRow>
+          <td class="mat-cell py-4" colspan="10" *ngIf="dataSource?.data?.length === 0">Không có dữ liệu</td>
+        </tr>
+      </table>
+    </div>
   </div>
 
 </div>
