@@ -1,4 +1,4 @@
-<div class="detail-wrapper flex mt-9 p-3 gap-2">
+<div class="detail-wrapper md:flex block mt-9 p-3 gap-2">
   <div class="detail-list-header flex justify-start items-center flex-col basis-1/3 border border-gray-200 rounded-xl px-3 py-2">
     <div class="list-title w-full text-2xl text-blue-800">
       Nhóm hướng dẫn
@@ -90,7 +90,7 @@
         Thêm sinh viên
       </button>
     </div>
-    <div class="active-list w-full">
+    <div class="active-list w-full table-wrapper">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
 
         <ng-container matColumnDef="studentCode">
@@ -111,7 +111,7 @@
 
         <ng-container matColumnDef="topic">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài </th>
-          <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
+          <td mat-cell *matCellDef="let element"> {{element?.thesis.name ?? 'Chưa xác định'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -128,6 +128,9 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="text-center" *matNoDataRow>
+          <td class="mat-cell py-4" colspan="10" *ngIf="dataSource?.data?.length === 0">Không có dữ liệu</td>
+        </tr>
 
       </table>
     </div>

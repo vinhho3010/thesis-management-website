@@ -38,4 +38,12 @@ export class CouncilService {
   deleteCouncil(id: string) {
     return this.http.delete(`api/council/${id}`);
   }
+
+  addThesisToCouncil(councilId: string, thesisId: string, data: any) {
+    return this.http.put(`api/council/${councilId}/thesis/${thesisId}`, data);
+  }
+
+  removeThesisFromCouncil(councilId: string, thesisId: string) {
+    return this.http.delete(`api/council/${councilId}/thesis/${thesisId}`);
+  }
 }

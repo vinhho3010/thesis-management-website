@@ -14,6 +14,7 @@ import { AddStudentToClassComponent } from 'src/app/pages/ministry/dialog/add-st
 import { FormsModule } from '@angular/forms';
 import { AddCouncilComponent } from 'src/app/pages/ministry/dialog/add-council/add-council.component';
 import { CouncilDetailComponent } from 'src/app/pages/ministry/council/council-detail/council-detail.component';
+import { AddThesisToCouncilComponent } from 'src/app/pages/ministry/dialog/add-thesis-to-council/add-thesis-to-council.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CouncilDetailComponent } from 'src/app/pages/ministry/council/council-d
     AddStudentToClassComponent,
     AddCouncilComponent,
     CouncilDetailComponent,
+    AddThesisToCouncilComponent,
   ],
   imports: [
     CommonModule,

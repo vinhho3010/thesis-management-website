@@ -1,0 +1,73 @@
+<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
+  <h1 class="pb-6 pt-2 text-xl font-medium text-blue-700">{{data?.thesis ? 'Cập nhật thông tin bảo vệ luận văn' : 'Thêm mới luận văn bảo vệ'}}</h1>
+
+
+<form class="form-wrapper" [formGroup]="addThesisForm" (ngSubmit)="onSubmit()">
+  <div class="input-fields w-full gap-2 md:grid block grid-cols-5">
+    <mat-form-field class="w-full col-span-2">
+      <mat-label>Khoa</mat-label>
+      <mat-select panelClass="panel-custom" formControlName="major" (selectionChange)="onChangeMajor($event)">
+        <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-span-3 w-full">
+      <mat-label>Giảng viên hướng dẫn</mat-label>
+      <mat-select panelClass="panel-custom" formControlName="teacher" (selectionChange)="onChangeTeacher($event)">
+        <mat-option [value]="teacher._id" *ngFor="let teacher of teacherByMajor">{{teacher.fullName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="input-field w-full gap-2 grid grid-cols-6">
+    <mat-form-field class="w-full col-span-4">
+      <mat-label>Sinh viên thực hiện</mat-label>
+      <mat-select panelClass="panel-custom" formControlName="student" (selectionChange)="onChangeStudent($event)">
+        <mat-option [value]="student._id" *ngFor="let student of studentList">{{student.fullName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-full col-span-2">
+      <mat-label>MSSV</mat-label>
+      <input type="text" matInput formControlName="code">
+    </mat-form-field>
+  </div>
+  <div class="input-field w-full gap-2">
+    <mat-form-field class="w-full">
+      <mat-label>Tên đề tài</mat-label>
+      <input matInput formControlName="topic">
+    </mat-form-field>
+  </div>
+  <div class="input-field w-full gap-2">
+    <mat-form-field class="w-full">
+      <mat-label>Tên đề tài (Tiếng Anh)</mat-label>
+      <input matInput formControlName="topicEng">
+    </mat-form-field>
+  </div>
+  <div class="input-fields w-full gap-2 grid grid-cols-4">
+    <mat-form-field class="col-span-2">
+      <mat-label>Ngày bảo vệ</mat-label>
+      <input matInput [matDatepicker]="datepicker" formControlName="date">
+      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel class="rounded-xl">Huỷ</button>
+          <button mat-raised-button color="primary" matDatepickerApply class="rounded-xl bg-blue-600">Xác nhận</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col-span-1">
+      <mat-label>Phòng</mat-label>
+      <input type="text" matInput formControlName="room">
+    </mat-form-field>
+    <mat-form-field class="col-span-1">
+      <mat-label>Giờ bảo vệ</mat-label>
+      <input type="time" matInput formControlName="time">
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-end items-center gap-4">
+    <button class="custom-btn rounded-xl py-4 px-3" mat-flat-button mat-dialog-close>Huỷ</button>
+    <button class="custom-btn bg-blue-600 text-white rounded-xl py-4 px-3" mat-flat-button
+    (click)="onSubmit()">{{data?.thesis ? 'Cập nhật' : 'Thêm mới'}}</button>
+  </div>
+</form>
+</div>

@@ -11,6 +11,8 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
+import { AddThesisToCouncilComponent } from '../../dialog/add-thesis-to-council/add-thesis-to-council.component';
+import { ThesisService } from 'src/app/services/thesis.service';
 
 @Component({
   selector: 'app-council-detail',
@@ -37,6 +39,7 @@ export class CouncilDetailComponent implements OnInit {
     private majorService: MajorService,
     private councilService: CouncilService,
     private manageUserService: ManageUserService,
+    private thesisService: ThesisService
   ) {
     this.councilId = this.route.snapshot.params['id'];
     this.councilInfoForm = new FormGroup({
@@ -53,7 +56,6 @@ export class CouncilDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadCouncilInfo();
     this.loadMajorList();
-    //this.onChangeMajor()
   }
 
   loadCouncilInfo() {
@@ -62,7 +64,7 @@ export class CouncilDetailComponent implements OnInit {
       next: (res) => {
         this.loadingService.setLoading(false);
         this.fillDataToForm(res);
-
+        this.dataSource.data = res.thesisList;
       },
       error: (err) => {
         this.loadingService.setLoading(false);
@@ -127,6 +129,66 @@ export class CouncilDetailComponent implements OnInit {
     })
   }
 
-  onRemoveStudent(studentId: string) {}
-  onAddStudent() {}
+  onRemoveThesis(row: any) {
+    this.toastService.confirmDeleteMessage('Bạn có chắc chắn muốn xóa luận văn này khỏi hội đồng ?', this.removeThesisHandler.bind(this, row));
+  }
+
+  removeThesisHandler(row: any) {
+    this.councilService.removeThesisFromCouncil(this.councilId, row._id).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Xóa thành công');
+        this.loadCouncilInfo();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  onAddThesis() {
+    const addDialog = this.dialog.open(AddThesisToCouncilComponent)
+    addDialog.afterClosed().subscribe({
+      next: (res) => {
+        if(res?.result?.selectedStudent) {
+          const thesisId = res.result.thesisId;
+          const protectInfo = res.result.protectInfo;
+          this.councilService.addThesisToCouncil(this.councilId, thesisId, protectInfo).subscribe({
+            next: () => {
+              this.toastService.showSuccessToast('Thêm luận văn thành công');
+              this.loadCouncilInfo();
+            },
+            error: (err) => {
+              this.toastService.showErrorToast(err.error.message);
+            }
+          })
+        }
+      }
+    })
+  }
+
+  onEditThesis(row: any) {
+    const editDialog = this.dialog.open(AddThesisToCouncilComponent, {
+      data: {
+        thesis: row,
+      }
+    })
+    editDialog.afterClosed().subscribe({
+      next: (res) => {
+        if(res?.result?.selectedStudent) {
+          const thesisId = res.result.thesisId;
+          const protectInfo = {protectInfo: res.result.protectInfo};
+          this.thesisService.updateThesis(thesisId, protectInfo).subscribe({
+            next: () => {
+              this.toastService.showSuccessToast('Cập nhật thông tin thành công');
+              this.loadCouncilInfo();
+            },
+            error: (err) => {
+              this.toastService.showErrorToast(err.error.message);
+            }
+          })
+        }
+      }
+    })
+
+  }
 }

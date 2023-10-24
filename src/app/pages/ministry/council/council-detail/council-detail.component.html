@@ -1,6 +1,6 @@
-<div class="detail-wrapper flex mt-9 p-3 gap-2">
+<div class="detail-wrapper md:flex block mt-9 p-3 gap-2">
   <div
-    class="detail-list-header flex justify-start items-center flex-col basis-1/3 border border-gray-200 rounded-xl px-3 py-2">
+    class="detail-list-header flex justify-start items-center flex-col lg:basis-1/3 border border-gray-200 rounded-xl px-3 py-2">
     <div class="list-title w-full text-2xl text-blue-800">
       Nhóm hội đồng
     </div>
@@ -11,25 +11,6 @@
         </div>
         <mat-form-field class="w-full" subscriptSizing='dynamic'>
           <input matInput type="text" placeholder="Nhập tên nhóm" formControlName="name">
-        </mat-form-field>
-      </div>
-      <div class="input-field">
-        <div class="field-title p-2 text-gray-600">
-          Ngành
-        </div>
-        <mat-form-field class="w-full" subscriptSizing='dynamic'>
-          <mat-select panelClass="panel-custom" formControlName="major" placeholder="Ngành học"
-            (selectionChange)="onChangeMajor()">
-            <mat-option [value]="major._id" *ngFor="let major of majors">{{major.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="input-field">
-        <div class="field-title p-2 text-gray-600">
-          Số lượng sinh viên
-        </div>
-        <mat-form-field class="w-full" subscriptSizing='dynamic'>
-          <input matInput type="text" placeholder="Số lượng sinh viên trong nhóm" formControlName="studentCount">
         </mat-form-field>
       </div>
       <div class="input-fields grid grid-cols-3 gap-2">
@@ -54,6 +35,17 @@
             </mat-select>
           </mat-form-field>
         </div>
+      </div>
+      <div class="input-field">
+        <div class="field-title p-2 text-gray-600">
+          Ngành
+        </div>
+        <mat-form-field class="w-full" subscriptSizing='dynamic'>
+          <mat-select panelClass="panel-custom" formControlName="major" placeholder="Ngành học"
+            (selectionChange)="onChangeMajor()">
+            <mat-option [value]="major._id" *ngFor="let major of majors">{{major.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="input-field gap-2">
         <div class="field-title p-2 text-gray-600">
@@ -86,45 +78,45 @@
     </form>
   </div>
   <div
-    class="detail-list flex justify-start items-start flex-col basis-2/3 w-full border border-gray-200 rounded-xl px-3 py-2">
+    class="detail-list flex justify-start items-start flex-col lg:basis-2/3 w-full border mt-4 md:mt-0 border-gray-200 rounded-xl px-3 py-2">
     <div class="list-header w-full p-3 flex justify-between items-center">
-      <span class=" text-2xl text-blue-800 ">Danh sách sinh viên</span>
-      <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" (click)="onAddStudent()">
+      <span class=" text-2xl text-blue-800 ">Danh sách luận văn được bảo vệ</span>
+      <button mat-flat-button color="primary" class="rounded-xl bg-blue-600" (click)="onAddThesis()">
         <mat-icon>add</mat-icon>
-        Thêm sinh viên
+        Thêm luận văn
       </button>
     </div>
-    <div class="active-list w-full">
+    <div class="active-list w-full table-wrapper">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
 
         <ng-container matColumnDef="studentCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
           <span class="mobile-label">MSSV: </span>
-          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.student.code}} </td>
         </ng-container>
 
         <ng-container matColumnDef="fullName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
-          <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.student.fullName}} </td>
         </ng-container>
 
         <ng-container matColumnDef="class">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
-          <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.student.class}} </td>
         </ng-container>
 
         <ng-container matColumnDef="topic">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài </th>
-          <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
           <td mat-cell *matCellDef="let row">
-            <button mat-icon-button color="primary">
+            <button mat-icon-button color="primary" (click)="onEditThesis(row)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="onRemoveStudent(row)">
+            <button mat-icon-button color="warn" (click)="onRemoveThesis(row)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -132,6 +124,9 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="text-center" *matNoDataRow>
+          <td class="mat-cell py-4" colspan="10" *ngIf="dataSource?.data?.length === 0">Không có dữ liệu</td>
+        </tr>
 
       </table>
     </div>

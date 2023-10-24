@@ -30,4 +30,12 @@ export class ThesisService {
   getThesisVersion(studentId: string, milestoneId: string){
     return this.http.get(`/api/thesis/student/${studentId}/milestone/${milestoneId}`);
   }
+
+  getThesisByStudentCode(studentCode: string){
+    return this.http.get<any>(`/api/thesis/user/code/${studentCode}`);
+  }
+
+  updateThesis(id: string, data: any){
+    return this.http.put(`/api/thesis/${id}`, data);
+  }
 }
