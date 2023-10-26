@@ -1,6 +1,8 @@
 <div class="wrapper max-w-6xl mx-auto">
   <div class="thesis-info lg:w-2/5 w-full" *ngIf="thesisInfo; else nonThesis">
-    <div class="info-wrapper border border-gray-300 rounded-xl mt-3 p-3 flex flex-col gap-3">
+    <div class=" border border-gray-300 rounded-xl mt-3 overflow-hidden">
+      <div class="result-title text-lg font-semibold text-white p-3 bg-blue-500">Thông tin luận văn</div>
+    <div class="info-wrapper p-3 flex flex-col gap-3">
       <div class="thesis-info__title">
         <span class="text-lg font-bold text-gray-600">Đề tài: </span>
         <span class="text-lg text-gray-500">{{thesisInfo.topic}}</span>
@@ -70,8 +72,27 @@
         </div>
       </div>
     </div>
+    </div>
+    <div *ngIf="thesisInfo?.protectInfo" class="result-field border border-gray-200 mt-3 rounded-xl overflow-hidden">
+      <div class="result-title text-lg font-semibold text-white p-3 bg-blue-500">Thông tin bảo vệ luận văn</div>
+      <div class="result-content flex flex-col gap-3 p-3">
+        <div class="result-content__place">
+          <span class="text-lg font-bold text-gray-600">Địa điểm: </span>
+          <span class="text-lg text-gray-500">Phòng {{thesisInfo.protectInfo?.room}}</span>
+        </div>
+        <div class="result-time">
+          <span class="text-lg font-bold text-gray-600">Thời gian: </span>
+          <span class="text-lg text-gray-500"> {{thesisInfo.protectInfo?.date | date: 'dd/MM/yyyy'}} - {{thesisInfo.protectInfo?.time}}</span>
+        </div>
+        <div *ngIf="finalScore" class="result-mark">
+          <span class="text-lg font-bold text-gray-600">Điểm số: </span>
+          <span class="text-lg text-gray-500"> {{finalScore}}/10 </span>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <div class="lg:w-3/5 w-full doc-view mt-3 px-3" *ngIf="thesisInfo.url">
+  <div class="lg:w-3/5 w-full doc-view mt-3 px-3" *ngIf="thesisInfo?.url">
     <iframe [src]="thesisInfo.url | safe:'resourceUrl' " ></iframe>
   </div>
   <ng-template #nonThesis>

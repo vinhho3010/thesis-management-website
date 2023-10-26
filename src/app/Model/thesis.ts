@@ -11,7 +11,7 @@ export interface Thesis {
   topic: string;
   topicEng: string;
   versions: ThesisVersion[];
-  results: any[];
+  results?: any[];
   status: ThesisStatus;
   class: Class
   semester: string;
@@ -20,4 +20,5 @@ export interface Thesis {
   isCustomUrl?: boolean;
   customUrl?: string;
   customFileName?: string;
+  protectInfo?: any;
 }

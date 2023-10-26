@@ -20,6 +20,7 @@ export class MyThesisComponent implements OnInit {
   versionsHasDocs: any[] = [];
   isCustomFile = new FormControl(false);
   selectedVersion = new FormControl();
+  finalScore?: any;
 
   selectedFiles?: FileList;
   fileName: any;
@@ -49,6 +50,9 @@ export class MyThesisComponent implements OnInit {
         this.thesisInfo = res as Thesis;
         this.loadHasDocsVersions();
         this.initFileInput();
+        if(this.thesisInfo?.results) {
+          this.initFinalScore();
+        }
       },
       error: (err) => {
         this.loadingService.setLoading(false);
@@ -75,6 +79,20 @@ export class MyThesisComponent implements OnInit {
     this.versionsHasDocs = this.thesisInfo.versions.filter(
       (version: any) => version.url
     );
+  }
+
+  initFinalScore() {
+    if(this.thesisInfo.results) {
+      const markArr = this.thesisInfo.results.map((result: any) => result.mark);
+      this.finalScore = markArr.reduce((total, amount, index, array) => {
+        total += amount;
+        if (index === array.length - 1) {
+          return total / array.length;
+        } else {
+          return total;
+        }
+      });
+    }
   }
 
   initFileInput() {

@@ -49,7 +49,7 @@ export class AddThesisToCouncilComponent {
   }
 
   initEditForm() {
-    if(this.data.thesis){
+    if(this.data?.thesis){
       this.loadFollowingStudent(this.data.thesis.class._id);
       this.loadTeacherByMajor(this.data.thesis.student.major);
       this.addThesisForm.disable();

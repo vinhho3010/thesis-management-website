@@ -28,6 +28,10 @@ import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/mileston
 import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-students/milestone-students.component';
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 import { ViewDocsComponent } from 'src/app/pages/home/dialog/view-docs/view-docs.component';
+import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
+import { AssignedCardComponent } from 'src/app/pages/home/assigned-council/assigned-card/assigned-card.component';
+import { ScoringComponent } from 'src/app/pages/home/dialog/scoring/scoring.component';
+import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
 
 
 
@@ -59,7 +63,11 @@ import { ViewDocsComponent } from 'src/app/pages/home/dialog/view-docs/view-docs
     MilestoneDetailComponent,
     MilestoneStudentsComponent,
     ProcessDetailComponent,
-    ViewDocsComponent
+    ViewDocsComponent,
+    AssignedCouncilComponent,
+    AssignedCardComponent,
+    AssignedDetailComponent,
+    ScoringComponent,
   ],
   imports: [
     CommonModule,

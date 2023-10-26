@@ -38,4 +38,8 @@ export class ThesisService {
   updateThesis(id: string, data: any){
     return this.http.put(`/api/thesis/${id}`, data);
   }
+
+  scoringThesis(thesisId: string, data: any) {
+    return this.http.put(`api/thesis/${thesisId}/scoring`, data);
+  }
 }

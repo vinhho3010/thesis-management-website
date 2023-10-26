@@ -19,7 +19,7 @@ import { studentListHeader } from 'src/app/shared/utilities/excel-schema';
 })
 export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['code', 'fullName', 'class', 'actions'];
+  displayedColumns: string[] = ['code', 'fullName', 'class', 'topic',  'actions'];
   dataSource = new MatTableDataSource([]);
   classOfTeacher!: string;
   pagination: Pagination = {
@@ -102,6 +102,8 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
         fullName: item?.fullName,
         major: item?.major.name,
         class: item?.class,
+        topic: item?.thesis?.topic,
+        topicEng: item?.thesis?.topicEng,
       };
     });
     this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema);

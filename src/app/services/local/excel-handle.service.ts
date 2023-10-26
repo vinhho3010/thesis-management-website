@@ -34,7 +34,7 @@ export class ExcelHandleService {
 
     }
 
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const workbook: XLSX.WorkBook = { Sheets: { 'DSSV': worksheet }, SheetNames: ['DSSV'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
     this.saveAsExcelFile(excelBuffer, filename);

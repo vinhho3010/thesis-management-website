@@ -11,7 +11,6 @@ export class ViewDocsComponent  {
   url: string = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _sanitizer: DomSanitizer
   ) {
     this.url = this.data?.url;
   }

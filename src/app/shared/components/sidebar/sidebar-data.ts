@@ -66,6 +66,11 @@ export const routesInfoTeacher: RouteInfo[] = [
     title: 'Quản lý mốc thời gian',
     icon: 'schedule_outline'
   },
+  {
+    path: '/council-list',
+    title: 'Danh sách hội đồng',
+    icon: 'library_books'
+  }
 ];
 
 export const routesInfoStudent: RouteInfo[] = [

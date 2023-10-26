@@ -23,6 +23,17 @@ export class CouncilService {
     return this.http.get<any>('api/council', {params});
   }
 
+  getTeacherCouncil(teacherId: string, filterCondition?: any) {
+    let params = new HttpParams();
+    if(filterCondition.schoolYear) {
+      params = params.set('schoolYear', filterCondition.schoolYear);
+    }
+    if(filterCondition.semester) {
+      params = params.set('semester', filterCondition.semester);
+    }
+    return this.http.get<any>(`api/council/teacher/${teacherId}`, {params});
+  }
+
   getCouncilById(id: string) {
     return this.http.get<any>(`api/council/${id}`);
   }
@@ -46,4 +57,5 @@ export class CouncilService {
   removeThesisFromCouncil(councilId: string, thesisId: string) {
     return this.http.delete(`api/council/${councilId}/thesis/${thesisId}`);
   }
+
 }

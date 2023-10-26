@@ -1,4 +1,4 @@
-<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
+<div class="wrapper p-4 w-[90vw] md:w-[70vw] lg:w-[50vw]">
   <h1 class="pb-6 pt-2 text-xl font-medium text-blue-700">{{data?.thesis ? 'Cập nhật thông tin bảo vệ luận văn' : 'Thêm mới luận văn bảo vệ'}}</h1>
 
 
@@ -42,7 +42,7 @@
     </mat-form-field>
   </div>
   <div class="input-fields w-full gap-2 grid grid-cols-4">
-    <mat-form-field class="col-span-2">
+    <mat-form-field class="lg:col-span-2 col-span-4">
       <mat-label>Ngày bảo vệ</mat-label>
       <input matInput [matDatepicker]="datepicker" formControlName="date">
       <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -54,11 +54,11 @@
       </mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="col-span-1">
+    <mat-form-field class="lg:col-span-1 col-span-2">
       <mat-label>Phòng</mat-label>
       <input type="text" matInput formControlName="room">
     </mat-form-field>
-    <mat-form-field class="col-span-1">
+    <mat-form-field class="lg:col-span-1 col-span-2">
       <mat-label>Giờ bảo vệ</mat-label>
       <input type="time" matInput formControlName="time">
     </mat-form-field>

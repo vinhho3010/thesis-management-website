@@ -71,5 +71,5 @@
   }
 
   export const studentListHeader = [
-    'STT',  'MSSV', 'Họ và tên', 'Ngành', 'Lớp'
+    'STT',  'MSSV', 'Họ và tên', 'Ngành', 'Lớp', 'Đề tài', 'Đề tài (tiếng Anh)'
   ]

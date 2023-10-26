@@ -1,0 +1,39 @@
+<div
+  class="card border border-gray-300 rounded-xl p-2 pl-4 pb-4 hover:bg-gray-100 hover:shadow-md cursor-pointer"
+  (click)="onNavigateToMilestone()">
+  <div class="flex justify-center items-start flex-col">
+    <div class="card-title my-2 line-clamp-1 text-gray-700 font-medium text-lg">
+      Tên nhóm hội đồng: {{ council.name }}
+    </div>
+    <div class="card-info">
+      <div class="font-normal">
+        <span class="font-medium">
+          Chủ tịch:
+        </span>
+        {{ council?.president?.fullName ?? 'Chưa có' }}
+      </div>
+      <div class="font-normal">
+        <span class="font-medium">
+          Thư ký:
+        </span>
+        {{ council?.secretary?.fullName ?? 'Chưa có' }}
+      </div>
+      <div class="font-normal">
+        <span class="font-medium">
+          Uỷ viên:
+        </span>
+        {{ council?.member?.fullName ?? 'Chưa có' }}
+      </div>
+      <div class="font-normal">
+        <span class="font-medium">
+          Số lượng đề tài:
+        </span>
+         {{ council?.thesisList.length ?? 'Chưa xác định' }}
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

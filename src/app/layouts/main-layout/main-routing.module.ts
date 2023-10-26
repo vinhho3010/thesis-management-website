@@ -14,6 +14,8 @@ import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
 import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
+import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
+import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
 
 
 const routes: Routes = [
@@ -69,6 +71,14 @@ const routes: Routes = [
       {
         path: 'class/documents/type/:typeId',
         component: RefDocumentsComponent
+      },
+      {
+        path: 'council-list',
+        component: AssignedCouncilComponent
+      },
+      {
+        path: 'council-list/detail/:id',
+        component: AssignedDetailComponent
       }
 
     ]

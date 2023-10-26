@@ -1,0 +1,64 @@
+<div class="wrapper p-4 w-[80vw] md:w-[80vw] lg:w-[60vw]">
+  <div class="lg:flex justify-start items-start">
+    <div class="min-h-[80vh] mt-3 doc-wrapper lg:w-1/2">
+      <iframe [src]="url | safe:'resourceUrl' " scrolling="auto"></iframe>
+    </div>
+    <div class="info-field lg:w-1/2 p-3 border border-gray-200 rounded-xl ml-3 mt-3">
+      <div class="title text-blue-600 text-2xl py-3 px-2">
+        Thông tin luận văn
+      </div>
+      <div class="thesis-info flex flex-col gap-3 px-2">
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Tên đề tài:
+          </span>
+          {{thesis?.topic}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Tên đề tài (Tiếng Anh):
+          </span>
+          {{thesis?.topicEng}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Sinh viên thực hiện:
+          </span>
+          {{thesis?.student?.fullName}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Giảng viên hướng dẫn:
+          </span>
+          {{thesis?.class?.teacher?.fullName}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Thời gian bảo vệ:
+          </span>
+          {{thesis?.protectInfo?.date | date: 'dd/MM/yyyy'}} - {{thesis?.protectInfo?.time}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Địa điểm:
+          </span>
+          Phòng {{thesis?.protectInfo?.room}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
+            Điểm:
+          </span>
+          <mat-form-field class="w-[98px]">
+            <input matInput type="number" [formControl]="mark" name="mark" min="0" max="10">
+            <span class="mr-5" matSuffix>&nbsp; /10</span>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 flex justify-end items-center gap-2">
+    <button mat-flat-button color="basic" class="rounded-xl px-4 py-5 min-w-[125px]" mat-dialog-close>Đóng</button>
+    <button mat-flat-button color="primary" class="rounded-xl px-4 py-5 min-w-[125px] bg-blue-600" (click)="onSubmit()">Xác nhận</button>
+  </div>
+</div>

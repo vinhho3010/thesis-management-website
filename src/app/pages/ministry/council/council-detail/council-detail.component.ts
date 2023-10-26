@@ -43,13 +43,13 @@ export class CouncilDetailComponent implements OnInit {
   ) {
     this.councilId = this.route.snapshot.params['id'];
     this.councilInfoForm = new FormGroup({
-      name: new FormControl({}, [Validators.required]),
-      major: new FormControl({}, [Validators.required]),
-      president: new FormControl({}, [Validators.required]),
-      secretary: new FormControl({}, [Validators.required]),
-      member: new FormControl({}, [Validators.required]),
-      schoolYear: new FormControl({}, [Validators.required]),
-      semester: new FormControl({}, [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      major: new FormControl('', [Validators.required]),
+      president: new FormControl('', [Validators.required]),
+      secretary: new FormControl('', [Validators.required]),
+      member: new FormControl('', [Validators.required]),
+      schoolYear: new FormControl('', [Validators.required]),
+      semester: new FormControl('', [Validators.required]),
     });
   }
 
