@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Thesis } from '../Model/thesis';
+import { Pagination } from '../Model/pagination';
+import { PaginationResponse } from '../Model/paginationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +43,24 @@ export class ThesisService {
 
   scoringThesis(thesisId: string, data: any) {
     return this.http.put(`api/thesis/${thesisId}/scoring`, data);
+  }
+
+  getAllThesis(pagination: Pagination, optionalParams: any){
+    let params = new HttpParams({
+      fromObject: {
+        page: pagination.page.toString(),
+        limit: pagination.limit.toString(),
+      }
+    });
+    if(optionalParams.schoolYear){
+      params = params.append('schoolYear', optionalParams.schoolYear);
+    }
+    if(optionalParams.semester){
+      params = params.append('semester', optionalParams.semester);
+    }
+    if(optionalParams.isPublic){
+      params = params.append('isPublic', optionalParams.isPublic);
+    }
+    return this.http.get<PaginationResponse>(`/api/thesis`, {params});
   }
 }

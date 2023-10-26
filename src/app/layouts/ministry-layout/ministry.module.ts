@@ -30,6 +30,7 @@ import { AddThesisToCouncilComponent } from 'src/app/pages/ministry/dialog/add-t
     AddCouncilComponent,
     CouncilDetailComponent,
     AddThesisToCouncilComponent,
+    ThesisCardComponent
   ],
   imports: [
     CommonModule,

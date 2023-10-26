@@ -1,12 +1,29 @@
-<div class="milestone-wrapper max-w-4xl mx-auto pt-5">
+<div class="milestone-wrapper max-w-4xl mx-auto pt-5 p-3">
   <div class="milestone-header">
-    <div class="milestone-title flex justify-end items-center px-4 mt-5">
-      <button mat-raised-button color="primary" class="add-btn bg-blue-600" (click)="onAddMilestone()">
+    <div class="milestone-title lg:flex block justify-end items-center mt-5">
+      <!-- <div [formGroup]="filterOptionForm"
+      class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
+      <mat-form-field floatLabel="always" appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>Niên khoá</mat-label>
+        <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
+          <mat-option [value]="null">Chọn niên khoá</mat-option>
+          <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full mt-3 lg:mt-0" subscriptSizing="dynamic">
+        <mat-label>Học kỳ</mat-label>
+        <mat-select placeholder="Chọn học kỳ" formControlName="semester">
+          <mat-option [value]="null">Chọn học kỳ</mat-option>
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+      <button mat-raised-button color="primary" class="add-btn bg-blue-600 ml-3" (click)="onAddMilestone()">
         <mat-icon>add</mat-icon>
         Thêm mốc thời gian
       </button>
     </div>
-
   </div>
   <div *ngIf="milestonesList && milestonesList.length > 0" class="list-title pb-3 mt-8 text-blue-800 text-xl">
     Danh sách mốc thời gian

@@ -23,8 +23,8 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource([]);
   classOfTeacher!: string;
   pagination: Pagination = {
-    pageIndex: 0,
-    pageSize: 5,
+    page: 0,
+    limit: 5,
     length: 0
   }
 
@@ -110,7 +110,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   }
 
     onPageChange(event: PageEvent) {
-    this.pagination.pageIndex = event.pageIndex;
-    this.pagination.pageSize = event.pageSize;
+    this.pagination.page = event.pageIndex;
+    this.pagination.limit = event.pageSize;
   }
 }

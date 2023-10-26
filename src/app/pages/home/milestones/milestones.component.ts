@@ -5,6 +5,8 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { AddMilestoneComponent } from '../dialog/add-milestone/add-milestone.component';
 import { MilestoneService } from 'src/app/services/milestone.service';
 import { LoaderService } from 'src/app/services/loader.service';
+import { schoolYear } from 'src/app/Model/enum/schoolYear';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-milestones',
@@ -13,6 +15,12 @@ import { LoaderService } from 'src/app/services/loader.service';
 })
 export class MilestonesComponent implements OnInit {
   milestonesList: any[] = [];
+  // schoolYear = schoolYear;
+
+  // filterOptionForm = new FormGroup({
+  //   schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
+  //   semester: new FormControl(1),
+  // })
 
   constructor(
     private authService: AuthService,

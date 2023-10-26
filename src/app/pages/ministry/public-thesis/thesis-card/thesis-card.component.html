@@ -1,1 +1,21 @@
-<p>thesis-card works!</p>
+<mat-card class="thesis-item md:p-2 border border-gray-300 rounded-xl" [class.mat-elevation-z0]="true" >
+  <mat-card-header>
+      <mat-card-title>{{thesis?.name}}</mat-card-title>
+        <mat-card-subtitle>
+          Sinh viên thực hiện: {{thesis?.student?.fullName}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+          Giảng viên hướng dẫn: {{thesis?.class?.teacher?.fullName}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        Ngành: {{thesis?.student?.major?.name}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+          Ngày bảo vệ: {{thesis?.protectInfo.date | date: 'dd/MM/yyyy'}}
+      </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions class="justify-end">
+      <button mat-button color="primary" class="button-view">Xem chi tiết</button>
+
+  </mat-card-actions>
+</mat-card>

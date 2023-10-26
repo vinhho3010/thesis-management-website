@@ -23,8 +23,8 @@ export class TableAccountComponent {
   @Input() tableType!: RoleAccount;
   roleAccount = RoleAccount;
   pagination: Pagination = {
-    pageIndex: 0,
-    pageSize: 5,
+    page: 0,
+    limit: 5,
     length: 0
   }
 
@@ -98,7 +98,7 @@ export class TableAccountComponent {
   }
 
   // onPageChange(event: PageEvent) {
-  //   this.pagination.pageIndex = event.pageIndex;
-  //   this.pagination.pageSize = event.pageSize;
+  //   this.pagination.page = event.page;
+  //   this.pagination.limit = event.limit;
   // }
 }

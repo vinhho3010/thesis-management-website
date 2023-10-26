@@ -3,40 +3,54 @@
     <div class="title w-1/2 text-3xl text-blue-800">
       Danh sách luận văn
     </div>
-    <div class="search-wrapper w-1/3 p-3">
-      <mat-form-field floatLabel="always" appearance="outline" class="w-full">
+    <div [formGroup]="filterOptionForm" class="search-wrapper w-1/3 p-3">
+      <mat-form-field floatLabel="always" appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label>Chọn dữ liệu hiển thị</mat-label>
-        <mat-select panelClass="panel-custom" [value]="'public'">
-          <mat-option value="public">Luận văn được công khai</mat-option>
-          <mat-option value="complete">Luận văn đã hoàn thành</mat-option>
+        <mat-select panelClass="panel-custom" [value]="'public'" formControlName="isPublic">
+          <mat-option [value]="true">Luận văn được công khai</mat-option>
+          <mat-option [value]="false">Luận văn đã hoàn thành</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-  <div class="card-list lg:px-10 grid grid-cols-3 gap-2">
-    <mat-card class="thesis-item md:p-2 border border-gray-300 rounded-xl" [class.mat-elevation-z0]="true"  *ngFor="let i of [1, 2, 3]">
-      <mat-card-header>
-          <mat-card-title>Bảo vệ blabla bla</mat-card-title>
-            <mat-card-subtitle>
-              Sinh viên thực hiện: Nguyễn văn C
-          </mat-card-subtitle>
-          <mat-card-subtitle>
-              Giảng viên hướng dẫn: Nguyễn Văn A
-          </mat-card-subtitle>
-          <mat-card-subtitle>
-            Ngành: Công nghệ thông tin
-          </mat-card-subtitle>
-          <mat-card-subtitle>
-              Ngày bảo vệ: 20/10/2021
-          </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions class="justify-end">
-          <button mat-button color="primary" class="button-view">Xem chi tiết</button>
+  <div class="flex items-center justify-start lg:px-10 lg: w-2/5">
+    <div [formGroup]="filterOptionForm"class="search-wrapper w-full py-3 lg:flex block gap-2 justify-start items-center">
+    <mat-form-field floatLabel="always" appearance="outline" class="w-full" subscriptSizing="dynamic">
+      <mat-label>Niên khoá</mat-label>
+      <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
+        <mat-option [value]="null">Chọn niên khoá</mat-option>
+        <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full" subscriptSizing="dynamic">
+      <mat-label>Học kỳ</mat-label>
+      <mat-select placeholder="Chọn học kỳ" formControlName="semester">
+        <mat-option [value]="null">Chọn học kỳ</mat-option>
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  </div>
+  <div class="card-list lg:px-10 grid grid-cols-3 gap-2" *ngIf="thesisList && thesisList.length>0; else emptyThesis">
+    <ng-container *ngFor="let thesis of thesisList">
+        <app-thesis-card-public [thesis]="thesis">
+        </app-thesis-card-public>
+    </ng-container>
 
-      </mat-card-actions>
-    </mat-card>
-
+    <mat-paginator class="py-1 col-span-3"
+      [pageSizeOptions]="[5, 10, 25]"
+      [pageSize]="pagination.limit"
+      [pageIndex]="pagination.page"
+      [length]="pagination.length"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
   </div>
 
-
+  <ng-template #emptyThesis>
+    <div class="flex justify-center items-center w-full h-full col-span-3 mt-7">
+      <div class="text-gray-500 text-xl">Không có luận văn nào.</div>
+    </div>
+  </ng-template>
 </div>
