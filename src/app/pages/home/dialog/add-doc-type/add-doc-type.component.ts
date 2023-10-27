@@ -79,20 +79,25 @@ export class AddDocTypeComponent {
   }
 
   onSubmit() {
-    this.refDocService.createDocTypeForClass(this.typeName.value).subscribe({
-      next: (res: any) => {
-        this.typeId = res._id;
-        if (this.selectedFiles) {
-          this.upload();
-        } else {
-          this.toastService.showSuccessToast('Thêm loại tài liệu thành công');
-          this.refDialog.close();
-        }
-      },
-      error: (err: any) => {
-        this.toastService.showErrorToast(err.error.message);
-      },
-    });
+    if(this.typeName.value){
+      this.refDocService.createDocTypeForClass(this.typeName.value).subscribe({
+        next: (res: any) => {
+          this.typeId = res._id;
+          if (this.selectedFiles) {
+            this.upload();
+          } else {
+            this.toastService.showSuccessToast('Thêm loại tài liệu thành công');
+            this.refDialog.close();
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
+    } else {
+      this.typeName.markAsTouched();
+      this.toastService.showErrorToast('Vui lòng nhập tên loại tài liệu');
+    }
   }
 
   resetForm() {

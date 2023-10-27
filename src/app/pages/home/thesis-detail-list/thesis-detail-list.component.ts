@@ -129,7 +129,6 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   onGoBack(): void {
-    const previous = this.routerExService.getPreviousUrl() ? this.routerExService.getPreviousUrl() as string : '/students';
-    this.router.navigateByUrl(previous);
+    this.router.navigate(['/students']);
   }
 }

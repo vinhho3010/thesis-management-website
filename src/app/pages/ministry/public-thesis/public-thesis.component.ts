@@ -8,6 +8,8 @@ import { Pagination } from 'src/app/Model/pagination';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { ThesisService } from 'src/app/services/thesis.service';
+import { DetailThesisDialogComponent } from '../dialog/detail-thesis-dialog/detail-thesis-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-public-thesis',
@@ -34,6 +36,7 @@ export class PublicThesisComponent implements OnInit {
     private loadingService: LoaderService,
     private toastService: ToastService,
     private thesisService: ThesisService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +58,17 @@ export class PublicThesisComponent implements OnInit {
       }
     })
   }
+  loadThesisListChange() {
+    this.thesisService.getAllThesis(this.pagination, this.filterOptionForm.value).subscribe({
+      next: (res) => {
+        this.pagination.length = res.length;
+        this.thesisList = res.data;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Không tải được danh sách');
+      }
+    })
+  }
 
   onListenFilterFormChange() {
     //if schoolyear, public type or semester change, reload council list with debounceTime 500ms
@@ -64,6 +78,26 @@ export class PublicThesisComponent implements OnInit {
       }
     })
 
+  }
+
+  onViewDetail(thesis: any) {
+    const config = {
+      data: {thesis}
+    }
+    const viewDialog = this.dialog.open(DetailThesisDialogComponent,config);
+    viewDialog.afterClosed().subscribe(res => {
+      if(res?.result?.isPublic !== undefined || res?.result?.isPublic !== null && res?.result?.isPublic !== thesis.isPublic){
+        this.thesisService.updateThesis(thesis._id, {isPublic: res.result.isPublic}).subscribe({
+          next: (res) => {
+            this.loadThesisListChange();
+            this.toastService.showSuccessToast('Cập nhật thành công');
+          },
+          error: (err) => {
+            this.toastService.showErrorToast('Cập nhật thất bại');
+          }
+        })
+      }
+    });
   }
 
   onPageChange(event: PageEvent) {

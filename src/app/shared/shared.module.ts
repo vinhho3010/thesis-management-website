@@ -5,7 +5,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MatModule } from './mat.module';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
-import { ThesisCardComponent } from './components/thesis-list/thesis-card/thesis-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
 import { DataTableComponent } from './components/data-table/data-table.component';
@@ -16,13 +15,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DomUrlPipe, SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card/thesis-card.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
     ThesisListComponent,
-    ThesisCardComponent,
     SemesterPipe,
     DataTableComponent,
     RolePipe,
@@ -30,7 +29,8 @@ import { SafePipe } from './pipes/safe.pipe';
     SanitizedHtmlPipe,
     ThesisStatusPipe,
     DomUrlPipe,
-    SafePipe
+    SafePipe,
+    ThesisCardComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +45,6 @@ import { SafePipe } from './pipes/safe.pipe';
     MatModule,
     ClickOutsideDirective,
     ThesisListComponent,
-    ThesisCardComponent,
     ReactiveFormsModule,
     SemesterPipe,
     RolePipe,
@@ -54,7 +53,8 @@ import { SafePipe } from './pipes/safe.pipe';
     SanitizedHtmlPipe,
     ThesisStatusPipe,
     DomUrlPipe,
-    SafePipe
+    SafePipe,
+    ThesisCardComponent
   ]
 })
 export class SharedModule { }

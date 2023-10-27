@@ -32,6 +32,7 @@ import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/as
 import { AssignedCardComponent } from 'src/app/pages/home/assigned-council/assigned-card/assigned-card.component';
 import { ScoringComponent } from 'src/app/pages/home/dialog/scoring/scoring.component';
 import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
+import { DetailThesisDialogComponent } from 'src/app/pages/ministry/dialog/detail-thesis-dialog/detail-thesis-dialog.component';
 
 
 
@@ -68,6 +69,7 @@ import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/ass
     AssignedCardComponent,
     AssignedDetailComponent,
     ScoringComponent,
+    DetailThesisDialogComponent,
   ],
   imports: [
     CommonModule,

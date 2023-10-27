@@ -3,7 +3,7 @@
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
-        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" *ngIf="isLogin"
           type="button" (click)="sidebarService.toggleMobileMenu()"
           class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span class="sr-only">Open sidebar</span>
@@ -12,8 +12,11 @@
         <a routerLink="['/home']" class="flex ml-2 md:mr-24">
           <img src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png" class="h-12 mr-3"
             alt="Logo" />
-          <span class="hidden sm:inline self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">CTU
-            Tms</span>
+          <div class="flex flex-col justify-start items-start">
+            <span class="hidden sm:inline text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white text-blue-600">CTU
+              Tms</span>
+            <span class="hidden sm:inline text-base font-semibold whitespace-nowrap text-yellow-500">Quản lý luận văn</span>
+          </div>
         </a>
       </div>
       <div *ngIf="isLogin" class="user-info flex justify-start items-center">

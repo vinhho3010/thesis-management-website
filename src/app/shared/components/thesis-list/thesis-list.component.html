@@ -26,8 +26,11 @@
       </div>
       </form>
 
-    <div class="list-item max-h-[550px] py-2 px-2 md:px-12">
-      <app-thesis-card *ngFor="let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]"></app-thesis-card>
+    <div class="max-h-[550px] grid grid-cols-1 lg:grid-cols-2 py-2 px-2 md:px-12 gap-3">
+      <app-thesis-card-public *ngFor="let thesis of thesisList"
+      [thesis]="thesis"
+      (onViewThesis)="onViewDetail($event)"
+      ></app-thesis-card-public>
     </div>
   </div>
 

@@ -1,21 +1,51 @@
-<mat-card class="thesis-item md:p-2 border border-gray-300 rounded-xl" [class.mat-elevation-z0]="true" >
+<mat-card class="thesis-item md:p-2 border border-gray-300 rounded-2xl hover:shadow-md" [class.mat-elevation-z0]="true">
   <mat-card-header>
-      <mat-card-title>{{thesis?.name}}</mat-card-title>
-        <mat-card-subtitle>
-          Sinh viên thực hiện: {{thesis?.student?.fullName}}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-          Giảng viên hướng dẫn: {{thesis?.class?.teacher?.fullName}}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-        Ngành: {{thesis?.student?.major?.name}}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-          Ngày bảo vệ: {{thesis?.protectInfo.date | date: 'dd/MM/yyyy'}}
-      </mat-card-subtitle>
+    <mat-card-subtitle>
+      <div class="font-bold">
+        Đề tài:
+        {{thesis?.topic}}
+      </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <div class="font-bold">
+        Topic:
+        ({{thesis?.topicEng}})
+      </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
+        Sinh viên thực hiện:
+      </span> {{thesis?.student?.fullName}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
+        Giảng viên hướng dẫn:
+      </span>
+      {{thesis?.class?.teacher?.fullName}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
+        Ngành:
+      </span>
+      {{thesis?.student?.major?.name}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
+        Ngày bảo vệ:
+      </span>
+      {{thesis?.protectInfo.date | date: 'dd/MM/yyyy'}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
+        Trạng thái :
+      </span>
+      <span *ngIf="!thesis?.isPublic" class="text-orange-600 bg-orange-200 py-1 px-3 rounded-full text-sm">Chưa công
+        khai</span>
+      <span *ngIf="thesis?.isPublic" class="text-green-600 bg-green-200 py-1 px-3 rounded-full text-sm">Công khai</span>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions class="justify-end">
-      <button mat-button color="primary" class="button-view">Xem chi tiết</button>
+    <button mat-button color="primary" class="button-view rounded-xl" (click)="onView(thesis)">Xem chi tiết</button>
 
   </mat-card-actions>
 </mat-card>

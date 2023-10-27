@@ -1,6 +1,6 @@
 export enum ThesisStatus {
-  ACCEPTED = 'ACCEPTED',
   CANCELED = 'CANCELED',
   IN_PROGRESS = 'IN_PROGRESS',
+  ACCEPTED = 'ACCEPTED',
   COMPLETED = 'COMPLETED',
 }

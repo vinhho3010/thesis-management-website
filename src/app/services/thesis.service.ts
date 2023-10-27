@@ -38,7 +38,7 @@ export class ThesisService {
   }
 
   updateThesis(id: string, data: any){
-    return this.http.put(`/api/thesis/${id}`, data);
+    return this.http.put<any>(`/api/thesis/${id}`, data);
   }
 
   scoringThesis(thesisId: string, data: any) {
@@ -58,7 +58,7 @@ export class ThesisService {
     if(optionalParams.semester){
       params = params.append('semester', optionalParams.semester);
     }
-    if(optionalParams.isPublic){
+    if(optionalParams.isPublic!==null || optionalParams.isPublic!==undefined){
       params = params.append('isPublic', optionalParams.isPublic);
     }
     return this.http.get<PaginationResponse>(`/api/thesis`, {params});

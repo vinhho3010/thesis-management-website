@@ -1,13 +1,13 @@
 <div class="assigned-wrapper max-w-5xl mx-auto">
   <div class="assigned-list-header flex justify-between items-center mt-9 p-3">
-    <div class="list-title w-1/2 text-3xl text-blue-800">
+    <div class="list-title w-full text-3xl text-blue-800">
       Danh sách nhóm hội đồng
     </div>
 
   </div>
   <div class="lg:flex block justify-between items-center">
     <div [formGroup]="filterOptionForm"
-      class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
+      class="search-wrapper lg:w-1/2 w-full p-3 flex gap-2 justify-start items-center">
       <mat-form-field floatLabel="always" appearance="outline" class="w-full">
         <mat-label>Niên khoá</mat-label>
         <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
@@ -15,7 +15,7 @@
           <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full">
+      <mat-form-field floatLabel="always" appearance="outline" class="w-1/2">
         <mat-label>Học kỳ</mat-label>
         <mat-select placeholder="Chọn học kỳ" formControlName="semester">
           <mat-option [value]="null">Chọn học kỳ</mat-option>

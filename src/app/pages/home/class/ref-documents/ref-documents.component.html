@@ -15,7 +15,7 @@
     </button>
   </div>
 
-  <div class="text-2xl mt-8 text-blue-600 w-full text-left">
+  <div *ngIf="refDocsList && refDocsList.length > 0" class="text-2xl mt-8 text-blue-600 w-full text-left">
     Danh sách tài liệu
   </div>
 
@@ -42,8 +42,8 @@
   </div>
 
   <ng-template #emptyRefDocs>
-    <div class="empty-ref-docs h-72 flex justify-center items-center flex-col">
-      <span class="text-gray-400 text-3xl">Chưa có tài liệu tham khảo</span>
+    <div class="empty-ref-docs h-72 flex justify-center items-center flex-col w-full">
+      <span class="text-gray-400 text-2xl text-center">Chưa có tài liệu tham khảo</span>
     </div>
   </ng-template>
 </div>
