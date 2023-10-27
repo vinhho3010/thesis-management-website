@@ -101,9 +101,9 @@
       </form>
     </div>
   </div>
-  <div class="w-full md:w-6/12 px-2" *ngIf="selectedThesis?.url">
+  <div class="w-full md:w-6/12 px-2" >
     <!-- Third component with 5 columns -->
-    <div class="w-full bg-gray-500 min-h-[50vh] rounded-xl">
+    <div class="w-full bg-gray-500 min-h-[50vh] rounded-xl" *ngIf="selectedThesis?.url; else emptyDocs">
       <!-- iframe to see pdf document -->
       <iframe
         [src]="selectedThesis?.url | safe:'resourceUrl' "
@@ -111,5 +111,12 @@
         frameborder="0"
       ></iframe>
     </div>
+    <ng-template #emptyDocs>
+      <div class="w-full rounded-xl border border-gray-300">
+        <div class="text-gray-600 min-h-[80vh] text-center text-xl mt-3 flex items-center justify-center">
+          <span>Chưa có tài liệu nào được tải lên</span>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

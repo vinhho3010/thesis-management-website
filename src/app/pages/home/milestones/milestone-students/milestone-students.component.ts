@@ -4,11 +4,11 @@ import { RouterExtService } from 'src/app/services/ex-router.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MilestoneService } from 'src/app/services/milestone.service';
-import { AddMilestoneComponent } from '../../../dialog/add-milestone/add-milestone.component';
+import { AddMilestoneComponent } from '../../dialog/add-milestone/add-milestone.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ThesisVersion } from 'src/app/Model/milestone';
 import { MatSelectChange } from '@angular/material/select';
-import { ViewDocsComponent } from '../../../dialog/view-docs/view-docs.component';
+import { ViewDocsComponent } from '../../dialog/view-docs/view-docs.component';
 
 @Component({
   selector: 'app-milestone-students',

@@ -24,8 +24,7 @@ import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list
 import { AddDocComponent } from 'src/app/pages/home/dialog/add-doc/add-doc.component';
 import { AddDocTypeComponent } from 'src/app/pages/home/dialog/add-doc-type/add-doc-type.component';
 import { AddMilestoneComponent } from 'src/app/pages/home/dialog/add-milestone/add-milestone.component';
-import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
-import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-students/milestone-students.component';
+import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-students/milestone-students.component';
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 import { ViewDocsComponent } from 'src/app/pages/home/dialog/view-docs/view-docs.component';
 import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
@@ -61,7 +60,6 @@ import { DetailThesisDialogComponent } from 'src/app/pages/ministry/dialog/detai
     AddDocTypeComponent,
     ThesisDetailListComponent,
     AddMilestoneComponent,
-    MilestoneDetailComponent,
     MilestoneStudentsComponent,
     ProcessDetailComponent,
     ViewDocsComponent,

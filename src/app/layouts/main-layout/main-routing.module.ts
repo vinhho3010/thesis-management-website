@@ -12,7 +12,7 @@ import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.compon
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
-import { MilestoneDetailComponent } from 'src/app/pages/home/milestones/milestone-detail/milestone-detail.component';
+import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-students/milestone-students.component';
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
 import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'milestones/:id',
-        component: MilestoneDetailComponent
+        component: MilestoneStudentsComponent
       },
       {
         path: 'class',

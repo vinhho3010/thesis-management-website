@@ -76,9 +76,11 @@ export class MyThesisComponent implements OnInit {
   }
 
   loadHasDocsVersions(): void {
-    this.versionsHasDocs = this.thesisInfo.versions.filter(
-      (version: any) => version.url
-    );
+    if(this.thesisInfo?.versions) {
+      this.versionsHasDocs = this.thesisInfo.versions.filter(
+        (version: any) => version.url
+      );
+    }
   }
 
   initFinalScore() {
