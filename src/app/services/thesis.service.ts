@@ -63,4 +63,12 @@ export class ThesisService {
     }
     return this.http.get<PaginationResponse>(`/api/thesis`, {params});
   }
+
+  addCommentThesisVersion(thesisVersionId: string, data: any){
+    return this.http.put<any>(`/api/thesis-version/${thesisVersionId}/add-comment`, data);
+  }
+
+  deleteCommentThesisVersion(thesisVersionId: string, commentId: string){
+    return this.http.delete<any>(`/api/thesis-version/${thesisVersionId}/delete-comment/${commentId}`);
+  }
 }

@@ -112,10 +112,10 @@ export class MilestoneStudentsComponent implements OnInit {
     this.router.navigate(['/home/milestones']);
   }
 
-  onViewSubmitDoc(url: string) {
+  onViewSubmitDoc(item: any) {
     const docsConfig = {
       data: {
-        url: url,
+        thesisVersion: item,
       }
     }
     this.dialog.open(ViewDocsComponent, docsConfig)

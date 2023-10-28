@@ -1,7 +1,99 @@
-<div class="wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[50vw]">
-  <div class="text-2xl font-medium mb-3">Xem tài liệu</div>
-  <div class="min-h-[80vh] mt-3 doc-wrapper">
-    <iframe [src]="url | safe:'resourceUrl' " scrolling="auto"></iframe>
+<div class="wrapper p-3 w-[90vw] md:w-[80vw] lg:w-[60vw]">
+  <div class="text-2xl font-medium mb-3">
+    Xem tài liệu
+  </div>
+  <div class="lg:flex justify-start items-start gap-3">
+    <div class="min-h-[80vh] mt-3 doc-wrapper lg:w-1/2">
+      <iframe [src]="url | safe:'resourceUrl' " scrolling="auto"></iframe>
+    </div>
+    <div class="comment-field lg:w-1/2 p-3 border border-gray-200 rounded-xl mt-3">
+      <div class="title text-lg font-medium flex items-center text-gray-700">
+        <mat-icon class="mr-2"> comment</mat-icon>
+        <span>Nhận xét</span>
+      </div>
+      <div class="input-field flex items-center justify-start mt-2 gap-2 h-full">
+        <div class="post-create w-full" (focusin)="isInputFocused = true" tabindex="-1">
+          <form [formGroup]="addCommentForm" class="p-3 rounded-xl border border-gray-300"
+            [class.shadow-md]="isInputFocused" [class.border-red-300]="addCommentForm.dirty && addCommentForm.invalid">
+            <div class="editor text-gray-500">
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar" *ngIf="isInputFocused">
+              </ngx-editor-menu>
+              <ngx-editor [placeholder]="'Thêm nhận xét'" [editor]="editor" formControlName="content">
+              </ngx-editor>
+            </div>
+            <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isInputFocused">
+              <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearCommentForm()">Huỷ</button>
+              <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]"
+                (click)="onAddComment()">Nhận xét</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <ng-container *ngIf="comments && comments.length > 0">
+        <div class="text-lg font-medium mt-3 pt-3 flex items-center text-gray-700 border-t border-gray-300">
+          <mat-icon class="mr-2">supervisor_account</mat-icon>
+          <span>{{comments.length}} nhận xét cho tài liệu</span>
+        </div>
+        <div class="comment-list min-h-[50vh] max-h-[59vh] overflow-y-auto mt-2">
+          <ng-container *ngFor="let comment of comments">
+            <div class="comment-card p-2">
+              <div class="comment-header flex justify-between items-center">
+                <div class="flex justify-start items-center gap-2">
+                  <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100 p-1">
+                    <img src="../../../../../assets/picture/default-avatar.svg" alt="avatar">
+                  </div>
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <span class="font-medium text-base">{{comment?.user?.fullName}}</span>
+                    </div>
+                    <div class="comment-date">
+                      <span class="text-gray-500 text-sm">{{comment?.createdAt | date:'dd/MM/yyyy'}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="action-button p-3">
+                  <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+
+                  <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
+                    <button mat-menu-item color="primary" (click)="onEditComment(comment)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Sửa</span>
+                    </button>
+                    <button mat-menu-item color="warn" (click)="onDeleteComment(comment)">
+                      <mat-icon color="warn">delete</mat-icon>
+                      <span class="text-red-500">Xoá</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+              <div class="comment-content">
+                <p *ngIf="!isEditComment || selectedComment?._id !== comment?._id" [innerHTML]="comment?.content | sanitizedHtml"></p>
+                <form *ngIf="isEditComment && selectedComment?._id === comment?._id"
+                  [formGroup]="editCommentForm" class="p-3 rounded-xl border border-gray-300"
+                  [class.shadow-md]="isInputFocused"
+                  [class.border-red-300]="addCommentForm.dirty && addCommentForm.invalid">
+                  <div class="editor text-gray-500">
+                    <ngx-editor-menu [editor]="editEditor" [toolbar]="editToolbar" class="editor-toolbar"
+                      >
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="editEditor" [placeholder]="'Nhập nội dung'" formControlName="content">
+                    </ngx-editor>
+                  </div>
+                  <div class="button-wrapper flex justify-end items-center mt-3 gap-2">
+                    <button mat-button color="basic" class="rounded-xl min-w-[95px]"
+                      (click)="clearEditComment()">Huỷ</button>
+                    <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]"
+                      (click)="onSubmitEditComment()">Cập nhật</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
   </div>
   <div class="mt-4 flex justify-end items-center">
     <button mat-flat-button color="basic" class="rounded-xl px-4 py-5 min-w-[125px]" mat-dialog-close>Đóng</button>
