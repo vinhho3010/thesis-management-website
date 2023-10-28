@@ -55,6 +55,19 @@ export class MilestoneStudentsComponent implements OnInit {
       },
     });
   }
+  loadCurrentMilestoneChange(): void {
+    this.milestoneService.getMilestone(this.milestoneId).subscribe({
+      next: (res) => {
+        this.currentMilestone = res;
+        this.thesisVersionList = this.currentMilestone.thesisVersionList;
+        this.loadStudentList();
+        this.countSubmittedStudent();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
 
   loadStudentList(): void {
     const submitList = [] as any[];
@@ -118,6 +131,11 @@ export class MilestoneStudentsComponent implements OnInit {
         thesisVersion: item,
       }
     }
-    this.dialog.open(ViewDocsComponent, docsConfig)
+    const viewDocs = this.dialog.open(ViewDocsComponent, docsConfig)
+    viewDocs.afterClosed().subscribe(
+      (res) => {
+        this.loadCurrentMilestoneChange();
+      }
+    )
   }
 }
