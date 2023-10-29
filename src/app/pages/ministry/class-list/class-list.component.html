@@ -88,6 +88,16 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
+  <mat-paginator class="py-1"
+  #paginator
+  [pageSizeOptions]="[5, 10, 25]"
+  [pageSize]="pagination.limit"
+  [pageIndex]="pagination.page"
+  [length]="pagination.length"
+  (page)="onPageChange($event)"
+  showFirstLastButtons>
+</mat-paginator>
+
 </div>
 
 </div>

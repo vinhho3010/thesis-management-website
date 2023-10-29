@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Pagination } from '../Model/pagination';
+import { PaginationResponse } from '../Model/paginationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +10,13 @@ export class CouncilService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCouncil(filterCondition?: any) {
-    let params = new HttpParams()
+  getAllCouncil(pagination: Pagination,filterCondition?: any) {
+    let params = new HttpParams({
+      fromObject: {
+        page: pagination.page.toString(),
+        limit: pagination.limit.toString(),
+      }
+    })
 
     if(filterCondition.major) {
       params = params.append('majorId', filterCondition.major);
@@ -20,7 +27,7 @@ export class CouncilService {
     if(filterCondition.semester) {
       params = params.append('semester', filterCondition.semester);
     }
-    return this.http.get<any>('api/council', {params});
+    return this.http.get<PaginationResponse>('api/council', {params});
   }
 
   getTeacherCouncil(teacherId: string, filterCondition?: any) {

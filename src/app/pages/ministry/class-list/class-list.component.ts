@@ -7,6 +7,8 @@ import { ClassService } from 'src/app/services/class.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Pagination } from 'src/app/Model/pagination';
 
 @Component({
   selector: 'app-class-list',
@@ -17,8 +19,17 @@ export class ClassListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = [ 'position', 'name', 'semester', 'major', 'supervisor', 'count', 'actions'];
   dataSource = new MatTableDataSource<any>();
+  @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
+
+  pagination: Pagination = {
+    page: 0,
+    limit: 5,
+    length: 0
+  }
 
   constructor(private dialog: MatDialog, private classService: ClassService, private toastService: ToastService, private router: Router, private loadingService: LoaderService) { }
+
+
 
   ngOnInit(): void {
     this.loadClassList();
@@ -26,13 +37,26 @@ export class ClassListComponent implements OnInit {
 
   loadClassList(): void {
     this.loadingService.setLoading(true);
-    this.classService.getAllClass().subscribe({
+    this.classService.getAllClass(this.pagination).subscribe({
       next: (res) => {
+        this.pagination.length = res.length;
         this.loadingService.setLoading(false);
-        this.dataSource.data = this.standardizeData(res);
+        this.dataSource.data = this.standardizeData(res.data);
       },
       error: (err) => {
         this.loadingService.setLoading(false);
+        this.toastService.showErrorToast(err.error.message);
+      }
+    })
+  }
+
+  getAllClass(): void {
+    this.classService.getAllClass(this.pagination).subscribe({
+      next: (res) => {
+        this.pagination.length = res.length;
+        this.dataSource.data = this.standardizeData(res.data);
+      },
+      error: (err) => {
         this.toastService.showErrorToast(err.error.message);
       }
     })
@@ -77,5 +101,11 @@ export class ClassListComponent implements OnInit {
     addClassDialog.afterClosed().subscribe((res) => {
       this.loadClassList();
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pagination.page = event.pageIndex;
+    this.pagination.limit = event.pageSize;
+    this.getAllClass();
   }
 }

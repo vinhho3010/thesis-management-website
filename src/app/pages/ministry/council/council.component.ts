@@ -12,6 +12,7 @@ import { AddCouncilComponent } from '../dialog/add-council/add-council.component
 import { CouncilService } from 'src/app/services/council.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import { Pagination } from 'src/app/Model/pagination';
 
 @Component({
   selector: 'app-council',
@@ -30,6 +31,12 @@ export class CouncilComponent implements OnInit, AfterViewInit {
     'actions',
   ];
   dataSource = new MatTableDataSource<any>();
+
+  pagination: Pagination = {
+    page: 0,
+    limit: 5,
+    length: 0
+  }
 
   majorList: any[] = [];
   schoolYear = schoolYear;
@@ -61,10 +68,11 @@ export class CouncilComponent implements OnInit, AfterViewInit {
 
   loadCouncilList(): void {
     this.loadingService.setLoading(true);
-    this.councilService.getAllCouncil(this.filterOptionForm.value).subscribe({
+    this.councilService.getAllCouncil(this.pagination, this.filterOptionForm.value).subscribe({
       next: (res) => {
         this.loadingService.setLoading(false);
-        this.dataSource.data = res
+        this.dataSource.data = res.data;
+        this.pagination.length = res.length;
       },
       error: (err) => {
         this.loadingService.setLoading(false);
@@ -74,9 +82,10 @@ export class CouncilComponent implements OnInit, AfterViewInit {
   }
 
   loadCouncilListChange(): void {
-    this.councilService.getAllCouncil(this.filterOptionForm.value).subscribe({
+    this.councilService.getAllCouncil(this.pagination, this.filterOptionForm.value).subscribe({
       next: (res) => {
-        this.dataSource.data = res
+        this.dataSource.data = res.data;
+        this.pagination.length = res.length;
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -147,5 +156,11 @@ export class CouncilComponent implements OnInit, AfterViewInit {
 
   clearFilter(formControlName: string) {
     this.filterOptionForm.get(formControlName)?.reset();
+  }
+
+  onPageChange(event: any): void {
+    this.pagination.page = event.pageIndex;
+    this.pagination.limit = event.pageSize;
+    this.loadCouncilListChange();
   }
 }
