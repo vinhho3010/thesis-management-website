@@ -36,22 +36,22 @@
         </div>
         <div class="comment-list min-h-[50vh] max-h-[59vh] overflow-y-auto mt-2">
           <ng-container *ngFor="let comment of comments">
-            <div class="comment-card p-2">
+            <div class="comment-card p-3 rounded-2xl mt-2 border border-gray-200">
               <div class="comment-header flex justify-between items-center">
                 <div class="flex justify-start items-center gap-2">
                   <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100 p-1">
                     <img src="../../../../../assets/picture/default-avatar.svg" alt="avatar">
                   </div>
-                  <div class="comment-info">
+                  <div class="comment-info flex items-center justify-start gap-2">
                     <div class="comment-author">
-                      <span class="font-medium text-base">{{comment?.user?.fullName}}</span>
+                      <span class="font-medium text-gray-700 text-base">{{comment?.user?.fullName}}</span>
                     </div>
                     <div class="comment-date">
-                      <span class="text-gray-500 text-sm">{{comment?.createdAt | date:'dd/MM/yyyy'}}</span>
+                      <span class="text-gray-500 text-sm">{{comment?.createdAt | dateToText}}</span>
                     </div>
                   </div>
                 </div>
-                <div class="action-button p-3">
+                <div *ngIf="currentUser?._id === comment.user._id" class="action-button">
                   <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl">
                     <mat-icon>more_vert</mat-icon>
                   </button>

@@ -1,85 +1,181 @@
-<div class="milestone-student mx-auto max-w-5xl px-2 mt-9">
+<div class="milestone-student mx-auto max-w-5xl p-3 mt-9">
   <div class="flex justify-start items-center">
     <button mat-button color="basic" class="rounded-xl" (click)="onNavigateBack()">
       <mat-icon>keyboard_arrow_left</mat-icon>
       Trở về
     </button>
   </div>
-  <div class="milestone-info mt-1 text-gray-600 text-lg border-b border-gray-300 p-3">
-    <div class="milestone-info-head mb-2 flex items-center justify-start">
-      <span class="text-xl text-blue-600 mr-2">Chi tiết mốc thời gian</span>
-    </div>
-    <div class="milestone-info__title">
-      <span>
-        <span class="font-medium">Tiêu đề:</span>
-        {{currentMilestone?.title ?? 'Không có'}}
-      </span>
-    </div>
-    <div class="milestone-info__period">
-      <span>
-        <span class="font-medium"> Thời gian thực hiện: </span>
-        {{currentMilestone?.startDate | date: 'dd/MM/yyyy'}} - {{currentMilestone?.endDate | date: 'dd/MM/yyyy'}}
-      </span>
-    </div>
-    <div class="milestone-info__submitted">
-      <span>
-        <span class="font-medium"> Trạng thái: &nbsp;</span>
-        <span *ngIf="currentVersion?.url" class="text-green-400">Đã hoàn thành</span>
-        <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa hoàn thành</span>
-      </span>
-    </div>
-    <div class="description" *ngIf="currentMilestone?.description">
-      <span class="font-medium">Yêu cầu:</span>
-      <div class="description-content">
-        <p [innerHTML]="currentMilestone?.description | sanitizedHtml"></p>
+  <div class="version-wrapper rounded-2xl border border-gray-300 p-3 mt-2">
+    <div class="milestone-info mt-1 text-gray-600 text-lg border-b border-gray-300 px-3 pb-3 pt-1">
+      <div class="milestone-info-head mb-2 flex items-center justify-start">
+        <span class="text-xl text-blue-600 mr-2">Chi tiết mốc thời gian</span>
       </div>
+      <div class="milestone-info__title">
+        <span>
+          <span class="font-medium">Tiêu đề:</span>
+          {{currentMilestone?.title ?? 'Không có'}}
+        </span>
+      </div>
+      <div class="milestone-info__period">
+        <span>
+          <span class="font-medium"> Thời gian thực hiện: </span>
+          {{currentMilestone?.startDate | date: 'dd/MM/yyyy'}} - {{currentMilestone?.endDate | date: 'dd/MM/yyyy'}}
+        </span>
+      </div>
+      <div class="milestone-info__submitted">
+        <span>
+          <span class="font-medium"> Trạng thái: &nbsp;</span>
+          <span *ngIf="currentVersion?.url" class="text-green-400">Đã hoàn thành</span>
+          <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa hoàn thành</span>
+        </span>
+      </div>
+      <div class="description" *ngIf="currentMilestone?.description">
+        <span class="font-medium">Yêu cầu:</span>
+        <div class="description-content">
+          <p [innerHTML]="currentMilestone?.description | sanitizedHtml"></p>
+        </div>
+      </div>
+    </div>
+    <div class="submit-field p-3">
+      <div class="title text-blue-600 text-xl my-3">
+        Đính kèm tài liệu
+      </div>
+      <div class="input-file-field">
+        <div class="upload-field w-full flex items-center justify-start bg-gray-100 rounded-xl p-2">
+          <input type="file" class="hidden" (change)="onFileSelected($event)" accept=".pdf" #fileUpload>
+          <button *ngIf="!(currentVersion?.url || isShowLoading)" mat-flat-button color="primary" class="py-6 px-6 rounded-xl"
+            (click)="fileUpload.click()"
+            [matTooltip]="fileName"
+            [matTooltipDisabled]="!fileName">
+            <mat-icon>insert_drive_file_outline</mat-icon>
+            <span class="hidden sm:inline">Chọn tập tin</span>
+          </button>
+          <div *ngIf="!isShowLoading" class=" w-3/5">
+            <div class="ml-2 overflow-ellipsis overflow-hidden whitespace-nowrap">
+              {{fileName ? fileName : "Chưa có tập tin nào được chọn"}}
+            </div>
+            <div *ngIf="currentVersion?.url" class="text-gray-500 ml-2">
+              {{currentVersion?.updateUrlAt | dateToText}}
+            </div>
+          </div>
+
+          <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
+            <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate" [value]="percentage"></mat-progress-bar>
+            <span class="ml-2 font-medium">{{percentage}}%</span>
+          </div>
+
+
+          <div class="ml-2 flex-grow flex justify-end">
+            <button *ngIf="!(currentVersion?.url || isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" color="warn" (click)="clearFileInput()">
+              <mat-icon>clear</mat-icon>
+            </button>
+
+            <button *ngIf="currentVersion?.url" mat-icon-button matTooltip="Xem tài liệu" (click)="viewSubmitDoc.click()">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+
+            <a #viewSubmitDoc [href]="currentVersion?.url" rel="noopener noreferrer" target="_blank" class="hidden"></a>
+          </div>
+        </div>
+      </div>
+      <button *ngIf="!currentVersion?.url" mat-flat-button color="primary" class="px-4 py-3 rounded-xl bg-blue-600 min-w-[125px] mt-3 shadow-md"
+      [class.bg-gray-300]="isShowLoading"
+       (click)="onSubmitFile()" [disabled]="isShowLoading">
+        <span>Gửi bài</span>
+      </button>
+      <button *ngIf="currentVersion?.url" mat-flat-button color="warn" class="px-4 py-3 rounded-xl min-w-[125px] mt-3 shadow-md" (click)="onCancelFile()">
+        <span>Huỷ bài nộp</span>
+      </button>
     </div>
   </div>
-  <div class="submit-field p-3">
-    <div class="title text-blue-600 text-xl my-3">
-      Đính kèm tài liệu
-    </div>
-    <div class="input-file-field">
-      <div class="upload-field w-full flex items-center justify-start bg-gray-100 rounded-xl p-2">
-        <input type="file" class="hidden" (change)="onFileSelected($event)" accept=".pdf" #fileUpload>
-        <button *ngIf="!(currentVersion?.url || isShowLoading)" mat-flat-button color="primary" class="py-6 px-6 rounded-xl max-w-xs"
-          (click)="fileUpload.click()"
-          [matTooltip]="fileName"
-          [matTooltipDisabled]="!fileName">
-          <mat-icon>insert_drive_file_outline</mat-icon>
-          <span>Chọn tập tin</span>
-        </button>
-        <div class="flex flex-col" *ngIf="!isShowLoading">
-          <span class="line-clamp-1 ml-2">{{fileName ? fileName : "Chưa có tập tin nào được chọn"}}</span>
-          <span *ngIf="currentVersion?.url" class="text-gray-500 ml-2">{{currentVersion?.updateUrlAt | dateToText}}</span>
-        </div>
-
-        <div *ngIf="isShowLoading" class="loading-bar flex w-full items-center justify-center">
-          <mat-progress-bar class="w-1/2 ml-3 py-2 rounded-2xl" mode="determinate" [value]="percentage"></mat-progress-bar>
-          <span class="ml-2 font-medium">{{percentage}}%</span>
-        </div>
-
-
-        <div class="ml-2 flex-grow flex justify-end">
-          <button *ngIf="!(currentVersion?.url || isShowLoading || !fileName)" mat-icon-button matTooltip="Huỷ" color="warn" (click)="clearFileInput()">
-            <mat-icon>clear</mat-icon>
-          </button>
-
-          <button *ngIf="currentVersion?.url" mat-icon-button matTooltip="Xem tài liệu" (click)="viewSubmitDoc.click()">
-            <mat-icon>keyboard_arrow_right</mat-icon>
-          </button>
-
-          <a #viewSubmitDoc [href]="currentVersion?.url" rel="noopener noreferrer" target="_blank" class="hidden"></a>
+  <div *ngIf="currentVersion?.url" class="comment-field w-full p-3 border border-gray-200 rounded-2xl mt-3">
+    <div class="p-2">
+      <div class="title text-lg font-medium flex items-center text-gray-700">
+        <mat-icon class="mr-2"> comment</mat-icon>
+        <span>Nhận xét</span>
+      </div>
+      <div class="input-field flex items-center justify-start mt-2 gap-2 h-full">
+        <div class="post-create w-full" (focusin)="isInputFocused = true" tabindex="-1">
+          <form [formGroup]="addCommentForm" class="p-3 rounded-xl border border-gray-300"
+            [class.shadow-md]="isInputFocused" [class.border-red-300]="addCommentForm.dirty && addCommentForm.invalid">
+            <div class="editor text-gray-500">
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="editor-toolbar" *ngIf="isInputFocused">ks
+              </ngx-editor-menu>
+              <ngx-editor [placeholder]="'Thêm nhận xét'" [editor]="editor" formControlName="content">
+              </ngx-editor>
+            </div>
+            <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isInputFocused">
+              <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearCommentForm()">Huỷ</button>
+              <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]"
+                (click)="onAddComment()">Nhận xét</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <button *ngIf="!currentVersion?.url" mat-flat-button color="primary" class="px-4 py-3 rounded-xl bg-blue-600 min-w-[125px] mt-3 shadow-md"
-    [class.bg-gray-300]="isShowLoading"
-     (click)="onSubmitFile()" [disabled]="isShowLoading">
-      <span>Gửi bài</span>
-    </button>
-    <button *ngIf="currentVersion?.url" mat-flat-button color="warn" class="px-4 py-3 rounded-xl min-w-[125px] mt-3 shadow-md" (click)="onCancelFile()">
-      <span>Huỷ bài nộp</span>
-    </button>
+    <ng-container *ngIf="comments && comments.length > 0">
+      <div class="text-lg font-medium mt-3 pt-3 px-3 flex items-center text-gray-700 border-t border-gray-300">
+        <mat-icon class="mr-2">supervisor_account</mat-icon>
+        <span>{{comments.length}} nhận xét cho tài liệu</span>
+      </div>
+      <div class="comment-list max-h-[59vh] overflow-y-auto mt-2">
+        <ng-container *ngFor="let comment of comments">
+          <div class="comment-card p-3 rounded-2xl mt-2 border border-gray-200">
+            <div class="comment-header flex justify-between items-center">
+              <div class="flex justify-start items-center gap-2">
+                <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100 p-1">
+                  <img src="../../../../../assets/picture/default-avatar.svg" alt="avatar">
+                </div>
+                <div class="comment-info flex items-center justify-start flex-wrap">
+                  <div class="comment-author">
+                    <span class="font-medium text-gray-700 text-base">{{comment?.user?.fullName}}</span>
+                  </div>
+                  <div class="comment-date ml-1">
+                    <span class="text-gray-500 text-sm">{{comment?.createdAt | dateToText}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="currentUser?._id === comment?.user?._id" class="action-button p-1">
+                <button [matMenuTriggerFor]="postMenu" mat-icon-button color="basic" class="rounded-xl">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu class="mt-1 rounded-xl" #postMenu="matMenu" xPosition="before">
+                  <button mat-menu-item color="primary" (click)="onEditComment(comment)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Sửa</span>
+                  </button>
+                  <button mat-menu-item color="warn" (click)="onDeleteComment(comment)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span class="text-red-500">Xoá</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <div class="comment-content pt-1">
+              <p *ngIf="!isEditComment || selectedComment?._id !== comment?._id" [innerHTML]="comment?.content | sanitizedHtml"></p>
+              <form *ngIf="isEditComment && selectedComment?._id === comment?._id"
+                [formGroup]="editCommentForm" class="p-3 rounded-xl border border-gray-300"
+                [class.shadow-md]="isInputFocused"
+                [class.border-red-300]="addCommentForm.dirty && addCommentForm.invalid">
+                <div class="editor text-gray-500">
+                  <ngx-editor-menu [editor]="editEditor" [toolbar]="editToolbar" class="editor-toolbar"
+                    >
+                  </ngx-editor-menu>
+                  <ngx-editor [editor]="editEditor" [placeholder]="'Nhập nội dung'" formControlName="content">
+                  </ngx-editor>
+                </div>
+                <div class="button-wrapper flex justify-end items-center mt-3 gap-2">
+                  <button mat-button color="basic" class="rounded-xl min-w-[95px]"
+                    (click)="clearEditComment()">Huỷ</button>
+                  <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]"
+                    (click)="onSubmitEditComment()">Cập nhật</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </div>

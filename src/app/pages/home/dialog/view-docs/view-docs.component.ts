@@ -19,6 +19,7 @@ export class ViewDocsComponent implements OnInit {
   comments: any[] = [];
   selectedComment: any;
   isEditComment = false;
+  currentUser = this.authService.getUser();
 
   addCommentForm = new FormGroup({
     content: new FormControl(
