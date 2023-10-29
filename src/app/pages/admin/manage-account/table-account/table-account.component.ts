@@ -36,15 +36,27 @@ export class TableAccountComponent {
 
   initDataSource(): void {
     this.loadingService.setLoading(true);
-    this.manageUserService.getAllAccount(this.tableType).subscribe({
+    this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
       next: (response) =>{
-        this.dataSourceInput.data = response;
+        this.dataSourceInput.data = response.data;
         this.pagination.length = response.length;
         this.loadingService.setLoading(false);
       },
       error: () => {
         this.toastService.showErrorToast('Tải dữ liệu thất bại');
         this.loadingService.setLoading(false);
+      }
+    });
+  }
+
+  reloadDataSource(): void {
+    this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
+      next: (response) =>{
+        this.dataSourceInput.data = response.data;
+        this.pagination.length = response.length;
+      },
+      error: () => {
+        this.toastService.showErrorToast('Tải dữ liệu thất bại');
       }
     });
   }
@@ -97,8 +109,9 @@ export class TableAccountComponent {
     });
   }
 
-  // onPageChange(event: PageEvent) {
-  //   this.pagination.page = event.page;
-  //   this.pagination.limit = event.limit;
-  // }
+  onPageChange(event: PageEvent) {
+    this.pagination.page = event.pageIndex;
+    this.pagination.limit = event.pageSize;
+    this.reloadDataSource();
+  }
 }

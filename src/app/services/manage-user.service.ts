@@ -2,6 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AccountInfo } from '../Model/account-info';
 import { RoleAccount } from '../Model/enum/roleEnum';
+import { PaginationResponse } from '../Model/paginationResponse';
+import { Pagination } from '../Model/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,15 @@ export class ManageUserService {
     return this.http.delete(`/api/user/${id}`)
   }
 
+  getAllAccountWithPagination(pagination: Pagination, role: RoleAccount){
+    let params = new HttpParams({
+      fromObject: {
+        page: pagination.page.toString(),
+        limit: pagination.limit.toString(),
+      }
+    })
+    return this.http.get<PaginationResponse>(`/api/user/roles/${role}/pagination`, {params})
+  }
   getAllAccount(role: RoleAccount){
     return this.http.get<AccountInfo[]>(`/api/user/roles/${role}`)
   }
