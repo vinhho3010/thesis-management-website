@@ -38,7 +38,7 @@ export class FirebaseService {
   }
 
   pushFileToStorage(fileUpload: FileUpload, storeUrlFile: Function): Observable<number | undefined> {
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+    const filePath = `${this.basePath}/${new Date().getTime()}_${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
 
