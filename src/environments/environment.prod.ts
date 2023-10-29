@@ -9,7 +9,7 @@ export const firebaseConfig = {
 };
 
 export const environment = {
-  production: false,
+  production: true,
   currentSchoolYear: '2023-2024',
   currentSemester: '1'
 };

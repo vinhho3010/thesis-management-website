@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./class.component.scss']
 })
 export class ClassComponent implements OnInit {
-hasClassInfo = this.authService.getClassId() ? true : false;
+isHasClassInfo = this.hasClassInfo();
 isTeacher = this.authService.getRole() === RoleAccount.TEACHER ? true : false;
 selectedTab = 0;
 
@@ -20,5 +20,13 @@ selectedTab = 0;
     if(retrievedData.previousIndex){
       this.selectedTab = retrievedData.previousIndex;
     }
+  }
+
+  hasClassInfo() {
+    if(this.authService.getRole() === RoleAccount.STUDENT) {
+      return this.authService.getUser().followClass ? true : false;
+    }
+
+    return this.authService.getClassId() ? true : false;
   }
 }

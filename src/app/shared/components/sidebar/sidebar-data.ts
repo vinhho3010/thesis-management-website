@@ -54,12 +54,16 @@ export const routesInfoTeacher: RouteInfo[] = [
   {
     path: '/class',
     title: 'Quản lý lớp học',
-    icon: 'book_outline'
+    icon: 'book_outline',
+    hasChild: true,
+    children:[]
   },
   {
     path: '/students',
     title: 'Danh sách sinh viên',
-    icon: 'people_outline'
+    icon: 'people_outline',
+    hasChild: true,
+    children: []
   },
   {
     path: '/milestones',
@@ -82,7 +86,7 @@ export const routesInfoStudent: RouteInfo[] = [
   {
     path: '/class',
     title: 'Lớp học',
-    icon: 'book_outline'
+    icon: 'book_outline',
   },
   {
     path: '/register-topic',
@@ -123,4 +127,6 @@ export interface RouteInfo {
   path: string;
   title: string;
   icon: string;
+  hasChild?: boolean;
+  children?: RouteInfo[];
 }

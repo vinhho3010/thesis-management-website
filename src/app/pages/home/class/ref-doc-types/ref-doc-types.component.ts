@@ -7,7 +7,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { RefDocsService } from 'src/app/services/ref-docs.service';
 import { AddDocTypeComponent } from '../../dialog/add-doc-type/add-doc-type.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EditTypeNameComponent } from '../../dialog/edit-type-name/edit-type-name.component';
 import { LoaderService } from 'src/app/services/loader.service';
 
@@ -17,9 +17,10 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./ref-doc-types.component.scss']
 })
 export class RefDocTypesComponent {
-  classId = this.authService.getClassId() ? this.authService.getClassId() : '';
+  classId: string;
   isTeacher = this.authService.getRole() === RoleAccount.TEACHER;
   refDocsTypeList = [] as any[];
+  paramsSubscription: any;
 
   constructor(
     private dialog: MatDialog,
@@ -28,8 +29,21 @@ export class RefDocTypesComponent {
     private toastService: ToastService,
     private firebaseService: FirebaseService,
     private loadingService: LoaderService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.classId = this.route.snapshot.paramMap.get('id') as string;
+    if(this.authService.getRole() === RoleAccount.STUDENT) {
+      this.classId = this.authService.getUser()?.followClass as string;
+    }
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      let newId = params.get('id');
+      if (newId !== this.classId && this.authService.getRole() === RoleAccount.TEACHER) {
+        this.classId = newId as string;
+        this.getRefDocsType();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getRefDocsType();
@@ -45,7 +59,7 @@ export class RefDocTypesComponent {
 
   getRefDocsType() {
     this.loadingService.setLoading(true);
-    this.refDocsService.getDocsTypesOfClass(this.classId as string).subscribe({
+    this.refDocsService.getDocsTypesOfClass(this.classId).subscribe({
       next: (res: any) => {
         this.loadingService.setLoading(false);
         this.refDocsTypeList = res;

@@ -11,7 +11,7 @@ export interface AccountInfo {
   code: string,
   major: string,
   followClass?: string;
-  instructClass?: string;
+  instructClass?: any;
   topic?: string;
   avatar?: string;
 }

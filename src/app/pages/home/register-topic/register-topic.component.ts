@@ -11,6 +11,7 @@ import { ClassService } from 'src/app/services/class.service';
 import { RegisteredTopic } from 'src/app/Model/registerTopic/registerTopic';
 import { PendingStatus } from 'src/app/Model/enum/pendingStatus';
 import { LoaderService } from 'src/app/services/loader.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register-topic',
@@ -92,7 +93,10 @@ export class RegisterTopicComponent implements OnInit {
 
   registeredWithTeacher(teacher: any){
     const request = [...this.pendingRequest, ...this.rejectedRequest]
-    return request.find((value) => value.class._id === teacher.instructClass);
+    const instructClassId = teacher.instructClass.map((value: any) => value._id);
+    return request.find((value) => {
+      return instructClassId.includes(value.class._id);
+    });
   }
 
   selectMajor(major: any){
@@ -128,7 +132,7 @@ export class RegisterTopicComponent implements OnInit {
         const result = res.result;
         const submitData: registerToClassData = {
           studentId: this.authService.getUser()._id,
-          classId: teacher?.instructClass,
+          classId: teacher?.instructClass[0]?._id,
           type: result?.type,
           topic: result?.topic,
           topicEng: result?.topicEng,

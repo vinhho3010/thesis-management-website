@@ -8,6 +8,7 @@ import { RegisterTopicComponent } from '../../register-topic/register-topic.comp
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterTopicDialogComponent } from '../../dialog/register-topic/register-topic.component';
 import { LoaderService } from 'src/app/services/loader.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pending-student-list',
@@ -24,14 +25,26 @@ export class PendingStudentListComponent {
     'actions',
   ];
   dataSource = new MatTableDataSource([]);
+  classId: string
+  paramsSubscription: any;
 
   constructor(
     private classService: ClassService,
     private authService: AuthService,
     private toastService: ToastService,
     private dialog: MatDialog,
-    private loadingService: LoaderService
-  ) {}
+    private loadingService: LoaderService,
+    private route: ActivatedRoute
+  ) {
+    this.classId = this.route.snapshot.paramMap.get('id') as string;
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      let newId = params.get('id');
+      if (newId !== this.classId) {
+        this.classId = newId as string;
+        this.loadPendingStudentList();
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -102,7 +115,7 @@ export class PendingStudentListComponent {
 
   loadPendingStudentList() {
     this.loadingService.setLoading(true);
-    this.classService.getPendingStudents(this.authService.getClassId() as string).subscribe({
+    this.classService.getPendingStudents(this.classId).subscribe({
         next: (res) => {
           this.loadingService.setLoading(false);
           this.dataSource.data = this.standardizeData(res);

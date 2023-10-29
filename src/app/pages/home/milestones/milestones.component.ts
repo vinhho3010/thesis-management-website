@@ -7,6 +7,7 @@ import { MilestoneService } from 'src/app/services/milestone.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { schoolYear } from 'src/app/Model/enum/schoolYear';
 import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-milestones',
@@ -15,12 +16,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MilestonesComponent implements OnInit {
   milestonesList: any[] = [];
-  // schoolYear = schoolYear;
+  schoolYear = schoolYear;
+  instructingClasses = this.authService.getUser().instructClass;
 
-  // filterOptionForm = new FormGroup({
-  //   schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
-  //   semester: new FormControl(1),
-  // })
+  filterOptionForm = new FormGroup({
+    schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
+    semester: new FormControl(1),
+  })
 
   constructor(
     private authService: AuthService,
@@ -32,34 +34,50 @@ export class MilestonesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMilestones();
+    this.onListenFilterFormChange();
   }
 
   loadMilestones() {
     this.loadingService.setLoading(true);
-    const classId = this.authService.getClassId();
-    this.milestoneService.getClassMilestones(classId as string).subscribe({
-      next: (res) => {
-        this.loadingService.setLoading(false);
-        this.milestonesList = res;
-      },
-      error: (err) => {
-        this.loadingService.setLoading(false);
-        this.toastService.showErrorToast('Không tải được danh sách');
-      }
-    })
+
+    const classInfo = this.instructingClasses.find((classItem: any) => {
+      return classItem.schoolYear == this.filterOptionForm.value.schoolYear && classItem.semester == this.filterOptionForm.value.semester
+    });
+    if(classInfo) {
+      this.milestoneService.getClassMilestones(classInfo._id as string).subscribe({
+        next: (res) => {
+          this.loadingService.setLoading(false);
+          this.milestonesList = res;
+        },
+        error: (err) => {
+          this.loadingService.setLoading(false);
+          this.toastService.showErrorToast('Không tải được danh sách');
+        }
+      })
+    } else {
+      this.loadingService.setLoading(false);
+      this.milestonesList = [];
+      this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
+    }
   }
 
   createMilestone(milestone: any) {
-    const classId = this.authService.getClassId();
-    this.milestoneService.createMilestone(classId as string, milestone).subscribe({
-      next: (res) => {
-        this.toastService.showSuccessToast('Tạo thành công');
-        this.loadMilestones();
-      },
-      error: (err) => {
-        this.toastService.showErrorToast('Không tạo được');
-      }
-    })
+    const classInfo = this.instructingClasses.find((classItem: any) => {
+      return classItem.schoolYear == this.filterOptionForm.value.schoolYear && classItem.semester == this.filterOptionForm.value.semester
+    });
+    if(classInfo) {
+      this.milestoneService.createMilestone(classInfo._id as string, milestone).subscribe({
+        next: (res) => {
+          this.toastService.showSuccessToast('Tạo thành công');
+          this.loadMilestones();
+        },
+        error: (err) => {
+          this.toastService.showErrorToast('Không tạo được');
+        }
+      })
+    } else {
+      this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
+    }
   }
 
   updateMilestone(milestone: any) {
@@ -113,5 +131,15 @@ export class MilestonesComponent implements OnInit {
         this.toastService.showErrorToast('Không xóa được');
       }
     })
+  }
+
+  onListenFilterFormChange() {
+    //if schoolyear or semester change, reload council list with debounceTime 500ms
+    this.filterOptionForm.valueChanges.pipe(debounceTime(500)).subscribe({
+      next: () => {
+        this.loadMilestones();
+      }
+    })
+
   }
 }

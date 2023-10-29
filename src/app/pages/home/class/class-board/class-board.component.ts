@@ -7,6 +7,7 @@ import { PostService } from 'src/app/services/post.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { LoaderService } from 'src/app/services/loader.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-class-board',
@@ -16,7 +17,7 @@ import { LoaderService } from 'src/app/services/loader.service';
 export class ClassBoardComponent implements OnInit {
   defaultAvatar = 'assets/picture/default-avatar.svg';
   className = '';
-  classId = this.authService.getClassId() ? this.authService.getClassId() : '';
+  classId: string;
   teacher: any;
   postList = [] as any[];
   selectedEditPost = {} as any;
@@ -37,13 +38,15 @@ export class ClassBoardComponent implements OnInit {
   isEditLoading = false;
   isTeacher = this.authService.getRole() === RoleAccount.TEACHER;
   isEditPost = false;
+  paramsSubscription: any;
 
   constructor(
     private classService: ClassService,
     private authService: AuthService,
     private postService: PostService,
     private toastService: ToastService,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private route: ActivatedRoute
   ) {
     this.createPostForm = new FormGroup({
       content: new FormControl(
@@ -56,6 +59,19 @@ export class ClassBoardComponent implements OnInit {
         { value: '', disabled: false },
         Validators.required()
       ),
+    });
+
+    this.classId = this.route.snapshot.paramMap.get('id') as string;
+    if(this.authService.getRole() === RoleAccount.STUDENT) {
+      this.classId = this.authService.getUser()?.followClass as string;
+    }
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      let newId = params.get('id');
+      if (newId !== this.classId && this.authService.getRole() === RoleAccount.TEACHER) {
+        this.classId = newId as string;
+        this.initClassInfo();
+        this.getPostListByClass();
+      }
     });
   }
 

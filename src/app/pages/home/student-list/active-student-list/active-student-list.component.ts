@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Pagination } from 'src/app/Model/pagination';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,6 +27,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
     limit: 5,
     length: 0
   }
+  paramsSubscription: any;
 
   constructor(
     private authService: AuthService,
@@ -34,11 +35,20 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
     private toastService: ToastService,
     private excelHandleService: ExcelHandleService,
     private router: Router,
-    private loadingService: LoaderService
-  ) {}
+    private loadingService: LoaderService,
+    private route: ActivatedRoute
+  ) {
+    this.classOfTeacher = this.route.snapshot.paramMap.get('id') as string;
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      let newId = params.get('id');
+      if (newId !== this.classOfTeacher) {
+        this.classOfTeacher = newId as string;
+        this.loadStudentList();
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.classOfTeacher = this.authService.getClassId() as string;
     this.loadStudentList();
   }
 

@@ -1,7 +1,15 @@
 <div class="milestone-wrapper max-w-4xl mx-auto pt-5 p-3">
   <div class="milestone-header">
     <div class="milestone-title flex md:justify-between items-center flex-col md:flex-row justify-center mb-5">
-      <!-- <div [formGroup]="filterOptionForm"
+    <div class="list-title pb-3 mt-8 text-blue-800 text-2xl">
+      Danh sách mốc thời gian
+    </div>
+      <button mat-raised-button color="primary" class="add-btn bg-blue-600 ml-3" (click)="onAddMilestone()">
+        <mat-icon>add</mat-icon>
+        Thêm mốc thời gian
+      </button>
+    </div>
+    <div [formGroup]="filterOptionForm"
       class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
       <mat-form-field floatLabel="always" appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label>Niên khoá</mat-label>
@@ -18,14 +26,6 @@
           <mat-option [value]="2">2</mat-option>
         </mat-select>
       </mat-form-field>
-    </div> -->
-    <div class="list-title pb-3 mt-8 text-blue-800 text-2xl">
-      Danh sách mốc thời gian
-    </div>
-      <button mat-raised-button color="primary" class="add-btn bg-blue-600 ml-3" (click)="onAddMilestone()">
-        <mat-icon>add</mat-icon>
-        Thêm mốc thời gian
-      </button>
     </div>
   </div>
   <div class="milestone-list grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 px-2">

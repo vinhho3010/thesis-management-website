@@ -15,11 +15,12 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./ref-documents.component.scss'],
 })
 export class RefDocumentsComponent implements OnInit {
-  classId = this.authService.getClassId() ? this.authService.getClassId() : '';
+  classId: string;
   isTeacher = this.authService.getRole() === RoleAccount.TEACHER;
   typeId = '';
   refDocsList = [] as any[];
   docType: any;
+  paramsSubscription: any;
 
   constructor(
     private dialog: MatDialog,
@@ -30,7 +31,20 @@ export class RefDocumentsComponent implements OnInit {
     private route: ActivatedRoute,
     private loadingService: LoaderService,
     private router: Router
-  ) {}
+  ) {
+    this.classId = this.route.snapshot.paramMap.get('id') as string;
+    if(this.authService.getRole() === RoleAccount.STUDENT) {
+      this.classId = this.authService.getUser()?.followClass as string;
+    }
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      let newId = params.get('id');
+      if (newId !== this.classId && this.authService.getRole() === RoleAccount.TEACHER) {
+        this.classId = newId as string;
+        this.getRefDocs();
+    this.loadType();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.typeId = this.route.snapshot.paramMap.get('typeId') as string;
