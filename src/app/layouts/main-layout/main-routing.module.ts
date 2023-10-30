@@ -77,7 +77,7 @@ const routes: Routes = [
         component: MyThesisComponent
       },
       {
-        path: 'class/documents/type/:typeId',
+        path: 'class/:classId/documents/type/:typeId',
         component: RefDocumentsComponent
       },
       {

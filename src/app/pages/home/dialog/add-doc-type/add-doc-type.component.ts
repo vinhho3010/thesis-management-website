@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { FileUpload } from 'src/app/Model/fileUpload';
 import { ClassService } from 'src/app/services/class.service';
@@ -14,7 +14,7 @@ import { RefDocsService } from 'src/app/services/ref-docs.service';
   styleUrls: ['./add-doc-type.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AddDocTypeComponent {
+export class AddDocTypeComponent implements OnInit {
   fileName = '';
   percentage = 0;
   selectedFiles?: FileList;
@@ -23,6 +23,7 @@ export class AddDocTypeComponent {
   uploadSuccess = false;
   typeName: FormControl = new FormControl('', [Validators.required]);
   typeId = '';
+  classId!: string
 
   addRefDocForm: FormGroup;
 
@@ -31,13 +32,20 @@ export class AddDocTypeComponent {
     private refDialog: MatDialogRef<AddDocTypeComponent>,
     private toastService: ToastService,
     private refDocService: RefDocsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.addRefDocForm = new FormGroup({
       type: new FormControl(''),
       fileName: new FormControl(''),
       file: new FormControl({}),
     });
+  }
+
+  ngOnInit(): void {
+    if(this.data.classId){
+      this.classId = this.data.classId;
+    }
   }
 
   onFileSelected(event: any) {
@@ -60,7 +68,7 @@ export class AddDocTypeComponent {
       if (file) {
         this.currentFileUpload = new FileUpload(file);
         this.firebaseService
-          .addDocForClass(this.currentFileUpload, this.typeId)
+          .addDocForClass(this.classId, this.currentFileUpload, this.typeId)
           .subscribe({
             next: (percentage: any) => {
               this.percentage = Math.round(percentage ? percentage : 0);
@@ -80,7 +88,7 @@ export class AddDocTypeComponent {
 
   onSubmit() {
     if(this.typeName.value){
-      this.refDocService.createDocTypeForClass(this.typeName.value).subscribe({
+      this.refDocService.createDocTypeForClass(this.classId, this.typeName.value).subscribe({
         next: (res: any) => {
           this.typeId = res._id;
           if (this.selectedFiles) {

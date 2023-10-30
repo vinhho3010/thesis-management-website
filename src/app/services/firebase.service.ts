@@ -25,8 +25,8 @@ export class FirebaseService {
     private toastService: ToastService
     ) { }
 
-  addDocForClass(fileUpload: FileUpload, typeId:string): any {
-    return this.pushFileToStorage(fileUpload, this.saveFileDataToRefDoc.bind(this, fileUpload, typeId));
+  addDocForClass(classId: string, fileUpload: FileUpload, typeId:string): any {
+    return this.pushFileToStorage(fileUpload, this.saveFileDataToRefDoc.bind(this,classId, fileUpload, typeId));
   }
 
   addDocForThesisVersion(fileUpload: FileUpload, thesisVersionId: string): any {
@@ -55,8 +55,8 @@ export class FirebaseService {
     return uploadTask.percentageChanges();
 }
 
-  private saveFileDataToRefDoc(fileUpload: FileUpload, typeId: string): void {
-    this.refDocsService.createDocForClass(fileUpload, typeId).subscribe({
+  private saveFileDataToRefDoc(classId: string, fileUpload: FileUpload, typeId: string): void {
+    this.refDocsService.createDocForClass(classId, fileUpload, typeId).subscribe({
       next: (res) => {
         this.toastService.showSuccessToast('Upload file thành công');
       },

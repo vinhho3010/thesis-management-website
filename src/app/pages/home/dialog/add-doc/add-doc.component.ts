@@ -23,6 +23,7 @@ export class AddDocComponent {
   addRefDocForm: FormGroup;
   route: ActivatedRoute;
   typeId = '';
+  classId!: string
 
   constructor(
     private firebaseService: FirebaseService,
@@ -38,6 +39,7 @@ export class AddDocComponent {
 
     this.route = data.route;
     this.typeId = this.route.snapshot.paramMap.get('typeId') as string;
+    this.classId = this.route.snapshot.paramMap.get('classId') as string;
   }
 
   onFileSelected(event: any) {
@@ -56,7 +58,7 @@ export class AddDocComponent {
       if (file) {
         this.currentFileUpload = new FileUpload(file);
         this.firebaseService
-          .addDocForClass(this.currentFileUpload, this.typeId)
+          .addDocForClass(this.classId, this.currentFileUpload, this.typeId)
           .subscribe({
             next: (percentage: any) => {
               this.percentage = Math.round(percentage ? percentage : 0);

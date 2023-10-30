@@ -32,18 +32,10 @@ export class RefDocumentsComponent implements OnInit {
     private loadingService: LoaderService,
     private router: Router
   ) {
-    this.classId = this.route.snapshot.paramMap.get('id') as string;
+    this.classId = this.route.snapshot.paramMap.get('classId') as string;
     if(this.authService.getRole() === RoleAccount.STUDENT) {
       this.classId = this.authService.getUser()?.followClass as string;
     }
-    this.paramsSubscription = this.route.paramMap.subscribe(params => {
-      let newId = params.get('id');
-      if (newId !== this.classId && this.authService.getRole() === RoleAccount.TEACHER) {
-        this.classId = newId as string;
-        this.getRefDocs();
-    this.loadType();
-      }
-    });
   }
 
   ngOnInit(): void {
@@ -55,7 +47,7 @@ export class RefDocumentsComponent implements OnInit {
   onAddDoc() {
     const dialogConfig = {
       data: {
-        route: this.route
+        route: this.route,
       }
     }
     this.dialog.open(AddDocComponent, dialogConfig).afterClosed().subscribe({
@@ -100,6 +92,11 @@ export class RefDocumentsComponent implements OnInit {
         previousIndex: 1
       }
     }
-    this.router.navigate(['class'], navigationExtra);
+    if(this.authService.getRole()===RoleAccount.TEACHER){
+      this.router.navigate([`/class/${this.classId}`], navigationExtra);
+    }
+    else{
+      this.router.navigate([`/class`], navigationExtra);
+    }
   }
 }

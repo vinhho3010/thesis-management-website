@@ -10,11 +10,11 @@ export class RefDocsService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  createDocForClass(doc: FileUpload, typeId: string) {
+  createDocForClass(classId: string, doc: FileUpload, typeId: string) {
     const data = {
       title: doc.title,
       url: doc.url,
-      class: this.authService.getClassId(),
+      class: classId,
       type: typeId
     }
     return this.http.post('/api/ref-docs', data);
@@ -36,12 +36,12 @@ export class RefDocsService {
     return this.http.get(`/api/ref-docs/class/${classId}/type`);
   }
 
-  createDocTypeForClass(docTypeName: string) {
+  createDocTypeForClass(classId: string, docTypeName: string) {
     const data = {
       name: docTypeName,
-      class: this.authService.getClassId()
+      class: classId
     }
-    return this.http.post(`/api/ref-docs/class/${this.authService.getClassId()}/type`, data);
+    return this.http.post(`/api/ref-docs/class/${classId}/type`, data);
   }
 
   updateDocType(docId: string, docTypeName: string) {

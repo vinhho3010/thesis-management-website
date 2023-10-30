@@ -27,13 +27,22 @@ export class ClassService {
     return this.http.get<Class>(`/api/class/${id}`)
   }
 
-  getAllClass(pagination: Pagination){
+  getAllClass(pagination: Pagination, filterCondition: any){
     let params = new HttpParams({
       fromObject: {
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
       }
     });
+    if(filterCondition.major) {
+      params = params.append('majorId', filterCondition.major);
+    }
+    if(filterCondition.schoolYear) {
+      params = params.append('schoolYear', filterCondition.schoolYear);
+    }
+    if(filterCondition.semester) {
+      params = params.append('semester', filterCondition.semester);
+    }
     return this.http.get<PaginationResponse>(`/api/class`, {params})
   }
 

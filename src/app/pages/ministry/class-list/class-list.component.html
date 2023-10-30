@@ -5,14 +5,32 @@
     </div>
 
   </div>
-<div class="flex justify-between items-center">
-  <div class="search-wrapper w-1/3 p-3">
+<div class="lg:flex block justify-between items-center">
+  <div [formGroup]="filterOptionForm" class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
     <mat-form-field floatLabel="always" appearance="outline" class="w-full">
-      <mat-label>Tìm kiếm</mat-label>
-      <input matInput type="text" placeholder="Nhập tên nhóm">
+      <mat-label>Ngành</mat-label>
+      <mat-select placeholder="Chọn ngành học" formControlName="major" panelClass="panel-custom">
+        <mat-option [value]="null">Chọn ngành học</mat-option>
+        <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" appearance="outline" class="w-full" >
+      <mat-label>Niên khoá</mat-label>
+      <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear" panelClass="panel-custom">
+        <mat-option [value]="null">Chọn niên khoá</mat-option>
+        <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full">
+      <mat-label>Học kỳ</mat-label>
+      <mat-select placeholder="Chọn học kỳ" formControlName="semester"  panelClass="panel-custom">
+        <mat-option [value]="null">Chọn học kỳ</mat-option>
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
-  <button mat-flat-button class="bg-blue-600 p-6 mb-4 rounded-xl text-white lg:mr-12 shadow-md" (click)="onCreateClass()">
+  <button mat-flat-button class="bg-blue-600 p-6 mb-4 rounded-xl text-white lg:mr-12 shadow-md ml-3" (click)="onCreateClass()">
     <mat-icon>add</mat-icon>
     <span class="ml-2">Thêm nhóm</span>
   </button>

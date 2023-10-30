@@ -96,30 +96,30 @@
         <ng-container matColumnDef="studentCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
           <span class="mobile-label">MSSV: </span>
-          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+          <td mat-cell *matCellDef="let element"> {{element?.code}} </td>
         </ng-container>
 
         <ng-container matColumnDef="fullName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
-          <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+          <td mat-cell *matCellDef="let element"> {{element?.fullName}} </td>
         </ng-container>
 
         <ng-container matColumnDef="class">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
-          <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+          <td mat-cell *matCellDef="let element"> {{element?.class}} </td>
         </ng-container>
 
         <ng-container matColumnDef="topic">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài </th>
-          <td mat-cell *matCellDef="let element"> {{element?.thesis.name ?? 'Chưa xác định'}} </td>
+          <td mat-cell *matCellDef="let element"> {{element?.thesis?.name ?? 'Chưa xác định'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
           <td mat-cell *matCellDef="let row">
-            <button mat-icon-button color="primary" >
+            <!-- <button mat-icon-button color="primary" >
               <mat-icon>edit</mat-icon>
-            </button>
+            </button> -->
             <button mat-icon-button color="warn" (click)="onRemoveStudent(row)">
               <mat-icon>delete</mat-icon>
             </button>

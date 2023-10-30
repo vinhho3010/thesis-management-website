@@ -50,7 +50,12 @@ export class RefDocTypesComponent {
   }
 
   onAddDoc() {
-    this.dialog.open(AddDocTypeComponent).afterClosed().subscribe({
+    const dialogConfig = {
+      data: {
+        classId: this.classId,
+      }
+    }
+    this.dialog.open(AddDocTypeComponent, dialogConfig).afterClosed().subscribe({
       next: (res: any) => {
         this.getRefDocsType();
       },
@@ -121,6 +126,6 @@ export class RefDocTypesComponent {
   }
 
   handleClickNavigate(docType: any) {
-    this.router.navigate([`/class/documents/type/${docType._id}`]);
+    this.router.navigate([`/class/${this.classId}/documents/type/${docType._id}`]);
   }
 }
