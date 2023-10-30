@@ -63,4 +63,12 @@ export class SidebarComponent implements OnInit{
     this.isStudentCollapsed = !this.isStudentCollapsed;
     this.isClassCollapsed = true;
   }
+
+  isSameIdStudent(path: string) {
+    const arrTemp = path.split('/');
+    const id = arrTemp[arrTemp.length - 1];
+
+    return this.router.url.includes(id) && this.router.url.includes('students');
+
+  }
 }

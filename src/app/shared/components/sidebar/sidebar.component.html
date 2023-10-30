@@ -19,7 +19,7 @@
         <li *ngIf="routeInfo?.hasChild && routeInfo.path==='/class'">
           <a [ngClass]=""
             (click)="toggleClassCollapse()"
-            [class.active]="isOnRoute(routeInfo.path)"
+            [class.active]="isOnRoute(routeInfo.path) || !isClassCollapsed"
             class="flex items-center justify-between p-3 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
             <span class="flex items-center justify-start">
               <mat-icon>{{routeInfo.icon}}</mat-icon>
@@ -34,23 +34,25 @@
         </li>
         <!-- chidrenRoutes -->
         <ng-container *ngIf="routeInfo?.hasChild && !isClassCollapsed && routeInfo.path==='/class'">
-          <ng-container *ngFor="let childRoute of routeInfo.children">
-            <li>
-              <a [ngClass]=""
-                (click)="handleRouting(childRoute)"
-                [class.active]="isOnRoute(childRoute.path)"
-                class="flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-blue-50 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
-                <mat-icon>{{childRoute.icon}}</mat-icon>
-                <span class="ml-3">{{childRoute.title}}</span>
-              </a>
-            </li>
-          </ng-container>
+        <ul class="rounded-xl border border-gray-200 p-2">
+            <ng-container *ngFor="let childRoute of routeInfo.children">
+              <li>
+                <a [ngClass]=""
+                  (click)="handleRouting(childRoute)"
+                  [class.child-active]="isOnRoute(childRoute.path)"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-[#FCFCD4] hover:shadow-sm hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer mt-1">
+                  <mat-icon>{{childRoute.icon}}</mat-icon>
+                  <span class="ml-3">{{childRoute.title}}</span>
+                </a>
+              </li>
+            </ng-container>
+          </ul>
         </ng-container>
 
         <li *ngIf="routeInfo?.hasChild && routeInfo.path==='/students'">
           <a [ngClass]=""
             (click)="toggleStudentCollapse()"
-            [class.active]="isOnRoute(routeInfo.path)"
+            [class.active]="isOnRoute(routeInfo.path) || !isStudentCollapsed"
             class="flex items-center justify-between p-3 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
             <span class="flex items-center justify-start">
               <mat-icon>{{routeInfo.icon}}</mat-icon>
@@ -65,17 +67,19 @@
         </li>
         <!-- chidrenRoutes -->
         <ng-container *ngIf="routeInfo?.hasChild && !isStudentCollapsed && routeInfo.path==='/students'">
-          <ng-container *ngFor="let childRoute of routeInfo.children">
-            <li>
-              <a [ngClass]=""
-                (click)="handleRouting(childRoute)"
-                [class.active]="isOnRoute(childRoute.path)"
-                class="flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-blue-50 hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer">
-                <mat-icon>{{childRoute.icon}}</mat-icon>
-                <span class="ml-3">{{childRoute.title}}</span>
-              </a>
-            </li>
-          </ng-container>
+          <ul class="rounded-xl border border-gray-200 p-2">
+            <ng-container *ngFor="let childRoute of routeInfo.children">
+              <li>
+                <a [ngClass]=""
+                  (click)="handleRouting(childRoute)"
+                  [class.child-active]="isOnRoute(childRoute.path) || isSameIdStudent(childRoute.path)"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-[#FCFCD4] hover:shadow-sm hover:text-gray-700 dark:hover:bg-gray-700 group cursor-pointer mt-1">
+                  <mat-icon>{{childRoute.icon}}</mat-icon>
+                  <span class="ml-3">{{childRoute.title}}</span>
+                </a>
+              </li>
+            </ng-container>
+          </ul>
         </ng-container>
       </ng-container>
 

@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { schoolYear } from 'src/app/Model/enum/schoolYear';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-milestones',
@@ -20,8 +21,8 @@ export class MilestonesComponent implements OnInit {
   instructingClasses = this.authService.getUser().instructClass;
 
   filterOptionForm = new FormGroup({
-    schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
-    semester: new FormControl(1),
+    schoolYear: new FormControl(environment.currentSchoolYear),
+    semester: new FormControl(environment.currentSemester),
   })
 
   constructor(

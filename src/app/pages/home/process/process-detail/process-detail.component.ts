@@ -176,7 +176,7 @@ export class ProcessDetailComponent implements OnInit {
         next: (res) => {
           this.toastService.showSuccessToast('Thêm bình luận thành công');
           this.clearCommentForm();
-          this.comments.push(res.comments[res.comments.length - 1]);
+          this.comments.unshift(res.comments[res.comments.length - 1]);
         },
         error: (err) => {
           this.toastService.showErrorToast(err.error.message);

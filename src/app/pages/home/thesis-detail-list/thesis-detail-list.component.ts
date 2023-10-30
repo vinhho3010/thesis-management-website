@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {  Router } from '@angular/router';
+import {  ActivatedRoute, Router } from '@angular/router';
 import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 import { Thesis } from 'src/app/Model/thesis';
 import { AuthService } from 'src/app/services/auth.service';
@@ -36,7 +36,8 @@ export class ThesisDetailListComponent implements OnInit {
     private location: Location,
     private routerExService: RouterExtService,
     private router: Router,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private route: ActivatedRoute
   ) {
     this.detailThesisForm = new FormGroup({
       type: new FormControl(''),
@@ -57,7 +58,7 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.classId = this.authService.getClassId() as string;
+    this.classId = this.route.snapshot.paramMap.get('id') as string;
     const retrievedData = this.location.getState() as any;
     if(retrievedData?.selectedStudent) {
       this.onChangeStudent(retrievedData.selectedStudent);
@@ -129,6 +130,6 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   onGoBack(): void {
-    this.router.navigate(['/students']);
+    this.router.navigate([`/students/${this.classId}`]);
   }
 }

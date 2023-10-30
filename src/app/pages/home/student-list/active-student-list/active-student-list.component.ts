@@ -62,7 +62,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
         selectedStudent: row,
       },
     };
-    this.router.navigate(['/students/thesis-detail'], navigationExtras);
+    this.router.navigate([`students/thesis-detail/${this.classOfTeacher}`], navigationExtras);
   }
 
   loadStudentList(): void {

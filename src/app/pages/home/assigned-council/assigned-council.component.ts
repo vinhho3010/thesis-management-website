@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CouncilService } from 'src/app/services/council.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-assigned-council',
@@ -18,8 +19,8 @@ export class AssignedCouncilComponent implements OnInit {
   semester = semester;
 
   filterOptionForm = new FormGroup({
-    schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
-    semester: new FormControl(1),
+    schoolYear: new FormControl(environment.currentSchoolYear),
+    semester: new FormControl(environment.currentSemester),
   })
 
   constructor(

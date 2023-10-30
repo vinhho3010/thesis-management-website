@@ -53,7 +53,7 @@ const routes: Routes = [
         component: StudentListComponent
       },
       {
-        path: 'students/thesis-detail',
+        path: 'students/thesis-detail/:id',//classId
         component: ThesisDetailListComponent
       },
       {
