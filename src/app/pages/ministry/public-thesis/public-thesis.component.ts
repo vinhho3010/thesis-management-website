@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { ThesisService } from 'src/app/services/thesis.service';
 import { DetailThesisDialogComponent } from '../dialog/detail-thesis-dialog/detail-thesis-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MajorService } from 'src/app/services/major.service';
 
 @Component({
   selector: 'app-public-thesis',
@@ -19,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class PublicThesisComponent implements OnInit {
   schoolYear = schoolYear;
   thesisList: any[] = [];
+  majorList: any[] = [];
 
   pagination: Pagination = {
     page: 0,
@@ -29,6 +31,7 @@ export class PublicThesisComponent implements OnInit {
   filterOptionForm = new FormGroup({
     schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
     semester: new FormControl(1),
+    major: new FormControl(''),
     isPublic : new FormControl(false)
   })
 
@@ -36,12 +39,25 @@ export class PublicThesisComponent implements OnInit {
     private loadingService: LoaderService,
     private toastService: ToastService,
     private thesisService: ThesisService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private majorService: MajorService
   ) { }
 
   ngOnInit(): void {
+    this.loadMajorList();
     this.loadThesisList();
     this.onListenFilterFormChange();
+  }
+
+  loadMajorList(): void {
+    this.majorService.getAllmajor().subscribe({
+      next: (res) => {
+        this.majorList = res;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
   }
 
   loadThesisList() {
@@ -103,5 +119,6 @@ export class PublicThesisComponent implements OnInit {
   onPageChange(event: PageEvent) {
     this.pagination.page = event.pageIndex;
     this.pagination.limit = event.pageSize;
+    this.loadThesisListChange();
   }
 }

@@ -8,8 +8,14 @@
     </mat-card-subtitle>
     <mat-card-subtitle>
       <div class="font-bold">
-        Topic:
+        Đề tài (Tiếng Anh):
         ({{thesis?.topicEng}})
+      </div>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <div class="font-semibold">
+        Lĩnh vực:
+        <span class="text-blue-500 bg-blue-200 py-1 px-3 rounded-full text-sm font-normal">{{thesis?.type}}</span>
       </div>
     </mat-card-subtitle>
     <mat-card-subtitle>
@@ -31,9 +37,15 @@
     </mat-card-subtitle>
     <mat-card-subtitle>
       <span class="font-semibold">
+        Học kỳ - Niên khoá:
+      </span>
+      {{thesis?.semester}}/{{thesis?.schoolYear}}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <span class="font-semibold">
         Ngày bảo vệ:
       </span>
-      {{thesis?.protectInfo?.date | date: 'dd/MM/yyyy'}}
+      {{thesis?.protectInfo?.date | date: 'dd/MM/yyyy'}} - {{thesis?.protectInfo?.time}}
     </mat-card-subtitle>
     <mat-card-subtitle>
       <span class="font-semibold">

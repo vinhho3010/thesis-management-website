@@ -61,6 +61,9 @@ export class ThesisService {
     if(optionalParams.isPublic!==null || optionalParams.isPublic!==undefined){
       params = params.append('isPublic', optionalParams.isPublic);
     }
+    if(optionalParams.major){
+      params = params.append('majorId', optionalParams.major);
+    }
     return this.http.get<PaginationResponse>(`/api/thesis`, {params});
   }
 
