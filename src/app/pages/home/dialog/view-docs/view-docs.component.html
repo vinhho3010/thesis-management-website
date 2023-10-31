@@ -39,8 +39,8 @@
             <div class="comment-card p-3 rounded-2xl mt-2 border border-gray-200">
               <div class="comment-header flex justify-between items-center">
                 <div class="flex justify-start items-center gap-2">
-                  <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100 p-1">
-                    <img src="../../../../../assets/picture/default-avatar.svg" alt="avatar">
+                  <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100">
+                    <img [src]="comment?.user?.avatar ?? '../../../../../assets/picture/default-avatar.svg'" alt="avatar" class="w-full h-full object-cover rounded-full">
                   </div>
                   <div class="comment-info flex items-center justify-start gap-2">
                     <div class="comment-author">

@@ -12,12 +12,12 @@
          [class.hover:bg-gray-200]="student._id !== selectedStudent._id"
          (click)="onChangeStudent(student)">
           <mat-card-header class="w-full">
-            <div mat-card-avatar class="student-avatar flex items-center rounded-full bg-white p-1">
-              <img src="../../../../assets/picture/default-avatar.svg" alt="avatar" />
+            <div mat-card-avatar class="student-avatar flex items-center rounded-full bg-white">
+              <img [src]="student?.avatar ?? '../../../../assets/picture/default-avatar.svg'" alt="avatar" />
             </div>
-              <mat-card-title>{{student.fullName}}</mat-card-title>
+              <mat-card-title>{{student?.fullName}}</mat-card-title>
               <mat-card-subtitle class="text-xs mt-1"
-              [class.text-gray-200]="student._id === selectedStudent._id">{{student.class}}</mat-card-subtitle>
+              [class.text-gray-200]="student._id === selectedStudent._id">{{student?.class}}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>

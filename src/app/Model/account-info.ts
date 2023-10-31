@@ -15,3 +15,9 @@ export interface AccountInfo {
   topic?: string;
   avatar?: string;
 }
+
+export interface ChangePasswordDto {
+  oldPassword: string;
+  newPassword: string;
+  _id: string;
+}

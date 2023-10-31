@@ -40,8 +40,8 @@
     <mat-card class="post-item mat-elevation-z0 shadow-sm mt-3 rounded-xl border border-gray-200 w-full" *ngFor="let post of postList">
       <div class="flex justify-between items-start">
         <mat-card-header>
-          <div mat-card-avatar class="rounded-full border border-gray-100 p-1">
-            <img [src]="'../../../../../assets/picture/default-avatar.svg'">
+          <div mat-card-avatar class="rounded-full border border-gray-100">
+            <img [src]="post?.user?.avatar ?? '../../../../../assets/picture/default-avatar.svg'" class="object-cover rounded-full h-full w-full">
           </div>
           <mat-card-title>{{post?.user?.fullName}}</mat-card-title>
           <mat-card-subtitle class="text-sm">{{  post?.createdAt | dateToText }}</mat-card-subtitle>

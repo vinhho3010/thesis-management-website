@@ -153,4 +153,8 @@ export class FirebaseService {
     const storageRef = this.storage.ref(this.basePath);
     storageRef.child(name).delete();
   }
+
+  onDeleteAttachment(downloadURL: string) {
+    this.storage.storage.refFromURL(downloadURL).delete();
+  }
 }

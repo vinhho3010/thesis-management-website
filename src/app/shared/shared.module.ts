@@ -16,6 +16,8 @@ import { DomUrlPipe, SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
 import { SafePipe } from './pipes/safe.pipe';
 import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card/thesis-card.component';
+import { ProfileDialogComponent } from './components/dialog/profile-dialog/profile-dialog.component';
+import { ChangePasswordComponent } from './components/dialog/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card
     ThesisStatusPipe,
     DomUrlPipe,
     SafePipe,
-    ThesisCardComponent
+    ThesisCardComponent,
+    ProfileDialogComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +58,9 @@ import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card
     ThesisStatusPipe,
     DomUrlPipe,
     SafePipe,
-    ThesisCardComponent
+    ThesisCardComponent,
+    ProfileDialogComponent,
+    ChangePasswordComponent
   ]
 })
 export class SharedModule { }
