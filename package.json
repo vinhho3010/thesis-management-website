@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "ngx-editor": "^16.0.1",
     "ngx-toastr": "^17.0.2",

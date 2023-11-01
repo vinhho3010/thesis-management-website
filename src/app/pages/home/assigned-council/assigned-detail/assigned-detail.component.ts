@@ -4,10 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime } from 'rxjs';
 import { schoolYear } from 'src/app/Model/enum/schoolYear';
-import { AddCouncilComponent } from 'src/app/pages/ministry/dialog/add-council/add-council.component';
-import { ClassService } from 'src/app/services/class.service';
 import { CouncilService } from 'src/app/services/council.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
@@ -15,6 +12,9 @@ import { MajorService } from 'src/app/services/major.service';
 import { ScoringComponent } from '../../dialog/scoring/scoring.component';
 import { ThesisService } from 'src/app/services/thesis.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExcelHandleService } from 'src/app/services/local/excel-handle.service';
+import { DatePipe } from '@angular/common';
+import { councilListHeader } from 'src/app/shared/utilities/excel-schema';
 
 @Component({
   selector: 'app-assigned-detail',
@@ -35,7 +35,6 @@ export class AssignedDetailComponent {
   ];
   dataSource = new MatTableDataSource<any>();
 
-  majorList: any[] = [];
   schoolYear = schoolYear;
   councilId!: string;
   council: any;
@@ -48,7 +47,9 @@ export class AssignedDetailComponent {
     private loadingService: LoaderService,
     private councilService: CouncilService,
     private thesisService: ThesisService,
-    private authService: AuthService
+    private authService: AuthService,
+    private excelHandleService: ExcelHandleService,
+    private datePipe: DatePipe
   ) {
     this.councilId = this.route.snapshot.paramMap.get('id') as string;
   }
@@ -111,6 +112,29 @@ export class AssignedDetailComponent {
 
       }
     });
+  }
+
+  onExportData(data: any[]) {
+    const schema = councilListHeader;
+    const columnWidth = [10, 20, 25, 25, 50, 25, 20, 10, 25, 25, 25];
+    const standardlizedData = data.map((item, index) => {
+      return {
+        index: index + 1,
+        code: item?.student?.code,
+        fullName: item?.student?.fullName,
+        major: item?.student?.major.name,
+        topic: `${item?.topic} \n (${item?.topicEng})`,
+        teacher: item?.class?.teacher?.fullName,
+        time: `${item?.protectInfo?.time} - ${this.datePipe.transform(new Date(item?.protectInfo?.date), 'dd/MM/yyyy')}`,
+        room: item?.protectInfo?.room,
+        president: this.council?.president?.fullName,
+        member: this.council?.member?.fullName,
+        secretary: this.council?.secretary?.fullName,
+      };
+    });
+    console.log(standardlizedData, data);
+
+    this.excelHandleService.exportToExcel(standardlizedData, 'HoiDong', schema, columnWidth);
   }
 
 }

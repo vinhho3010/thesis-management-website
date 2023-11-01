@@ -23,22 +23,30 @@
 
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> MSSV </th>
-        <span class="mobile-label">MSSV: </span>
-        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">MSSV: </span>
+          {{element.code}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
-        <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Họ Tên: </span>
+          {{element.fullName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="class">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Lớp </th>
-        <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Lớp: </span>
+          {{element.class}} </td>
       </ng-container>
       <ng-container matColumnDef="topic">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Đề tài </th>
-        <td mat-cell *matCellDef="let element"> {{element?.thesis.topic ?? 'Chưa đăng ký'}} </td>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Đề tài: </span>
+          {{element?.thesis.topic ?? 'Chưa đăng ký'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

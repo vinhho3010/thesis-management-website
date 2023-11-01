@@ -59,8 +59,15 @@
 
     </div>
   </div>
-  <div class="title text-blue-600 text-2xl mt-5 pl-3">
-    Danh sách đề tài
+  <div class="flex justify-start items-center gap-3 mt-5 mb-3 pl-3">
+    <div class="title text-blue-600 text-2xl  ">
+      Danh sách đề tài
+    </div>
+    <button mat-flat-button color="primary" class="bg-orange-600 ml-3 rounded-xl py-5 px-3 min-w-[160px] shadow-md"
+      (click)="onExportData(dataSource.data)">
+        <mat-icon>unarchive</mat-icon>
+        <span>Xuất danh sách</span>
+      </button>
   </div>
   <div class="council-list table-wrapper">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort [bgColor]="'#f1f1f1'">

@@ -105,6 +105,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
 
   onExportData(data: any[]) {
     const schema = studentListHeader;
+    const columnWidth = [10, 20, 25, 25, 20, 40, 40];
     const standardlizedData = data.map((item, index) => {
       return {
         index: index + 1,
@@ -116,7 +117,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
         topicEng: item?.thesis?.topicEng,
       };
     });
-    this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema);
+    this.excelHandleService.exportToExcel(standardlizedData, 'DSSV', schema, columnWidth);
   }
 
     onPageChange(event: PageEvent) {
