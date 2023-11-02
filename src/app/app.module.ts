@@ -4,7 +4,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { firebaseConfig } from 'src/environments/environment';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule }     from '@angular/common/http';
@@ -56,6 +55,7 @@ import { DatePipe } from '@angular/common';
       useValue: {
         ...new MatDialogConfig(),
         maxHeight: "95vh",
+        maxWidth: "99vw",
         panelClass: 'custom-dialog',
         autoFocus: false,
       } as MatDialogConfig,

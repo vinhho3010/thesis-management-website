@@ -16,6 +16,7 @@ import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milest
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
 import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
+import { ChatComponent } from 'src/app/pages/home/chat/chat.component';
 
 
 const routes: Routes = [
@@ -87,6 +88,10 @@ const routes: Routes = [
       {
         path: 'council-list/detail/:id',
         component: AssignedDetailComponent
+      },
+      {
+        path: 'chat',
+        component: ChatComponent
       }
 
     ]
