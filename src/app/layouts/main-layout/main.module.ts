@@ -33,6 +33,7 @@ import { ScoringComponent } from 'src/app/pages/home/dialog/scoring/scoring.comp
 import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/assigned-detail/assigned-detail.component';
 import { DetailThesisDialogComponent } from 'src/app/pages/ministry/dialog/detail-thesis-dialog/detail-thesis-dialog.component';
 import { ChatComponent } from 'src/app/pages/home/chat/chat.component';
+import { WebSocketService } from 'src/app/services/websocket.service';
 
 
 
@@ -69,12 +70,13 @@ import { ChatComponent } from 'src/app/pages/home/chat/chat.component';
     AssignedDetailComponent,
     ScoringComponent,
     DetailThesisDialogComponent,
-    ChatComponent
+    ChatComponent,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     SharedModule,
-  ]
+  ],
+  providers: [WebSocketService],
 })
 export class MainModule { }

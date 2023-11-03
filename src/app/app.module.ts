@@ -1,9 +1,10 @@
+import { WebSocketService } from './services/websocket.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { firebaseConfig } from 'src/environments/environment';
+import { firebaseConfig, socketIOConfig } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule }     from '@angular/common/http';
@@ -24,6 +25,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {CUSTOM_DATE_FORMAT} from './shared/utilities/customDateFormat';
 import { SpinnerComponent } from './pages/spinner/spinner.component';
 import { DatePipe } from '@angular/common';
+import { AuthInterceptor } from './services/interceptor/auth.interceptor';
+import { SocketIoModule } from 'ngx-socket-io';
 
 
 @NgModule({
@@ -37,16 +40,16 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    AuthModule,
-    MainModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    NgxEditorModule
+    NgxEditorModule,
+    SocketIoModule.forRoot(socketIOConfig)
   ],
   providers: [
+        WebSocketService,
     HttpClientModule,
     {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}},
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
@@ -63,7 +66,12 @@ import { DatePipe } from '@angular/common';
     { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
-    DatePipe
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

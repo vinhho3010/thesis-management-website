@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Class } from 'src/app/Model/class';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,13 +17,15 @@ export class ClassOverviewComponent implements OnInit {
   studentList: any[] = [];
   teacher: any;
   paramsSubscription: any;
+  currentUser = this.authService.getUser()._id;
 
   constructor(
     private classService: ClassService,
     private authService: AuthService,
     private toastService: ToastService,
     private loadingService: LoaderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.classId = this.route.snapshot.paramMap.get('id') as string;
     if(this.authService.getRole() === RoleAccount.STUDENT) {
@@ -55,5 +57,16 @@ export class ClassOverviewComponent implements OnInit {
         this.toastService.showErrorToast(err.error.message);
       },
     });
+  }
+
+  onMessage(user: any) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        user,
+      },
+    };
+
+    this.router.navigate(['/chat'], navigationExtras);
+
   }
 }

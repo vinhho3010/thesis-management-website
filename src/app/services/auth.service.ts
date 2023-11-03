@@ -52,6 +52,10 @@ export class AuthService {
     })
   }
 
+  getAccessToken(){
+    return this.storageService.get(TOKEN_KEY) as string;
+  }
+
   getRole(){
     const user = this.getUser();
     if(user){

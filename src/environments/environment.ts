@@ -1,3 +1,5 @@
+import { SocketIoConfig } from "ngx-socket-io";
+
 export const firebaseConfig = {
   apiKey: "AIzaSyCE-n1QzXBCKPyRPKtDPJHj--ByR3hraIU",
   authDomain: "thesis-management-cdf24.firebaseapp.com",
@@ -13,3 +15,14 @@ export const environment = {
   currentSchoolYear: '2023-2024',
   currentSemester: '1'
 };
+
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+console.log(user);
+const userId = user._id;
+export const socketIOConfig: SocketIoConfig = { url: 'http://localhost:8000', options: {
+  query: {
+    userId: userId
+  }
+}, };
+
+

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { StorageService } from 'src/app/services/local/storage.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { WebSocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent {
     private router: Router,
     private toast: ToastService,
     private storageService: StorageService,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private webSocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +52,10 @@ export class LoginComponent {
         next: (res) => {
           this.loadingService.setLoading(false);
           this.authService.saveUser(res.data);
-          this.toast.showSuccessToast('Đăng nhập thành công');
           this.navigateBaseOnRole(this.authService.getRole());
+          this.toast.showSuccessToast('Đăng nhập thành công');
+          this.webSocketService.reconnect();
+
         },
         error: (err) => {
           this.loadingService.setLoading(false);
@@ -67,7 +71,7 @@ export class LoginComponent {
         break;
       case RoleAccount.TEACHER:
       case RoleAccount.STUDENT:
-        this.router.navigate(['/student']);
+        this.router.navigate(['/home']);
         break;
       case RoleAccount.MINISTRY:
         this.router.navigate(['/ministry']);
