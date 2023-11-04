@@ -1,9 +1,9 @@
 <div class="active-wrapper">
   <div class="active-list-header flex justify-end items-center mt-9 p-3">
     <div class="search-wrapper lg:w-2/5 w-full p-3 gap-3">
-      <mat-form-field floatLabel="always" subscriptSizing="dynamic" appearance="outline" class="w-full">
+      <mat-form-field floatLabel="always" subscriptSizing="dynamic" appearance="outline" class="w-full" >
         <mat-label>Tìm kiếm</mat-label>
-        <input matInput type="text" placeholder="Nhập tên sinh viên">
+        <input matInput type="text" placeholder="Nhập thông tin tìm kiếm" [formControl]="searchCode">
       </mat-form-field>
     </div>
   </div>

@@ -1,3 +1,7 @@
 .chat-wrapper {
   height: calc(100vh - 82px);
+
+  .h-custom {
+    flex: 1 1 100%;
+  }
 }
