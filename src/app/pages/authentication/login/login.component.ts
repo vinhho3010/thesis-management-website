@@ -31,7 +31,6 @@ export class LoginComponent {
     private toast: ToastService,
     private storageService: StorageService,
     private loadingService: LoaderService,
-    private webSocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class LoginComponent {
           this.authService.saveUser(res.data);
           this.navigateBaseOnRole(this.authService.getRole());
           this.toast.showSuccessToast('Đăng nhập thành công');
-          this.webSocketService.reconnect();
+          //this.webSocketService.reconnect();
 
         },
         error: (err) => {

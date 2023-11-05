@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { WebSocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-chat',
@@ -28,23 +29,25 @@ export class ChatComponent implements OnInit {
     private authService: AuthService,
     private location: Location,
     private toastService: ToastService,
+    private webSocketService: WebSocketService,
   ) {}
 
   ngOnInit(): void {
     this.loadChatList();
     this.listenMessages();
+    this.webSocketService.reconnect();
   }
 
   checkIfGoFromClass() {
     //a user is selected from class component
     const selectedFromClass = this.location.getState() as any;
     if(selectedFromClass?.user) {
-      const selectedChat = this.chatList.find((chat: any) => chat.friend._id === selectedFromClass?.user?._id);
+      const selectedChat = this.chatList.find((chat: any) => chat?.friend?._id === selectedFromClass?.user?._id);
 
       if(selectedChat) { //if chat room is existed
         this.onChangeChat(selectedChat);
       } else { //if chat room is not existed, create new chat room
-        this.createNewChatRoom(this.selectedUserChatId);
+        this.createNewChatRoom(selectedFromClass?.user?._id);
       }
 
     }
@@ -53,7 +56,7 @@ export class ChatComponent implements OnInit {
   createNewChatRoom(friendId: string) {
     this.chatService.createChatRoom(friendId, this.currentUserId).subscribe((data: any) => {
       this.loadChatList();
-      this.selectedChat = data;
+      //this.selectedChat = data;
     });
   }
 
@@ -104,7 +107,7 @@ export class ChatComponent implements OnInit {
 
   onChangeChat(chat: any) {
     this.selectedUserChatId = chat.friend._id;
-    if(this.selectedChat?._id !== chat._id) {
+    if(this.selectedChat?._id !== chat?._id) {
       this.selectedChat = chat;
       this.loadMessages(this.selectedChat._id);
     }

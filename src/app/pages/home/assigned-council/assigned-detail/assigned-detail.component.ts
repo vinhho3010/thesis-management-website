@@ -114,10 +114,42 @@ export class AssignedDetailComponent {
     });
   }
 
+  arraysAreEqual<T>(array1: T[], array2: T[]): boolean {
+    return array1.length === array2.length && array1.every(item => array2.includes(item));
+  }
+
+  get setOfCouncilMember() {
+    const president = this.council?.president?._id;
+    const member = this.council?.member?._id;
+    const secretary = this.council?.secretary?._id;
+
+    return [...new Set([president, member, secretary])];
+  }
+
+  teachersHasMarkedThesis(thesis: any) {
+    if(thesis?.results && thesis?.results.length > 0) {
+      const resultsList = thesis?.results;
+      const teachersHasMark = resultsList.map((result: any) => result.teacher);
+      return [...new Set(teachersHasMark)];
+    } else {
+      return [];
+    }
+  }
+
+  avgScore(thesis: any) {
+    const resultsList = thesis?.results;
+    const scores = resultsList.map((result: any) => result.mark);
+    const avgScore = scores.reduce((a: any, b: any) => a + b, 0) / scores.length;
+    return avgScore.toFixed(2);
+  }
+
   onExportData(data: any[]) {
-    const schema = councilListHeader;
-    const columnWidth = [10, 20, 25, 25, 50, 25, 20, 10, 25, 25, 25];
+    let schema = councilListHeader;
+    let columnWidth = [10, 20, 25, 25, 50, 25, 20, 10, 25, 25, 25, 15];
+
     const standardlizedData = data.map((item, index) => {
+      console.log(item, this.setOfCouncilMember, this.teachersHasMarkedThesis(item));
+
       return {
         index: index + 1,
         code: item?.student?.code,
@@ -130,6 +162,7 @@ export class AssignedDetailComponent {
         president: this.council?.president?.fullName,
         member: this.council?.member?.fullName,
         secretary: this.council?.secretary?.fullName,
+        avgScore: this.arraysAreEqual(this.setOfCouncilMember, this.teachersHasMarkedThesis(item)) ? this.avgScore(item) : 'Chưa chấm',
       };
     });
     console.log(standardlizedData, data);

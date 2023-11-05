@@ -21,13 +21,14 @@ export class AuthenticationGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+console.log('guard');
 
       if(this.authService.isLogin()){
         return true;
       } else {
         //go to login page
         this.toastService.showErrorToast('Bạn cần đăng nhập để truy cập');
-        this.router.navigate(['/login']);
+        this.router.navigateByUrl('auth/login');
         return false;
       }
   }

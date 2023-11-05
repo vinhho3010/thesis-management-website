@@ -17,7 +17,6 @@ export const environment = {
 };
 
 const user = JSON.parse(localStorage.getItem('user') || '{}');
-console.log(user);
 const userId = user._id;
 export const socketIOConfig: SocketIoConfig = { url: 'http://localhost:8000', options: {
   query: {

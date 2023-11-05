@@ -66,7 +66,7 @@ export class AuthService {
 
   logout() {
     this.storageService.clean();
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 
   isLogin(){

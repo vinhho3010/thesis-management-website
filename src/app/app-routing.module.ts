@@ -4,6 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 {
   path: '',
+  redirectTo: 'home',
+  pathMatch: 'full'
+},
+{
+  path: 'auth',
   loadChildren: () => import('./layouts/authentication-layout/auth.module').then(m => m.AuthModule),
 },
 {
@@ -17,7 +22,7 @@ const routes: Routes = [
 {
   path: 'ministry',
   loadChildren: () => import('./layouts/ministry-layout/ministry.module').then(m => m.MinistryModule),
-}
+},
 
 ];
 
