@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SidebarService } from 'src/app/services/local/sidebar.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { ProfileDialogComponent } from '../dialog/profile-dialog/profile-dialog.component';
+import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { ProfileDialogComponent } from '../dialog/profile-dialog/profile-dialog.
 })
 export class HeaderComponent implements OnInit{
   userData!: AccountInfo;
+  ROLE = RoleAccount
   isLogin = false;
 
   constructor(
@@ -21,6 +23,7 @@ export class HeaderComponent implements OnInit{
     private authService: AuthService,
     private showToast: ToastService,
     private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +43,9 @@ export class HeaderComponent implements OnInit{
     profileDialog.afterClosed().subscribe((result) => {
         this.userData = this.authService.getUser();
     });
+  }
+
+  onNavigateChat(): void {
+    this.router.navigate(['/chat']);
   }
 }

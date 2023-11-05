@@ -34,6 +34,10 @@
           <mat-icon>settings_applications</mat-icon>
           <span>Cài đặt tài khoản</span>
         </button>
+        <button *ngIf="isLogin && (userData?.role === ROLE?.STUDENT ||  userData?.role === ROLE?.TEACHER)" mat-menu-item (click)="onNavigateChat()">
+          <mat-icon>message</mat-icon>
+          <span>Tin nhắn</span>
+        </button>
         <button mat-menu-item (click)="onLogout()">
           <mat-icon>exit_to_app</mat-icon>
           <span>Đăng xuất</span>

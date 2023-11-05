@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -11,7 +11,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  @ViewChild('chatContainer', { static: false }) chatContainer!: ElementRef;
+  @ViewChild('bottomAnchor', { static: false }) bottomAnchor!: ElementRef;
 
   currentUserId = this.authService.getUser()._id;
   inputForm = new FormGroup({
@@ -33,7 +33,6 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.loadChatList();
     this.listenMessages();
-    this.scrollToBottom();
   }
 
   checkIfGoFromClass() {
@@ -88,14 +87,18 @@ export class ChatComponent implements OnInit {
       this.chatService.sendMessage(message);
       this.messages.push(message);
       this.inputForm.reset();
-      this.scrollToBottom();
+      setTimeout(
+        ()=> this.scrollToBottom(), 200
+      )
     }
   }
 
   listenMessages() {
     return this.chatService.getMessage().subscribe((data: any) => {
       this.messages.push(data);
-      this.scrollToBottom();
+      setTimeout(
+        ()=> this.scrollToBottom(), 200
+      )
     });
   }
 
@@ -105,7 +108,9 @@ export class ChatComponent implements OnInit {
       this.selectedChat = chat;
       this.loadMessages(this.selectedChat._id);
     }
-    this.scrollToBottom();
+    setTimeout(
+      ()=> this.scrollToBottom(), 300
+    )
   }
 
   loadMessages(selectedChatId: string) {
@@ -115,9 +120,8 @@ export class ChatComponent implements OnInit {
   }
 
   scrollToBottom(): void {
-    if(this.chatContainer) {
-      const chatContainer = this.chatContainer.nativeElement;
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    if(this.bottomAnchor) {
+      this.bottomAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }
 }

@@ -1,9 +1,9 @@
 <div class="flex flex-wrap h-full mt-9 p-3">
   <div class="w-full md:w-2/12">
     <!-- First component with 2 columns -->
-    <div class="w-fullmin-h-[50vh]">
-      <div class="title">Danh sách sinh viên</div>
-      <div class="students-list">
+    <div class="w-full min-h-[50vh] max-h-[75vh] overflow-y-auto">
+      <div class="title p-3 text-blue-600 text-xl font-medium">Danh sách sinh viên {{studentList.length > 0 ? '(' + studentList.length + ')' : ''}}</div>
+      <div class="students-list px-2">
         <mat-card *ngFor="let student of studentList"
          class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 hover:shadow-md"
          [class.bg-blue-500]="student._id === selectedStudent._id"
@@ -13,7 +13,7 @@
          (click)="onChangeStudent(student)">
           <mat-card-header class="w-full">
             <div mat-card-avatar class="student-avatar flex items-center rounded-full bg-white">
-              <img [src]="student?.avatar ?? '../../../../assets/picture/default-avatar.svg'" alt="avatar" />
+              <img [src]="student?.avatar ?? '../../../../assets/picture/default-avatar.svg'" alt="avatar" class="object-cover w-full h-full rounded-full" />
             </div>
               <mat-card-title>{{student?.fullName}}</mat-card-title>
               <mat-card-subtitle class="text-xs mt-1"
@@ -25,10 +25,10 @@
   </div>
   <div class="w-full md:w-4/12 px-2">
     <!-- Second component with 5 columns -->
-    <div class="w-full rounded-xl px-2 py-3 border border-gray-300 min-h-[50vh]">
-      <form class="form-wrapper">
+    <div class="w-full rounded-xl border border-gray-300 min-h-[50vh]">
+      <div class="mb-4 p-3 bg-blue-600 text-white rounded-tl-xl rounded-tr-xl">Thông tin sinh viên</div>
+      <form class="form-wrapper p-3 ">
         <ng-container [formGroup]="studentForm">
-          <div class="text-gray-600 mb-4 ">Thông tin sinh viên</div>
           <div class="input-field w-full gap-2">
             <mat-form-field class="lg:w-2/3 w-full">
               <mat-label>Họ tên </mat-label>

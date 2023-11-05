@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,6 +23,7 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['code', 'fullName', 'class', 'topic',  'actions'];
   dataSource = new MatTableDataSource([]);
   classOfTeacher!: string;
+  searchCode = new FormControl('');
   pagination: Pagination = {
     page: 0,
     limit: 5,
@@ -50,6 +52,17 @@ export class ActiveStudentListComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.loadStudentList();
+    this.onListenSearchCode();
+  }
+
+  onListenSearchCode(): void {
+    this.searchCode.valueChanges.subscribe((value) => {
+      if(value) {
+        this.dataSource.filter = value.trim().toLowerCase();
+      } else {
+        this.dataSource.filter = '';
+      }
+    });
   }
 
   ngAfterViewInit(): void {
