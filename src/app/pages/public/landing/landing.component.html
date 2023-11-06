@@ -1,0 +1,26 @@
+<div class="landing-container bg-transparent">
+  <div class="flex lg:flex-row flex-col-reverse items-center p-8 w-full rounded-[32px] xl:px-60">
+    <div class="lg:w-1/2 w-full h-full flex flex-col justify-center items-start gap-5 lg:pl-28 lg:-mt-8">
+      <h1 [@textAppear]="textAppearState1" class="text-blue-700 text-4xl md:text-6xl font-bold main-title-font capitalize">
+        Quản lý luận văn
+      </h1>
+      <h2 class="text-indigo-400 font-light">
+        <p [@textAppear]="textAppearState1">
+          Hệ thống giúp quản lý, tìm kiếm và tìm hiểu về luận văn của sinh viên. Tạo cầu nối dễ dàng giữa sinh viên, giảng viên và luận văn với hệ thống tiện lợi.
+           Đăng nhập ngay để khám phá!
+        </p>
+      </h2>
+      <div [@textAppear]="textAppearState2" class="landing-container__button flex justify-start items-center md:flex-row flex-col gap-3 md:w-auto w-full">
+        <button mat-flat-button class="shadow hover:shadow-md bg-blue-600 rounded-full py-6 px-8 md:w-auto w-full" color="primary"
+          routerLink="/auth/login">Đăng nhập</button>
+          <button mat-stroked-button  routerLink="/public/thesis-list" color="primary" class="shadow hover:shadow-md py-6 px-8 rounded-full border-blue-600 text-blue-600 md:w-auto w-full">Xem luận văn công khai </button>
+      </div>
+    </div>
+    <div [@textAppear]="textAppearState1" class="lg:w-1/2 w-full flex justify-center items-center">
+      <img src="../../../../assets/picture/main-lading.png"
+        class="lg:w-[700px] lg:h-[700px] md:w-[400px] md:h-[400px] w-[350px] h-[350px] ">
+
+    </div>
+  </div>
+
+</div>

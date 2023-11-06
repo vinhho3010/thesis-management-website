@@ -21,7 +21,6 @@ export class AuthenticationGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-console.log('guard');
 
       if(this.authService.isLogin()){
         return true;

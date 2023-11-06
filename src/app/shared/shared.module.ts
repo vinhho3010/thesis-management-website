@@ -18,6 +18,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card/thesis-card.component';
 import { ProfileDialogComponent } from './components/dialog/profile-dialog/profile-dialog.component';
 import { ChangePasswordComponent } from './components/dialog/change-password/change-password.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,14 +36,15 @@ import { ChangePasswordComponent } from './components/dialog/change-password/cha
     SafePipe,
     ThesisCardComponent,
     ProfileDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
     MatModule,
     ClickOutsideDirective,
     ReactiveFormsModule,
-    NgxEditorModule
+    NgxEditorModule,
+    // BrowserAnimationsModule
   ],
   exports: [
     HeaderComponent,
@@ -64,3 +67,9 @@ import { ChangePasswordComponent } from './components/dialog/change-password/cha
   ]
 })
 export class SharedModule { }
+
+export const textAppearAnimation = trigger('textAppear', [
+  state('hidden', style({ opacity: 0, transform: 'translateY(20px)' })),
+  state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+  transition('hidden => visible', animate('500ms ease-in')),
+]);

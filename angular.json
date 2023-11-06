@@ -19,7 +19,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "sweetalert2",
-              "moment"
+              "moment",
+              "exceljs"
            ],
             "outputPath": "dist/thesis-management-website",
             "index": "src/index.html",

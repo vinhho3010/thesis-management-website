@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TOKEN_KEY } from './services/auth.service';
+
+const isLogin = localStorage.getItem(TOKEN_KEY) ? true : false;
 
 const routes: Routes = [
 {
   path: '',
-  redirectTo: 'home',
+  redirectTo: `${isLogin ? 'home' : 'auth'}`,
   pathMatch: 'full'
 },
 {
@@ -23,6 +26,14 @@ const routes: Routes = [
   path: 'ministry',
   loadChildren: () => import('./layouts/ministry-layout/ministry.module').then(m => m.MinistryModule),
 },
+{
+  path: 'public',
+  loadChildren: () => import('./layouts/public-layout/public.module').then(m => m.PublicModule),
+},
+// {
+//   path: '**',
+//   redirectTo: 'home'
+// }
 
 ];
 
@@ -30,4 +41,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+ }

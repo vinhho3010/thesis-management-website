@@ -5,8 +5,8 @@ import { AccountInfo, ChangePasswordDto } from '../Model/account-info';
 import { Router } from '@angular/router';
 import { RoleAccount } from '../Model/enum/roleEnum';
 
-const USER_SAVE_KEY = 'user';
-const TOKEN_KEY = 'token';
+export const USER_SAVE_KEY = 'user';
+export const TOKEN_KEY = 'token';
 @Injectable({
   providedIn: 'root'
 })
