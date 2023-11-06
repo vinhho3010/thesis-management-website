@@ -7,7 +7,7 @@ const isLogin = localStorage.getItem(TOKEN_KEY) ? true : false;
 const routes: Routes = [
 {
   path: '',
-  redirectTo: `${isLogin ? 'home' : 'auth'}`,
+  redirectTo: `${isLogin ? 'home' : 'public'}`,
   pathMatch: 'full'
 },
 {

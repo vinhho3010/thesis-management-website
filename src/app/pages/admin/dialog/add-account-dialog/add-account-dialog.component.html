@@ -118,8 +118,12 @@
   <div class="flex justify-end items-center gap-4">
     <button class="custom-btn" mat-flat-button (click)="onClose()">Huỷ</button>
     <button
+    *ngIf="formAction === FormAction.EDIT"
+    class="custom-btn bg-red-500 text-white" mat-flat-button (click)="onForceResetPassword()">Đặt lại mật khẩu</button>
+    <button
     *ngIf="data?.isView == true ? false : true"
     class="custom-btn bg-blue-600 text-white" mat-flat-button (click)="onSubmitData()">{{formAction === FormAction.ADD ? 'Thêm tài khoản' : 'Cập nhật'}}</button>
+
   </div>
 
 </div>
