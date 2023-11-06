@@ -211,4 +211,19 @@ export class AddAccountDialogComponent implements OnInit {
       },
     });
   }
+
+  onForceResetPassword() {
+    this.toastService.confirmHandle('Bạn có chắc chắn muốn đặt lại mật khẩu?', this.handleForceReset.bind(this));
+  }
+
+  handleForceReset() {
+    this.manageUserService.forceChangePassword(this.data._id).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Đặt lại mật khẩu thành công');
+      },
+      error: () => {
+        this.toastService.showErrorToast('Đặt lại mật khẩu thất bại. Xin hãy thử lại sau');
+      },
+    });
+  }
 }

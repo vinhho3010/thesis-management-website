@@ -10,11 +10,12 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { MajorService } from 'src/app/services/major.service';
 import { ThesisService } from 'src/app/services/thesis.service';
+import { textAppearAnimation } from '../../shared.module';
 
 @Component({
   selector: 'app-thesis-list',
   templateUrl: './thesis-list.component.html',
-  styleUrls: ['./thesis-list.component.scss']
+  styleUrls: ['./thesis-list.component.scss'],
 })
 export class ThesisListComponent {
   thesisList: any[] = [];

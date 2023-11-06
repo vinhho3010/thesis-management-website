@@ -1,56 +1,62 @@
-.wrapper{
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 1rem;
-  margin-top: -64px;
+.main-wrapper {
+  border-radius: 24px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  min-height: fit-content;
 
-  .form-wrapper{
+  .wrapper{
     width: 100%;
-    background-color: white;
-    padding: 1.5rem 1.5rem 2rem 1.5rem;
-    gap: 1rem;
-    border-radius: 24px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    .title{
-      padding: 8px 8px 24px 8px;
-      font-size: 1.5rem;
-      font-weight: 500;
-    }
-
-    .input{
-      display: block;
-      margin-top: 0.3rem;
+    .form-wrapper{
       width: 100%;
+      background-color: white;
+      padding: 1.5rem 1.5rem 2rem 1.5rem;
+      gap: 1rem;
+      // border-radius: 24px;
+      // box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+
+      .title{
+        padding: 8px 8px 24px 8px;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .input{
+        display: block;
+        margin-top: 0.3rem;
+        width: 100%;
+      }
+
+      .btn-submit{
+        font-size: 16px;
+        min-height: 48px;
+        border-radius: 16px;
+      }
     }
 
-    .btn-submit{
-      font-size: 16px;
-      min-height: 48px;
-      border-radius: 16px;
+  .utility-field{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -12px;
+    padding: 0 4px;
+
+    .remember-check{
+      margin-left: -8px;
     }
   }
 
-.utility-field{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: -12px;
-  padding: 0 4px;
-
-  .remember-check{
-    margin-left: -8px;
+  .alert-space {
+    @media (max-width: 576px) {
+      margin-top: 0.5rem !important;
+    }
   }
-}
 
-.alert-space {
-  @media (max-width: 576px) {
-    margin-top: 0.5rem !important;
   }
-}
 
 }

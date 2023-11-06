@@ -55,4 +55,11 @@ export class ManageUserService {
   getTeacherByMajorHasClass(majorId: string){
     return this.http.get<AccountInfo[]>(`/api/user/major/${majorId}/has-class`)
   }
+
+  forceChangePassword(id: string){
+    const data = {
+      _id: id
+    }
+    return this.http.put(`/api/force-change-password`, data)
+  }
 }

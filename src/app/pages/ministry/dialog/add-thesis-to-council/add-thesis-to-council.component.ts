@@ -100,7 +100,7 @@ export class AddThesisToCouncilComponent {
 
   onChangeTeacher(event: MatSelectChange) {
     const selectedTeacher = this.teacherByMajor.find(teacher => teacher._id === this.addThesisForm.get('teacher')?.value);
-    this.loadFollowingStudent(selectedTeacher?.instructClass);
+    this.loadFollowingStudent(selectedTeacher?.instructClass[0]?._id);
   }
 
   loadFollowingStudent(classId: any) {

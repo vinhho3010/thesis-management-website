@@ -75,5 +75,5 @@
   ]
 
 export const councilListHeader = [
-  'STT', 'MSSV', 'Họ và tên', 'Ngành', 'Đề tài', 'GVHD', 'Thời gian', 'Phòng', 'Chủ tịch', 'Ủy viên', 'Thư ký'
+  'STT', 'MSSV', 'Họ và tên', 'Ngành', 'Đề tài', 'GVHD', 'Thời gian', 'Phòng', 'Chủ tịch', 'Ủy viên', 'Thư ký', 'Điểm TB'
 ]

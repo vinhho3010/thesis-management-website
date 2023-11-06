@@ -7,11 +7,13 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { StorageService } from 'src/app/services/local/storage.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 import { WebSocketService } from 'src/app/services/websocket.service';
+import { textAppearAnimation } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [textAppearAnimation],
 })
 export class LoginComponent {
   loginForm = new FormGroup({
@@ -24,6 +26,7 @@ export class LoginComponent {
   });
 
   isShowPassword = false;
+  textAppearState = 'hidden';
 
   constructor(
     private authService: AuthService,
@@ -31,11 +34,13 @@ export class LoginComponent {
     private toast: ToastService,
     private storageService: StorageService,
     private loadingService: LoaderService,
-    private webSocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
     this.storageService.clean();
+    setTimeout(() => {
+      this.textAppearState = 'visible';
+    }, 200);
   }
 
   submit() {
@@ -54,7 +59,7 @@ export class LoginComponent {
           this.authService.saveUser(res.data);
           this.navigateBaseOnRole(this.authService.getRole());
           this.toast.showSuccessToast('Đăng nhập thành công');
-          this.webSocketService.reconnect();
+          //this.webSocketService.reconnect();
 
         },
         error: (err) => {

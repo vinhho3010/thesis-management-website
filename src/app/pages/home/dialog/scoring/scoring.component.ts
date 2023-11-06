@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class ScoringComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private refDialog: MatDialogRef<ScoringComponent>,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class ScoringComponent implements OnInit {
         const result = {
           mark: this.mark.value,
           thesis: this.thesis._id,
-          teacher: this.thesis?.class.teacher._id
+          teacher: this.authService?.getUser()?._id
         }
         this.refDialog.close({result});
       }

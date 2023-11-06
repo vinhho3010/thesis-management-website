@@ -1,49 +1,60 @@
-<div class="wrapper">
-  <div class="form-wrapper">
-    <div class="title">Đăng nhập vào tài khoản của bạn</div>
-    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
-      <div class="input">
-        <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full">
-          <mat-label>Email</mat-label>
-          <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com">
-          <mat-error
-            class="text-red-500 text-xs"
-            *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
-            Vui lòng nhập đúng định dạng email
-          </mat-error>
-        </mat-form-field>
-      </div>
+<div class="w-screen flex justify-center items-center">
+  <div [@textAppear]="textAppearState" class="main-wrapper flex justify-center items-center md:w-auto w-[90%]">
+    <div class="wrapper md:w-1/2 w-full sm:p-4 p-2">
+      <div class="form-wrapper w-full">
+        <div class="title">Đăng nhập</div>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+          <div class="input">
+            <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full">
+              <mat-label>Email</mat-label>
+              <input name="email" matInput type="email" formControlName="email" placeholder="Example@example.com">
+              <mat-error
+                class="text-red-500 text-xs"
+                *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
+                Vui lòng nhập đúng định dạng email
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-      <div class="input mt-2">
-        <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
-          <mat-label>Mật khẩu</mat-label>
-          <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
-            [placeholder]=" isShowPassword ? 'Password' : ' • • • • • • • •' ">
-          <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Hide Password' : 'Show Password' "
-            matSuffix tabindex="-1" (click)="isShowPassword=!isShowPassword">
-            <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
+          <div class="input mt-2">
+            <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
+              <mat-label>Mật khẩu</mat-label>
+              <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
+                [placeholder]=" isShowPassword ? 'Password' : ' • • • • • • • •' ">
+              <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Hide Password' : 'Show Password' "
+                matSuffix tabindex="-1" (click)="isShowPassword=!isShowPassword">
+                <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
+              </button>
+              <mat-error
+                class="text-red-500 text-xs"
+                *ngIf="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')">
+                Mật khẩu phải có ít nhất 8 ký tự
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="utility-field">
+            <div class="remember-check" [class.alert-space]="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')
+            && (this.loginForm.controls.password.touched && this.loginForm.controls.password.dirty)">
+              <mat-checkbox formControlName="isRemember" color="primary">Nhớ tài khoản</mat-checkbox>
+            </div>
+            <!-- <div class="forgot-password font-medium text-blue-700">
+              <a routerLink="/forgot-password">Quên mật khẩu?</a>
+            </div> -->
+          </div>
+          <button type="submit" mat-flat-button extended color="primary" class="btn-submit w-full mt-3">
+            Đăng nhập
           </button>
-          <mat-error
-            class="text-red-500 text-xs"
-            *ngIf="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')">
-            Mật khẩu phải có ít nhất 8 ký tự
-          </mat-error>
-        </mat-form-field>
+        </form>
       </div>
-
-
-      <div class="utility-field">
-        <div class="remember-check" [class.alert-space]="loginForm.controls.password.hasError('minlength') && !loginForm.controls.password.hasError('required')
-        && (this.loginForm.controls.password.touched && this.loginForm.controls.password.dirty)">
-          <mat-checkbox formControlName="isRemember" color="primary">Nhớ tài khoản</mat-checkbox>
-        </div>
-        <div class="forgot-password font-medium text-blue-700">
-          <a routerLink="/forgot-password">Quên mật khẩu?</a>
-        </div>
+    </div>
+    <div class="w-1/2 md:block hidden">
+      <div class="text-center mt-5">
+        <img src="../../../../assets/picture/login-main.png" class="w-[450px] h-[400px]">
       </div>
-      <button type="submit" mat-flat-button extended color="primary" class="btn-submit w-full mt-3">
-        Đăng nhập
-      </button>
-    </form>
+    </div>
+
   </div>
+
 </div>

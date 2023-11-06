@@ -17,7 +17,7 @@ export class ExcelHandleService {
 
   exportToExcel(data: any[], filename: string, schema: string[], columnWidth: any[]): void {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('DSSV');
+    const worksheet = workbook.addWorksheet('ThongTin');
 
     // Create header row with styling
     const headerRow = worksheet.addRow(schema);

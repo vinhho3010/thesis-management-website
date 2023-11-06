@@ -27,7 +27,7 @@ export class AuthenticationGuard {
       } else {
         //go to login page
         this.toastService.showErrorToast('Bạn cần đăng nhập để truy cập');
-        this.router.navigate(['/login']);
+        this.router.navigateByUrl('auth/login');
         return false;
       }
   }

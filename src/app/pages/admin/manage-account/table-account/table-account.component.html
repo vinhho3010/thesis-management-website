@@ -6,7 +6,7 @@
     <div class="search-wrapper w-1/2 p-3 flex items-center">
       <mat-form-field floatLabel="always" appearance="outline" class="w-3/4 mt-4">
         <mat-label>Tìm kiếm</mat-label>
-        <input matInput type="text" placeholder="Nhập từ khoá">
+        <input matInput type="search" placeholder="Nhập từ khoá" [formControl]="searchCode">
         <mat-icon matPrefix>search</mat-icon>
       </mat-form-field>
     </div>

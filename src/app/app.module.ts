@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule }     from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthModule } from './layouts/authentication-layout/auth.module';
-import { MainModule } from './layouts/main-layout/main.module';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';

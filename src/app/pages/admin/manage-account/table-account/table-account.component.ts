@@ -10,6 +10,8 @@ import { AddFileAccountComponent } from '../../dialog/add-file-account/add-file-
 import { Pagination } from 'src/app/Model/pagination';
 import { PageEvent } from '@angular/material/paginator';
 import { LoaderService } from 'src/app/services/loader.service';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-table-account',
@@ -22,6 +24,7 @@ export class TableAccountComponent {
   dataSourceInput = new MatTableDataSource();
   @Input() tableType!: RoleAccount;
   roleAccount = RoleAccount;
+  searchCode = new FormControl('');
   pagination: Pagination = {
     page: 0,
     limit: 5,
@@ -32,6 +35,7 @@ export class TableAccountComponent {
 
   ngOnInit(): void {
     this.initDataSource();
+    this.onListenSearchCode();
   }
 
   initDataSource(): void {
@@ -45,6 +49,16 @@ export class TableAccountComponent {
       error: () => {
         this.toastService.showErrorToast('Tải dữ liệu thất bại');
         this.loadingService.setLoading(false);
+      }
+    });
+  }
+
+  onListenSearchCode(): void {
+    this.searchCode.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
+      if(value) {
+        this.dataSourceInput.filter = value.trim().toLowerCase();
+      } else {
+        this.dataSourceInput.filter = '';
       }
     });
   }
