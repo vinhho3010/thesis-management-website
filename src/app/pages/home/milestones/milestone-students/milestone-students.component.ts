@@ -122,7 +122,7 @@ export class MilestoneStudentsComponent implements OnInit {
   }
 
   onGoBack() {
-    this.router.navigate(['/home/milestones']);
+    this.router.navigate(['/milestones']);
   }
 
   onViewSubmitDoc(item: any) {
