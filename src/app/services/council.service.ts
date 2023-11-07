@@ -65,4 +65,8 @@ export class CouncilService {
     return this.http.delete(`api/council/${councilId}/thesis/${thesisId}`);
   }
 
+  getCouncilByThesisId(thesisId: string) {
+    return this.http.get<any>(`api/council/thesis/${thesisId}`);
+  }
+
 }

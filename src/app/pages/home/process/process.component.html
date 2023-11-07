@@ -3,7 +3,7 @@
     <div class="title text-blue-600 text-2xl my-3">
       Danh sách mốc thời gian
     </div>
-    <div class="docs-item-wrapper w-full">
+    <div class="docs-item-wrapper w-full" *ngIf="thesisVersionsList && thesisVersionsList.length>0 ; else emptyProcess">
       <mat-card class="docs-item hover:bg-gray-100 hover:shadow-md cursor-pointer" *ngFor="let version of thesisVersionsList" [class.mat-elevation-z0]="true"  (click)="onViewDetail(version)">
         <mat-card-content>Tiêu đề: {{version?.milestone.title}}</mat-card-content>
         <mat-card-content class="text-gray-500 text-sm">
@@ -16,6 +16,11 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <ng-template #emptyProcess>
+      <div class="empty-list flex justify-center items-center rounded-xl border w-full border-gray-300 mt-3 p-3">
+        <span class="text-lg text-gray-500">Không có mốc thời gian nào được tạo</span>
+      </div>
+    </ng-template>
   </div>
   <ng-template #nonClass>
     <div class="non-class flex justify-center items-center rounded-xl border border-gray-300 mt-3 p-3">

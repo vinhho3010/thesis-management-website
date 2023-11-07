@@ -9,7 +9,7 @@ export interface AccountInfo {
   phoneNumber: string,
   address: string,
   code: string,
-  major: string,
+  major: any,
   followClass?: any;
   instructClass?: any;
   topic?: string;

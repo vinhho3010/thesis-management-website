@@ -51,7 +51,7 @@ export class AddThesisToCouncilComponent {
   initEditForm() {
     if(this.data?.thesis){
       this.loadFollowingStudent(this.data.thesis.class._id);
-      this.loadTeacherByMajor(this.data.thesis.student.major);
+      this.loadTeacherByMajor(this.data.thesis.class?.teacher?.major);
       this.addThesisForm.disable();
       this.addThesisForm.controls['time'].enable();
       this.addThesisForm.controls['room'].enable();
@@ -59,7 +59,7 @@ export class AddThesisToCouncilComponent {
 
       this.addThesisForm.controls['code'].setValue(this.data.thesis.student.code);
       this.addThesisForm.controls['student'].setValue(this.data.thesis.student._id);
-      this.addThesisForm.controls['major'].setValue(this.data.thesis.student.major);
+      this.addThesisForm.controls['major'].setValue(this.data.thesis.class?.teacher?.major);
       this.addThesisForm.controls['teacher'].setValue(this.data.thesis.class.teacher._id);
       this.addThesisForm.controls['date'].setValue(this.data.thesis.protectInfo.date);
       this.addThesisForm.controls['room'].setValue(this.data.thesis.protectInfo.room);

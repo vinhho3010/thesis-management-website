@@ -42,14 +42,14 @@ export class RegisterTopicComponent implements OnInit {
   ngOnInit(): void {
     this.loadMajorList();
     this.loadRegisterd();
+
   }
 
   loadMajorList(){
     this.majorService.getAllmajor().subscribe({
       next: (res) => {
         this.majorList = res;
-        this.selectedMajor = this.majorList[0];
-        this.loadTeacherList();
+        this.selectDefaultMajor();
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -66,6 +66,13 @@ export class RegisterTopicComponent implements OnInit {
         this.toastService.showErrorToast(err.error.message);
       }
     })
+  }
+
+  selectDefaultMajor(){
+    if(this.authService.getUser().major){
+      this.selectedMajor = this.majorList.find((value) => value._id === this.authService.getUser().major?._id);
+      this.loadTeacherList();
+    }
   }
 
   loadRegisterd() {
@@ -93,9 +100,9 @@ export class RegisterTopicComponent implements OnInit {
 
   registeredWithTeacher(teacher: any){
     const request = [...this.pendingRequest, ...this.rejectedRequest]
-    const instructClassId = teacher.instructClass.map((value: any) => value._id);
+    const instructClassId = teacher.instructClass.map((value: any) => value?._id);
     return request.find((value) => {
-      return instructClassId.includes(value.class._id);
+      return instructClassId.includes(value?.class?._id);
     });
   }
 
@@ -121,6 +128,11 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onRegisterTopic(teacher: any){
+    if(teacher.major !== this.authService.getUser()?.major?._id){
+      this.toastService.infoToast('<b>Giáo viên không thuộc ngành của bạn</b>. <br> Bạn chỉ có thể đăng ký với giảng viên cùng chuyên ngành hoặc liên hệ riêng với giảng viên để được đăng ký');
+      return;
+    }
+
    const registerTopic =  this.matDialog.open(RegisterTopicDialogComponent, {
       data: {
         teacher: teacher,

@@ -143,13 +143,26 @@ export class AssignedDetailComponent {
     return avgScore.toFixed(2);
   }
 
+  markOfTeacher(thesis: any, teacherId: string) {
+    const result = thesis?.results.find((result: any) => result.teacher === teacherId);
+    if(result) {
+      return (result.mark).toFixed(2);
+    } else {
+      return null;
+    }
+  }
+
   onExportData(data: any[]) {
     let schema = councilListHeader;
     let columnWidth = [10, 20, 25, 25, 50, 25, 20, 10, 25, 25, 25, 15];
 
-    const standardlizedData = data.map((item, index) => {
-      console.log(item, this.setOfCouncilMember, this.teachersHasMarkedThesis(item));
+    for(let i=0; i < this.setOfCouncilMember.length; i++) {
+      schema.splice(schema.length -1, 0, `Điểm số ${i+1}`)
+      //insert at position previous last arr
+      columnWidth.splice(columnWidth.length - 1, 0, 20);
+    }
 
+    const standardlizedData = data.map((item, index) => {
       return {
         index: index + 1,
         code: item?.student?.code,
@@ -162,6 +175,9 @@ export class AssignedDetailComponent {
         president: this.council?.president?.fullName,
         member: this.council?.member?.fullName,
         secretary: this.council?.secretary?.fullName,
+        ...((this.setOfCouncilMember.length > 0 && this.setOfCouncilMember[0] ) && {teacher1: this.markOfTeacher(item, this.setOfCouncilMember[0])}),
+        ...((this.setOfCouncilMember.length > 1 && this.setOfCouncilMember[1] ) && {teacher2: this.markOfTeacher(item, this.setOfCouncilMember[1])}),
+        ...((this.setOfCouncilMember.length > 2 && this.setOfCouncilMember[2] ) && {teacher3: this.markOfTeacher(item, this.setOfCouncilMember[2])}),
         avgScore: this.arraysAreEqual(this.setOfCouncilMember, this.teachersHasMarkedThesis(item)) ? this.avgScore(item) : 'Chưa chấm',
       };
     });
