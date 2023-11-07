@@ -2,5 +2,11 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://ctu-tms.cyclic.app/api/$1" },
     { "source": "/(.*)", "destination": "https://ctu-tms.cyclic.app/$1" }
-   ]
+   ],
+   "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }

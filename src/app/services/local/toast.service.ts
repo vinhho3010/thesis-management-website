@@ -101,4 +101,13 @@ export class ToastService {
       }
     })
   }
+
+  infoToast(message: string) {
+    return Swal.fire({
+      html: '<h3 class="font-base">' + message + '</h3>',
+      confirmButtonText: 'Xác nhận',
+      confirmButtonColor: "#0ea5e9",
+      icon: 'info',
+    })
+  }
 }

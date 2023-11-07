@@ -98,7 +98,9 @@ export class ChatComponent implements OnInit {
 
   listenMessages() {
     return this.chatService.getMessage().subscribe((data: any) => {
-      this.messages.push(data);
+      if(data?.from?._id === this.selectedUserChatId) {
+        this.messages.push(data);
+      }
       setTimeout(
         ()=> this.scrollToBottom(), 200
       )

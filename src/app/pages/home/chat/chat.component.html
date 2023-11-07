@@ -3,21 +3,22 @@
   <!-- Sidebar -->
   <div class="w-1/4 bg-white border-r border-gray-300">
     <!-- Sidebar Header -->
-    <header class="p-4 border-b border-gray-300 flex justify-between items-center bg-blue-600 text-white ">
-      <h1 class="text-2xl font-medium">Tin nhắn</h1>
+    <header class="p-4 border-b border-gray-300 flex justify-start items-center gap-2 bg-blue-600 text-white ">
+      <mat-icon>message</mat-icon>
+      <h1 class="hidden sm:block text-2xl font-medium">Tin nhắn</h1>
 
     </header>
 
     <!-- Contact List -->
     <div class="overflow-y-auto h-full p-3 mb-9 pb-20">
       <ng-container *ngFor="let chat of chatList" >
-        <div class="flex items-center mb-4 cursor-pointer hover:bg-blue-100 p-2 rounded-xl" (click)="onChangeChat(chat)"
+        <div class="flex items-center sm:justify-start justify-center mb-4 cursor-pointer hover:bg-blue-100 p-2 rounded-xl" (click)="onChangeChat(chat)"
         [class.bg-blue-200]="chat?._id === selectedChat?._id"
         >
-          <div class="w-12 h-12 bg-gray-300 rounded-full mr-3">
+          <div class="w-12 h-12 bg-gray-300 rounded-full mr-3 flex-shrink-0">
             <img [src]="chat?.friend?.avatar ?? '../../../../assets/picture/default-avatar.svg'" alt="chat Avatar" class="w-12 h-12 rounded-full object-cover">
           </div>
-          <div class="flex-1">
+          <div class="flex-1 hidden sm:block">
             <h2 class="text-lg font-semibold">{{chat?.friend?.fullName}}</h2>
             <p class="text-gray-600">{{chat?.friend?.code}}</p>
           </div>
@@ -35,22 +36,22 @@
       </header>
 
       <!-- Chat Messages -->
-      <div class="h-custom w-full overflow-y-auto p-4 rounded-2xl" *ngIf="messages && messages.length > 0; else emptyMessage">
+      <div class="h-custom w-full overflow-y-auto sm:p-4 p-1 rounded-2xl" *ngIf="messages && messages.length > 0; else emptyMessage">
         <ng-container *ngFor="let message of messages">
           <!-- Incoming Message -->
           <div class="flex mb-4 cursor-pointer" *ngIf="message?.from?._id !== currentUserId && message?.from !== currentUserId">
             <div class="w-9 h-9 rounded-full flex items-center justify-center mr-2">
               <img [src]="message?.from?.avatar ?? '../../../../assets/picture/default-avatar.svg'" alt="User Avatar" class="w-8 h-8 rounded-full">
             </div>
-            <div class="flex max-w-[80%] bg-white shadow rounded-xl p-3 gap-3">
-              <p class="text-gray-700">{{message?.message}}</p>
-            </div>
+            <div class="max-w-[80%] h-auto  bg-white shadow rounded-xl p-3 gap-3">
+              <p class="text-gray-700 break-words hyphens-auto">{{message?.message}}</p>
+          </div>
           </div>
 
           <!-- Outgoing Message -->
           <div class="flex justify-end mb-4 cursor-pointer" *ngIf="message?.from?._id === currentUserId || message?.from === currentUserId">
-            <div class="flex max-w-[80%] bg-blue-500 shadow text-white rounded-xl p-3 gap-3">
-              <p>{{message?.message}}</p>
+            <div class="max-w-[80%] bg-blue-500 shadow text-white rounded-xl p-3 gap-3">
+              <p class="break-words hyphens-auto">{{message?.message}}</p>
             </div>
           </div>
         </ng-container>
