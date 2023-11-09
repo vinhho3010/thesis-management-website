@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, TOKEN_KEY, USER_SAVE_KEY } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { StorageService } from 'src/app/services/local/storage.service';
 import { ToastService } from 'src/app/services/local/toast.service';
@@ -37,7 +37,8 @@ export class LoginComponent {
   ) {}
 
   ngOnInit(): void {
-    this.storageService.clean();
+    this.clearAuthData();
+
     setTimeout(() => {
       this.textAppearState = 'visible';
     }, 200);
@@ -59,6 +60,7 @@ export class LoginComponent {
           this.authService.saveUser(res.data);
           this.navigateBaseOnRole(this.authService.getRole());
           this.toast.showSuccessToast('Đăng nhập thành công');
+          this.setRemember();
           //this.webSocketService.reconnect();
 
         },
@@ -67,6 +69,26 @@ export class LoginComponent {
           this.toast.showErrorToast('Đăng nhập thất bại');
         },
       });
+  }
+
+  setRemember() {
+    if (this.loginForm.value.isRemember as boolean === true && this.loginForm.value.email as string !== '') {
+      this.authService.setRemember(true, this.loginForm.value.email as string);
+    } else {
+      this.authService.setRemember(false, '');
+    }
+  }
+
+  clearAuthData() {
+    this.storageService.remove(TOKEN_KEY);
+    this.storageService.remove(USER_SAVE_KEY);
+
+    if(this.authService.isRemember()){
+      this.loginForm.patchValue({
+        email: this.authService.getRememberEmail(),
+        isRemember: true
+      })
+    }
   }
 
   navigateBaseOnRole(role: RoleAccount | null) {

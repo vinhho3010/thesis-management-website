@@ -7,6 +7,8 @@ import { RoleAccount } from '../Model/enum/roleEnum';
 
 export const USER_SAVE_KEY = 'user';
 export const TOKEN_KEY = 'token';
+export const REMEMBER_KEY = 'isRemember';
+export const STORED_EMAIL_KEY = 'storedEmail';
 @Injectable({
   providedIn: 'root'
 })
@@ -65,12 +67,26 @@ export class AuthService {
   }
 
   logout() {
-    this.storageService.clean();
+    this.storageService.remove(USER_SAVE_KEY);
+    this.storageService.remove(TOKEN_KEY);
     this.router.navigate(['auth/login']);
   }
 
   isLogin(){
     return this.storageService.get(TOKEN_KEY) ? true : false;
+  }
+
+  isRemember(){
+    return this.storageService.get(REMEMBER_KEY) ? true : false;
+  }
+
+  setRemember(isRemember: boolean, email: string){
+    this.storageService.save(REMEMBER_KEY, isRemember);
+    this.storageService.save(STORED_EMAIL_KEY, email);
+  }
+
+  getRememberEmail(){
+    return this.storageService.get(STORED_EMAIL_KEY) as string;
   }
 
   getClassId(){

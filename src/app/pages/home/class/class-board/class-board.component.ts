@@ -8,6 +8,8 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CommentPostComponent } from '../../dialog/comment-post/comment-post.component';
 
 @Component({
   selector: 'app-class-board',
@@ -46,7 +48,8 @@ export class ClassBoardComponent implements OnInit {
     private postService: PostService,
     private toastService: ToastService,
     private loadingService: LoaderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.createPostForm = new FormGroup({
       content: new FormControl(
@@ -192,6 +195,20 @@ export class ClassBoardComponent implements OnInit {
       complete: () => {
         this.isEditLoading = false;
       },
+    });
+  }
+
+  onViewComment(post: any): void {
+    const dialogConfig = {
+      data: {
+        post: post,
+      }
+    }
+    const commentDialog = this.dialog.open(CommentPostComponent, dialogConfig);
+    commentDialog.afterClosed().subscribe({
+      next: () => {
+        this.getPostListByClass();
+      }
     });
   }
 }

@@ -34,6 +34,7 @@ import { AssignedDetailComponent } from 'src/app/pages/home/assigned-council/ass
 import { DetailThesisDialogComponent } from 'src/app/pages/ministry/dialog/detail-thesis-dialog/detail-thesis-dialog.component';
 import { ChatComponent } from 'src/app/pages/home/chat/chat.component';
 import { WebSocketService } from 'src/app/services/websocket.service';
+import { CommentPostComponent } from 'src/app/pages/home/dialog/comment-post/comment-post.component';
 
 
 
@@ -71,6 +72,7 @@ import { WebSocketService } from 'src/app/services/websocket.service';
     ScoringComponent,
     DetailThesisDialogComponent,
     ChatComponent,
+    CommentPostComponent,
   ],
   imports: [
     CommonModule,

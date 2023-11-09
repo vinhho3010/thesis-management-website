@@ -23,4 +23,14 @@ export class PostService {
   updatePost(postId: string, data: unknown) {
     return this.http.put<any>(`/api/post/${postId}`, data);
   }
+
+  addCommentPost(postId: string, data: unknown) {
+    return this.http.put<any>(`/api/post/${postId}/add-comment`, data);
+  }
+
+  deleteCommentPost(postId: string, commentId: string) {
+    return this.http.delete<any>(`/api/post/${postId}/delete-comment/${commentId}`);
+  }
+
+
 }
