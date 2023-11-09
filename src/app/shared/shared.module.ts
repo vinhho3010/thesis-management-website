@@ -7,7 +7,6 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
-import { DataTableComponent } from './components/data-table/data-table.component';
 import { RolePipe } from './pipes/role.pipe';
 import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
@@ -19,7 +18,6 @@ import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card
 import { ProfileDialogComponent } from './components/dialog/profile-dialog/profile-dialog.component';
 import { ChangePasswordComponent } from './components/dialog/change-password/change-password.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,7 +25,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SidebarComponent,
     ThesisListComponent,
     SemesterPipe,
-    DataTableComponent,
     RolePipe,
     DateToTextPipe,
     SanitizedHtmlPipe,
