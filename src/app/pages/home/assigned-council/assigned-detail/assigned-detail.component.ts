@@ -153,7 +153,7 @@ export class AssignedDetailComponent {
   }
 
   onExportData(data: any[]) {
-    let schema = councilListHeader;
+    let schema = new Array<string>(...councilListHeader);
     let columnWidth = [10, 20, 25, 25, 50, 25, 20, 10, 25, 25, 25, 15];
 
     for(let i=0; i < this.setOfCouncilMember.length; i++) {
@@ -183,7 +183,7 @@ export class AssignedDetailComponent {
     });
     console.log(standardlizedData, data);
 
-    this.excelHandleService.exportToExcel(standardlizedData, 'HoiDong', schema, columnWidth);
+    this.excelHandleService.exportToExcel(standardlizedData, this.council.name, schema, columnWidth);
   }
 
 }

@@ -100,3 +100,35 @@
     justify-content: flex-start;
   }
 }
+
+.completed-badge {
+  background: #dcfce7;
+  color: #22c55e;
+  padding: 4px 8px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+
+.accepted-badge {
+  background: #bfdbfe;
+  color: #3b82f6;
+  padding: 4px 8px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+
+.canceled-badge {
+  background: #fecaca;
+  color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+
+.inprogress-badge{
+  background: #fef9c3;
+  color: #eab308;
+  padding: 4px 8px;
+  border-radius: 50px;
+  font-size: 12px;
+}
