@@ -18,6 +18,15 @@ import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card
 import { ProfileDialogComponent } from './components/dialog/profile-dialog/profile-dialog.component';
 import { ChangePasswordComponent } from './components/dialog/change-password/change-password.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { RouterModule } from '@angular/router';
+
+
+export const textAppearAnimation = trigger('textAppear', [
+  state('hidden', style({ opacity: 0, transform: 'translateY(20px)' })),
+  state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+  transition('hidden => visible', animate('500ms ease-in')),
+]);
 
 @NgModule({
   declarations: [
@@ -34,6 +43,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ThesisCardComponent,
     ProfileDialogComponent,
     ChangePasswordComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +51,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ClickOutsideDirective,
     ReactiveFormsModule,
     NgxEditorModule,
+    RouterModule
     // BrowserAnimationsModule
   ],
   exports: [
@@ -60,13 +71,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     SafePipe,
     ThesisCardComponent,
     ProfileDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    NotificationsComponent
   ]
 })
 export class SharedModule { }
-
-export const textAppearAnimation = trigger('textAppear', [
-  state('hidden', style({ opacity: 0, transform: 'translateY(20px)' })),
-  state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
-  transition('hidden => visible', animate('500ms ease-in')),
-]);

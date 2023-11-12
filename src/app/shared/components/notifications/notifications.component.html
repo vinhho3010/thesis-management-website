@@ -1,0 +1,43 @@
+<div [@textAppear]="textAppearState"
+  class="absolute flex flex-col justify-start items-start top-16 rounded-2xl bg-white shadow-custom2 max-h-72  max-w-xs w-80 -translate-x-[85%] py-3">
+  <div class="text-lg border-b border-gray-300 px-3 pb-2 text-gray-700 w-full flex justify-between items-center">
+    <span>Thông báo</span>
+    <button mat-button color="primary" class="rounded-2xl text-sm" (click)="markAllAsRead()">
+      Đã đọc tất cả
+    </button>
+  </div>
+  <div class="notice-list h-flex-full overflow-y-auto w-full px-2">
+    <ng-container *ngIf="notificationList && notificationList.length > 0; else emptyNotice">
+      <ng-container *ngFor="let notice of notificationList">
+        <div class="flex justify-start items-center hover:bg-gray-200 cursor-pointer my-1 rounded-xl pl-2">
+          <span *ngIf="!notice.isRead" class="inline-block w-2 h-2 bg-blue-600 rounded-full">
+          </span>
+          <div
+            class="notice-item w-full block  px-3 py-1  text-gray-600"
+            (click)="handleClickNotification(notice)"
+            [class.pl-5]="notice.isRead">
+            <div class="notice-item__title font-medium">
+              {{notice.title}}
+            </div>
+            <div class="notice-item__content">
+              {{notice.content}}
+            </div>
+          </div>
+
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #emptyNotice>
+      <div class="flex justify-center items-center w-full h-full pt-3">
+        <span class="text-gray-500">Không có thông báo nào</span>
+      </div>
+    </ng-template>
+  </div>
+  <div class="footer-notice flex justify-center items-center bg-white rounded-b-2xl pt-2 w-full">
+    <button mat-button color="warn" class="rounded-2xl" (click)="clearAllNotification()">
+      <mat-icon>clear_all</mat-icon>
+      Xoá tất cả
+    </button>
+  </div>
+</div>
