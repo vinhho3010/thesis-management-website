@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { AuthService } from 'src/app/services/auth.service';
+import { WebSocketService } from 'src/app/services/websocket.service';
 import { routesInfoTeacher, routesInfoStudent, RouteInfo } from 'src/app/shared/components/sidebar/sidebar-data';
 
 @Component({
@@ -10,8 +11,9 @@ import { routesInfoTeacher, routesInfoStudent, RouteInfo } from 'src/app/shared/
 })
 export class MainLayoutComponent {
   routesInfo: RouteInfo[];
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private websocketService: WebSocketService) {
     this.routesInfo = this.authService.getUser()?.role.includes(RoleAccount.TEACHER) ? routesInfoTeacher : routesInfoStudent;
+    this.websocketService.reconnect();
    }
 
 }

@@ -12,6 +12,7 @@ import { RegisteredTopic } from 'src/app/Model/registerTopic/registerTopic';
 import { PendingStatus } from 'src/app/Model/enum/pendingStatus';
 import { LoaderService } from 'src/app/services/loader.service';
 import { environment } from 'src/environments/environment';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-register-topic',
@@ -36,7 +37,8 @@ export class RegisterTopicComponent implements OnInit {
     private matDialog: MatDialog,
     private authService: AuthService,
     private classService: ClassService,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit(): void {
@@ -155,6 +157,13 @@ export class RegisterTopicComponent implements OnInit {
         this.classService.registerToClass(submitData).subscribe({
           next: () => {
             this.toastService.showSuccessToast('Đăng ký thành công');
+            this.notificationsService.newNotification({
+              from: this.authService.getUser()._id,
+              to: teacher._id,
+              title: 'Đăng ký đề tài',
+              content: `Sinh viên ${this.authService.getUser().fullName} đã đăng ký với bạn`,
+              linkAction: `students/${teacher?.instructClass[0]?._id}`,
+            })
             this.loadRegisterd();
           },
           error: (err) => {

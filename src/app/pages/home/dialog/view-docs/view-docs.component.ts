@@ -6,6 +6,7 @@ import { Editor, Toolbar, Validators } from 'ngx-editor';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { ToastService } from 'src/app/services/local/toast.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { ThesisService } from 'src/app/services/thesis.service';
 
 @Component({
@@ -54,6 +55,7 @@ export class ViewDocsComponent implements OnInit {
     private toastService: ToastService,
     private thesisService: ThesisService,
     private commentService: CommentService,
+    private notificationService: NotificationsService
 
   ) {
     this.url = this.data?.thesisVersion?.url;
@@ -84,6 +86,13 @@ export class ViewDocsComponent implements OnInit {
           this.toastService.showSuccessToast('Thêm bình luận thành công');
           this.clearCommentForm();
           this.comments.unshift(res.comments[res.comments.length - 1]);
+          this.notificationService.newNotification({
+            from: this.authService.getUser()._id,
+            to: this.data?.thesisVersion?.student?._id,
+            content: `Giảng viên ${this.authService.getUser().fullName} vừa thêm nhận xét vào bài nộp của bạn`,
+            title: 'Nhận xét mới',
+            linkAction: `process/${this.data?.thesisVersion?.milestone}`
+          });
         },
         error: (err) => {
           this.toastService.showErrorToast(err.error.message);
