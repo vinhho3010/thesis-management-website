@@ -19,7 +19,19 @@
           </div>
         </a>
       </div>
-      <div *ngIf="isLogin"  class="flex justify-start items-center" >
+      <div *ngIf="isLogin"  class="flex justify-start items-center gap-2" >
+        <div
+        (clickOutside)="isShowNotification = false"
+        class="relative">
+          <button mat-icon-button class="text-gray-600"  (click)="isShowNotification = !isShowNotification">
+            <mat-icon *ngIf="unreadNotificationCount <= 0" matBadgeSize="small" matBadgeColor="primary">notifications</mat-icon>
+            <mat-icon *ngIf="unreadNotificationCount > 0" matBadgeSize="small"  [matBadge]="unreadNotificationCount" matBadgeColor="primary">notifications</mat-icon>
+          </button>
+          <app-notifications *ngIf="isShowNotification"
+          [isShowNotification]="isShowNotification"
+          (unreadNotification)="onUnreadNotification($event)"
+          ></app-notifications>
+        </div>
         <div class="user-info flex justify-start items-center">
           <div class="info-wrapper flex justify-end flex-col items-end">
             <div class="name text-gray-700">{{userData.fullName}}</div>
@@ -30,18 +42,7 @@
               [src]="userData.avatar ? userData.avatar : '../../../../assets/picture/default-avatar.svg'" width="40px" height="40px">
           </span>
         </div>
-        <div
-        (clickOutside)="isShowNotification = false"
-        class="relative">
-          <button mat-icon-button class="focus:outline-none" (click)="isShowNotification = !isShowNotification">
-            <mat-icon *ngIf="unreadNotificationCount <= 0" matBadgeColor="primary">notifications</mat-icon>
-            <mat-icon *ngIf="unreadNotificationCount > 0"  [matBadge]="unreadNotificationCount" matBadgeColor="primary">notifications</mat-icon>
-          </button>
-          <app-notifications *ngIf="isShowNotification"
-          [isShowNotification]="isShowNotification"
-          (unreadNotification)="onUnreadNotification($event)"
-          ></app-notifications>
-        </div>
+
       </div>
       <mat-menu #userMenu="matMenu" backdropClass="panel-custom">
         <button mat-menu-item (click)="onOpenProfile()">

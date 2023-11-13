@@ -33,4 +33,8 @@ export class NotificationsService {
   updateNotification(id: string, notification: any) {
     return this.http.patch('api/notification/' + id, notification);
   }
+
+  deleteNotification(id: string) {
+    return this.http.delete('api/notification/' + id);
+  }
 }

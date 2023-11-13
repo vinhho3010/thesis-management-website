@@ -1,21 +1,19 @@
 <div [@textAppear]="textAppearState"
-  class="absolute flex flex-col justify-start items-start top-16 rounded-2xl bg-white shadow-custom2 max-h-72  max-w-xs w-80 -translate-x-[85%] py-3">
+  class="absolute flex flex-col justify-start items-start top-16 rounded-2xl bg-white shadow-custom2 max-h-72  max-w-xs w-80 -translate-x-[45%] py-3">
   <div class="text-lg border-b border-gray-300 px-3 pb-2 text-gray-700 w-full flex justify-between items-center">
     <span>Thông báo</span>
     <button mat-button color="primary" class="rounded-2xl text-sm" (click)="markAllAsRead()">
-      Đã đọc tất cả
+      Đánh dấu đã đọc
     </button>
   </div>
   <div class="notice-list h-flex-full overflow-y-auto w-full px-2">
     <ng-container *ngIf="notificationList && notificationList.length > 0; else emptyNotice">
       <ng-container *ngFor="let notice of notificationList">
-        <div class="flex justify-start items-center hover:bg-gray-200 cursor-pointer my-1 rounded-xl pl-2">
-          <span *ngIf="!notice.isRead" class="inline-block w-2 h-2 bg-blue-600 rounded-full">
+        <div class="flex justify-start items-center hover:bg-gray-200 cursor-pointer my-1 rounded-xl pl-1"
+          (click)="handleClickNotification(notice)">
+          <span *ngIf="!notice.isRead" class="inline-block w-[10px] h-[8px] flex-grow bg-blue-600 rounded-full">
           </span>
-          <div
-            class="notice-item w-full block  px-3 py-1  text-gray-600"
-            (click)="handleClickNotification(notice)"
-            [class.pl-5]="notice.isRead">
+          <div class="notice-item w-full block  pl-3 pr-1 py-1  text-gray-600" [class.pl-5]="notice.isRead">
             <div class="notice-item__title font-medium">
               {{notice.title}}
             </div>
@@ -23,6 +21,9 @@
               {{notice.content}}
             </div>
           </div>
+          <button mat-icon-button color="warn" class="mr-1 text-xs scale-[85%]" matTooltip="Xoá thông báo" matTooltipClass="text-sm" (click)="deleteNotification($event, notice)">
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
 
         </div>
       </ng-container>
@@ -34,7 +35,7 @@
       </div>
     </ng-template>
   </div>
-  <div class="footer-notice flex justify-center items-center bg-white rounded-b-2xl pt-2 w-full">
+  <div *ngIf="notificationList.length > 0" class="footer-notice flex justify-center items-center bg-white rounded-b-2xl pt-2 w-full">
     <button mat-button color="warn" class="rounded-2xl" (click)="clearAllNotification()">
       <mat-icon>clear_all</mat-icon>
       Xoá tất cả

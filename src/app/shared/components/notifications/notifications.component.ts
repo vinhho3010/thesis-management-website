@@ -3,7 +3,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Notification } from 'src/app/Model/notification';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
   selector: 'app-notifications',
@@ -25,7 +26,8 @@ userId = this.authService.getUser()._id;
   constructor(
     private notificationsService: NotificationsService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
   ) {
 
   }
@@ -40,6 +42,9 @@ userId = this.authService.getUser()._id;
     this.notificationsService.getNotifications(this.userId).subscribe({
       next: (res) => {
         this.notificationList = res;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Không tải được thông báo');
       }
     })
   }
@@ -48,6 +53,9 @@ userId = this.authService.getUser()._id;
     this.notificationsService.deleteAllNotifications(this.userId).subscribe({
       next: (res) => {
         this.notificationList = [];
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Thông báo xoá thất bại');
       }
     })
   }
@@ -59,16 +67,29 @@ userId = this.authService.getUser()._id;
           notification.isRead = true;
         });
         this.unreadNotification.emit(0);
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Thông báo đánh dấu đã đọc thất bại');
       }
     })
   }
 
   handleClickNotification(notification: Notification){
-    this.router.navigate([notification.linkAction]);
+    if(this.router.url.includes(notification.linkAction)){
+      this.router.navigate(['/home']).then(() => {
+        this.router.navigate([notification.linkAction]);
+      });
+    } else {
+      this.router.navigate([notification.linkAction]);
+    }
+
     if(!notification.isRead) {
       this.notificationsService.updateNotification(notification._id, {isRead: true}).subscribe({
         next: (res) => {
           notification.isRead = true;
+        },
+        error: (err) => {
+          this.toastService.showErrorToast('Thông báo đánh dấu đã đọc thất bại');
         }
       });
       this.unreadNotification.emit(this.notificationList.filter((notification: Notification) => !notification.isRead).length - 1);
@@ -86,6 +107,19 @@ userId = this.authService.getUser()._id;
       next: (res) => {
         this.notificationList.unshift(res as Notification);
         this.unreadNotification.emit(this.notificationList.filter((notification: Notification) => !notification.isRead).length);
+      }
+    })
+  }
+
+  deleteNotification(event: any, notification: Notification){
+    event.stopPropagation();
+    this.notificationsService.deleteNotification(notification._id).subscribe({
+      next: (res) => {
+        this.notificationList = this.notificationList.filter((item: Notification) => item._id !== notification._id);
+        this.unreadNotification.emit(this.notificationList.filter((notification: Notification) => !notification.isRead).length);
+      },
+      error: (err) => {
+        this.toastService.showErrorToast('Thông báo xoá thất bại');
       }
     })
   }
