@@ -39,6 +39,11 @@ export const routesInfo: RouteInfo[] = [
 
 export const routesInfoAdmin: RouteInfo[] = [
   {
+    path: 'admin/dashboard',
+    title: 'Dashboard',
+    icon: 'dashboard'
+  },
+  {
     path: 'admin/manage-account',
     title: 'Quản lý tài khoản',
     icon: 'manage_accounts'

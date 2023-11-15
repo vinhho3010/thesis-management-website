@@ -1,0 +1,78 @@
+<div class="dashboard-wrapper pt-9 w-full h-full bg-slate-50 ">
+  <div class="max-w-7xl mx-auto">
+    <!-- <span class="title inline-block text-2xl font-medium text-blue-500 bg-white p-3 rounded-3xl mb-5 mt-3">
+      Thống kê
+    </span> -->
+    <section class="tag-wrapper  rounded-3xl bg-white p-3 shadow-md">
+      <div class="flex justify-center items-center gap-5">
+        <div class="bg-gradient-to-tr from-rose-200 to-red-400 w-72 h-36 rounded-2xl p-3">
+          <div class="title text-gray-50">
+            Tổng số người dùng
+          </div>
+          <div class="body-text text-3xl text-white">
+            {{accountCount ?? 0}}
+          </div>
+        </div>
+        <div class="bg-gradient-to-tr from-violet-400 to-indigo-400 w-72 h-36 rounded-2xl p-3">
+          <div class="title text-gray-50">
+            Luận văn học kỳ hiện tại
+          </div>
+          <div class="body-text text-3xl text-white">
+            124
+          </div>
+        </div>
+        <div class="bg-gradient-to-tr from-amber-200 to-yellow-300 w-72 h-36 rounded-2xl p-3">
+          <div class="title text-gray-50">
+            Tổng số luận văn
+          </div>
+          <div class="body-text text-3xl text-white">
+            9752
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="chart-section w-full h-full rounded-3xl bg-white px-3 py-5 shadow-md mt-8">
+      <div [formGroup]="filterOptionForm"
+      class="search-wrapper lg:w-1/2 w-full p-3 lg:flex block gap-2 justify-start items-center">
+      <mat-form-field floatLabel="always" appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>Niên khoá</mat-label>
+        <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
+          <mat-option [value]="null">Chọn niên khoá</mat-option>
+          <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full mt-3 lg:mt-0" subscriptSizing="dynamic">
+        <mat-label>Học kỳ</mat-label>
+        <mat-select placeholder="Chọn học kỳ" formControlName="semester">
+          <mat-option [value]="null">Chọn học kỳ</mat-option>
+          <mat-option [value]="'1'">1</mat-option>
+          <mat-option [value]="'2'">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+      <div class="flex justify-center items-center gap-8 mt-3">
+        <div class="pie-wrapper w-[28%] rounded-2xl bg-white p-3 border border-gray-300">
+          <div class="title-pie px-3 pb-3">
+            <h6 class="text-xs text-gray-400">Thống kê</h6>
+            <h3 class="text-base  text-gray-600 font-medium">Tỷ lệ người dùng</h3>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="">
+            <app-pie-chart
+            [pieChartData]="pieChartData"
+            ></app-pie-chart>
+          </div>
+        </div>
+        <div class="column-wrapper w-[53%] rounded-2xl bg-white p-5 border border-gray-300">
+          <div class="title-column px-3 pb-3">
+            <h6 class="text-xs text-gray-400">Số lượng</h6>
+            <h3 class="text-base  text-gray-600 font-medium ">Số lượng luận văn</h3>
+          </div>
+          <mat-divider></mat-divider>
+          <app-column-chart></app-column-chart>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

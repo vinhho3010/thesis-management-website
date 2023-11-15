@@ -8,6 +8,7 @@ import { ManageAccountComponent } from 'src/app/pages/admin/manage-account/manag
 import { TableAccountComponent } from 'src/app/pages/admin/manage-account/table-account/table-account.component';
 import { AddAccountDialogComponent } from 'src/app/pages/admin/dialog/add-account-dialog/add-account-dialog.component';
 import { AddFileAccountComponent } from 'src/app/pages/admin/dialog/add-file-account/add-file-account.component';
+import { DashboardComponent } from 'src/app/pages/admin/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AddFileAccountComponent } from 'src/app/pages/admin/dialog/add-file-acc
     ManageAccountComponent,
     TableAccountComponent,
     AddAccountDialogComponent,
-    AddFileAccountComponent
+    AddFileAccountComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

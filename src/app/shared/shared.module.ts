@@ -20,6 +20,9 @@ import { ChangePasswordComponent } from './components/dialog/change-password/cha
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { RouterModule } from '@angular/router';
+import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
+import { ColumnChartComponent } from './components/charts/column-chart/column-chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 export const textAppearAnimation = trigger('textAppear', [
@@ -43,7 +46,9 @@ export const textAppearAnimation = trigger('textAppear', [
     ThesisCardComponent,
     ProfileDialogComponent,
     ChangePasswordComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    PieChartComponent,
+    ColumnChartComponent
   ],
   imports: [
     CommonModule,
@@ -51,8 +56,8 @@ export const textAppearAnimation = trigger('textAppear', [
     ClickOutsideDirective,
     ReactiveFormsModule,
     NgxEditorModule,
-    RouterModule
-    // BrowserAnimationsModule
+    RouterModule,
+    NgChartsModule
   ],
   exports: [
     HeaderComponent,
@@ -72,7 +77,9 @@ export const textAppearAnimation = trigger('textAppear', [
     ThesisCardComponent,
     ProfileDialogComponent,
     ChangePasswordComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    PieChartComponent,
+    ColumnChartComponent
   ]
 })
 export class SharedModule { }

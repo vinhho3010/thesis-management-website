@@ -25,6 +25,7 @@ import { SpinnerComponent } from './pages/spinner/spinner.component';
 import { DatePipe } from '@angular/common';
 import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 import { SocketIoModule } from 'ngx-socket-io';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { SocketIoModule } from 'ngx-socket-io';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     NgxEditorModule,
-    SocketIoModule.forRoot(socketIOConfig)
+    SocketIoModule.forRoot(socketIOConfig),
+    NgChartsModule
   ],
   providers: [
         WebSocketService,
