@@ -63,11 +63,11 @@
           </mat-menu>
         </div>
       </div>
-      <mat-card-content *ngIf="!isEditPost || selectedEditPost?._id !== post?._id" [innerHTML]="post?.content | sanitizedHtml"></mat-card-content>
+      <mat-card-content *ngIf="!isEditPost || selectedEditPost?._id !== post?._id" [innerHTML]="post?.content | sanitizedHtml" ></mat-card-content>
       <mat-card-content>
         <form *ngIf="isEditPost && selectedEditPost?._id === post?._id" [formGroup]="editPostForm" [class.border-red-300]="editPostForm.dirty && editPostForm.invalid" class="p-3 mt-4 rounded-xl border border-gray-200">
           <div class="editor text-gray-500 px-3">
-            <ngx-editor-menu [editor]="editEditor" [toolbar]="toolbar" class="editor-toolbar">
+            <ngx-editor-menu [editor]="editEditor" [toolbar]="editToolbar" class="editor-toolbar">
             </ngx-editor-menu>
             <ngx-editor [placeholder]="'Nhập nội dung thông báo'" [editor]="editEditor" formControlName="content">
             </ngx-editor>

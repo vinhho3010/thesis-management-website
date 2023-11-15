@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +18,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 })
 export class PendingStudentListComponent {
   @ViewChild(MatSort) sort!: MatSort;
+  @Output() studentPendingCount = new EventEmitter<number>();
   displayedColumns: string[] = [
     'studentCode',
     'fullName',
@@ -135,6 +136,7 @@ export class PendingStudentListComponent {
         next: (res) => {
           this.loadingService.setLoading(false);
           this.dataSource.data = this.standardizeData(res);
+          this.studentPendingCount.emit(res.length);
         },
         error: (err) => {
           this.loadingService.setLoading(false);

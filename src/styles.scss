@@ -107,6 +107,12 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  ul, ol {
+    list-style: revert;
+    margin: 0 16px;
+  }
+}
 
 
 .mdc-notched-outline__notch

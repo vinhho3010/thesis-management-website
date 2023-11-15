@@ -32,6 +32,16 @@ export class ClassBoardComponent implements OnInit {
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
+  editToolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
@@ -239,5 +249,10 @@ export class ClassBoardComponent implements OnInit {
         this.getPostListByClass();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.editEditor.destroy();
+    this.editor.destroy();
   }
 }
