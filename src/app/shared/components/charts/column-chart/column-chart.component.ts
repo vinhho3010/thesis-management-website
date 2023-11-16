@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -10,6 +10,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class ColumnChartComponent {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @Input({required: true}) barChartData!: ChartData<'bar'>;
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -17,7 +18,7 @@ export class ColumnChartComponent {
     scales: {
       x: {},
       y: {
-        min: 10,
+        min: 0,
       },
     },
     plugins: {
@@ -29,18 +30,4 @@ export class ColumnChartComponent {
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [];
-
-  public barChartData: ChartData<'bar'> = {
-    labels: [
-      'CNTT',
-      'KTPM',
-      'HTTT',
-      'MMT&TT',
-      'KHMT',
-      'TTDPT'
-    ],
-    datasets: [
-      { data: [65, 59, 80, 81, 56, 55], label: 'Số lượng luận văn' },
-    ],
-  };
 }

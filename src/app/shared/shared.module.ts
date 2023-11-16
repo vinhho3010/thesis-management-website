@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
 import { ColumnChartComponent } from './components/charts/column-chart/column-chart.component';
 import { NgChartsModule } from 'ng2-charts';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 
 
 export const textAppearAnimation = trigger('textAppear', [
@@ -48,7 +49,8 @@ export const textAppearAnimation = trigger('textAppear', [
     ChangePasswordComponent,
     NotificationsComponent,
     PieChartComponent,
-    ColumnChartComponent
+    ColumnChartComponent,
+    LineChartComponent
   ],
   imports: [
     CommonModule,
@@ -79,7 +81,8 @@ export const textAppearAnimation = trigger('textAppear', [
     ChangePasswordComponent,
     NotificationsComponent,
     PieChartComponent,
-    ColumnChartComponent
+    ColumnChartComponent,
+    LineChartComponent
   ]
 })
 export class SharedModule { }

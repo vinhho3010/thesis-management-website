@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { schoolYear } from 'src/app/Model/enum/schoolYear';
+import { ToastService } from 'src/app/services/local/toast.service';
 import { StatisticService } from 'src/app/services/statistic.service';
 import { environment } from 'src/environments/environment';
 
@@ -11,18 +13,29 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardComponent implements OnInit {
   pieChartData: any;
+  columnChartData: any;
+  lineChartData: any;
   accountCount: any;
   schoolYear = schoolYear;
+  allThesisCount: any;
+  currentThesisCount: any;
   filterOptionForm = new FormGroup({
     schoolYear: new FormControl(environment.currentSchoolYear),
     semester: new FormControl(environment.currentSemester),
   });
 
-  constructor(private statisticService: StatisticService) {}
+  constructor(private statisticService: StatisticService, private toastService: ToastService) {}
 
   ngOnInit(): void {
-    this.loadAccountPerRole();
     this.countAccount();
+    this.countThesis();
+
+    //chart loadData
+    this.loadAccountPerRole();
+    this.loadThesisPerMajor();
+    this.countThesisBySchoolYear();
+
+    this.onListenFilterFormChange();
   }
 
   countAccount() {
@@ -33,11 +46,26 @@ export class DashboardComponent implements OnInit {
 
   loadAccountPerRole() {
     this.statisticService.accountPerRole().subscribe((res) => {
-      this.fillChartData(res);
+      this.fillPieChartData(res);
     });
   }
 
-  fillChartData(data: any) {
+  loadThesisPerMajor() {
+    this.statisticService.countThesisByMajor(
+        this.filterOptionForm.value.semester as string,
+        this.filterOptionForm.value.schoolYear as string
+      )
+      .subscribe({
+        next: (res) => {
+          this.fillColumnChartData(res);
+        },
+        error: (err) => {
+          this.toastService.showErrorToast('Không tải được dữ liệu');
+        },
+      });
+  }
+
+  fillPieChartData(data: any) {
     const pieChartLabels = ['Giảng viên', 'Sinh viên', 'Giáo vụ'];
     const chartData = [
       data.teacher,
@@ -54,5 +82,57 @@ export class DashboardComponent implements OnInit {
           },
         ],
       };
+  }
+
+  fillColumnChartData(data: any) {
+    this.columnChartData = {
+      labels: [],
+      datasets: [
+        { data: [], label: 'Số lượng luận văn' },
+      ],
+    };
+    for(let item of data) {
+      this.columnChartData.labels.push(item.major);
+      this.columnChartData.datasets[0].data.push(item.count);
+    }
+  }
+
+  fillLineChartData(data: any) {
+    this.lineChartData = {
+      labels: [],
+      datasets: [
+        { data: [], label: 'Số lượng luận văn' },
+      ],
+    };
+    for(let item of data) {
+      this.lineChartData.labels.push(item.schoolYear);
+      this.lineChartData.datasets[0].data.push(item.count);
+    }
+    console.log(this.lineChartData);
+
+  }
+
+  countThesisBySchoolYear() {
+    const schoolYear = Object.values(this.schoolYear);
+    this.statisticService.countThesisBySchoolyear(schoolYear).subscribe((res) => {
+      this.fillLineChartData(res);
+    });
+  }
+
+  countThesis() {
+    const allThesis = this.statisticService.countThesis();
+    const currentThesis = this.statisticService.countThesis(environment.currentSemester, environment.currentSchoolYear);
+    forkJoin([
+      allThesis, currentThesis
+    ]).subscribe((res) => {
+      this.allThesisCount = res[0];
+      this.currentThesisCount = res[1];
+    })
+  }
+
+  onListenFilterFormChange() {
+    this.filterOptionForm.valueChanges.subscribe((res) => {
+      this.loadThesisPerMajor();
+    });
   }
 }

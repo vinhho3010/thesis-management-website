@@ -40,7 +40,7 @@ export const routesInfo: RouteInfo[] = [
 export const routesInfoAdmin: RouteInfo[] = [
   {
     path: 'admin/dashboard',
-    title: 'Dashboard',
+    title: 'Thống kê',
     icon: 'dashboard'
   },
   {
