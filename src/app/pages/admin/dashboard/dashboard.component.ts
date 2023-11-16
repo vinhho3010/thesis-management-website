@@ -108,8 +108,6 @@ export class DashboardComponent implements OnInit {
       this.lineChartData.labels.push(item.schoolYear);
       this.lineChartData.datasets[0].data.push(item.count);
     }
-    console.log(this.lineChartData);
-
   }
 
   countThesisBySchoolYear() {
