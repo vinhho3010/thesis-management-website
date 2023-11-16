@@ -16,11 +16,14 @@
       <ng-template mat-tab-label>
 
         Sinh viên đăng ký
+        <span *ngIf="studentPendingCount > 0" class="text-red-400">
+          <br>
+          ({{studentPendingCount}})</span>
       </ng-template>
       <div class="tab-content">
-        <ng-template matTabContent>
-          <app-pending-student-list></app-pending-student-list>
-        </ng-template>
+          <app-pending-student-list
+          (studentPendingCount)="studentPendingCount = $event"
+          ></app-pending-student-list>
       </div>
     </mat-tab>
 

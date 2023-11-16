@@ -9,6 +9,8 @@ import { schoolYear } from 'src/app/Model/enum/schoolYear';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { ClassService } from 'src/app/services/class.service';
 
 @Component({
   selector: 'app-milestones',
@@ -30,7 +32,9 @@ export class MilestonesComponent implements OnInit {
     private toastService: ToastService,
     private dialog: MatDialog,
     private milestoneService: MilestoneService,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private notificationService: NotificationsService,
+    private classService: ClassService,
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +75,7 @@ export class MilestonesComponent implements OnInit {
         next: (res) => {
           this.toastService.showSuccessToast('Tạo thành công');
           this.loadMilestones();
+          this.sendNotificationToStudent(classInfo);
         },
         error: (err) => {
           this.toastService.showErrorToast('Không tạo được');
@@ -79,6 +84,28 @@ export class MilestonesComponent implements OnInit {
     } else {
       this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
     }
+  }
+
+  sendNotificationToStudent(classInfo: any) {
+    let studentIds = [];
+
+    this.classService.getStudentInClass(classInfo?._id as string).subscribe({
+      next: (res) => {
+        studentIds = res.map((student: { _id: any; }) => student._id);
+        studentIds.forEach((studentId: any) => {
+          this.notificationService.newNotification({
+            from: this.authService.getUser()._id,
+            to: studentId,
+            content: `Giảng viên ${this.authService.getUser().fullName} vừa thêm mới một mốc thời gian`,
+            title: 'Mốc thời gian mới',
+            linkAction: '/process'
+          });
+        });
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
   }
 
   updateMilestone(milestone: any) {

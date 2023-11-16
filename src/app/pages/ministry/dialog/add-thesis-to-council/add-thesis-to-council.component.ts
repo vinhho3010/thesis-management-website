@@ -9,6 +9,7 @@ import { ManageUserService } from 'src/app/services/manage-user.service';
 import { MatSelectChange } from '@angular/material/select';
 import { Class } from 'src/app/Model/class';
 import { ClassService } from 'src/app/services/class.service';
+import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 
 @Component({
   selector: 'app-add-thesis-to-council',
@@ -107,10 +108,20 @@ export class AddThesisToCouncilComponent {
     this.classService.getStudentInClass(classId).subscribe({
       next: (res) => {
         this.studentList = res;
+        if(this.studentList.length > 0) {
+          this.studentList = this.filterStudentStatus(this.studentList);
+        }
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
       }
+    })
+  }
+
+  filterStudentStatus(students: any) {
+    return students.filter((student: any) => {
+      //only accept student with status accepted or completed status
+      return student.thesis?.status === ThesisStatus.ACCEPTED || student.thesis?.status === ThesisStatus.COMPLETED;
     })
   }
 

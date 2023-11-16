@@ -49,12 +49,16 @@ export class ProcessDetailComponent implements OnInit {
   });
   toolbar: Toolbar = [
     ['bold', 'italic'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['underline', 'strike'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
   editToolbar: Toolbar = [
     ['bold', 'italic'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['underline', 'strike'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
@@ -246,6 +250,11 @@ export class ProcessDetailComponent implements OnInit {
   ngOnDestroy(): void {
     this.editor.destroy();
     this.editEditor.destroy();
+  }
+
+  isExpried(date: Date) {
+    const today = new Date();
+    return new Date(date) < today;
   }
 
 }

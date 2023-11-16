@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegisterTopicDialogComponent } from '../../dialog/register-topic/register-topic.component';
 import { LoaderService } from 'src/app/services/loader.service';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-pending-student-list',
@@ -17,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PendingStudentListComponent {
   @ViewChild(MatSort) sort!: MatSort;
+  @Output() studentPendingCount = new EventEmitter<number>();
   displayedColumns: string[] = [
     'studentCode',
     'fullName',
@@ -34,7 +36,8 @@ export class PendingStudentListComponent {
     private toastService: ToastService,
     private dialog: MatDialog,
     private loadingService: LoaderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationsService: NotificationsService
   ) {
     this.classId = this.route.snapshot.paramMap.get('id') as string;
     this.paramsSubscription = this.route.paramMap.subscribe(params => {
@@ -62,6 +65,13 @@ export class PendingStudentListComponent {
       next: () => {
         this.loadPendingStudentList();
         this.toastService.showSuccessToast('Chấp nhận sinh viên thành công');
+        this.notificationsService.newNotification({
+          from: this.authService.getUser()._id,
+          to: row.student._id,
+          content: `Giảng viên ${this.authService.getUser().fullName} đã chấp nhận yêu cầu đăng ký đề tài của bạn`,
+          title: 'Đề tài đã được chấp nhận',
+          linkAction: '/class'
+        });
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -80,6 +90,13 @@ export class PendingStudentListComponent {
       next: () => {
         this.loadPendingStudentList();
         this.toastService.showSuccessToast('Đã từ chối sinh viên');
+        this.notificationsService.newNotification({
+          from: this.authService.getUser()._id,
+          to: row.student._id,
+          content: `Giảng viên ${this.authService.getUser().fullName} đã từ chối yêu cầu đăng ký đề tài của bạn`,
+          title: 'Đề tài đã bị từ chối',
+          linkAction: '/register-topic'
+        });
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -119,6 +136,7 @@ export class PendingStudentListComponent {
         next: (res) => {
           this.loadingService.setLoading(false);
           this.dataSource.data = this.standardizeData(res);
+          this.studentPendingCount.emit(res.length);
         },
         error: (err) => {
           this.loadingService.setLoading(false);

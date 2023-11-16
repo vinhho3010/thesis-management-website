@@ -12,7 +12,8 @@
         <mat-card-content class="text-gray-500 text-sm">
           Trạng thái:
           <span *ngIf="version?.url" class="text-green-400">Đã hoàn thành</span>
-          <span *ngIf="!version?.url" class="text-red-400">Chưa hoàn thành</span>
+          <span *ngIf="!version?.url && !isExpried(version?.milestone.endDate)" class="text-orange-400">Chưa hoàn thành</span>
+          <span *ngIf="!version?.url && isExpried(version?.milestone.endDate) " class="text-red-400">Trễ hạn nộp</span>
         </mat-card-content>
       </mat-card>
     </div>

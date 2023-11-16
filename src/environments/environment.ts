@@ -13,7 +13,8 @@ export const firebaseConfig = {
 export const environment = {
   production: false,
   currentSchoolYear: '2023-2024',
-  currentSemester: '1'
+  currentSemester: '1',
+  clientUrl: 'http://localhost:4200',
 };
 
 const user = JSON.parse(localStorage.getItem('user') || '{}');

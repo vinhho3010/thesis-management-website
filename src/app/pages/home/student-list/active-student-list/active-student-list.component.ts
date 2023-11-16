@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 import { Pagination } from 'src/app/Model/pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClassService } from 'src/app/services/class.service';
@@ -20,10 +21,11 @@ import { studentListHeader } from 'src/app/shared/utilities/excel-schema';
 })
 export class ActiveStudentListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['code', 'fullName', 'class', 'topic',  'actions'];
+  displayedColumns: string[] = ['code', 'fullName', 'class', 'topic','status' ,  'actions'];
   dataSource = new MatTableDataSource([]);
   classOfTeacher!: string;
   searchCode = new FormControl('');
+  THESIS_STATUS = ThesisStatus;
   pagination: Pagination = {
     page: 0,
     limit: 5,

@@ -1,4 +1,4 @@
-<div class="milestone-student mx-auto max-w-5xl p-3 mt-9">
+<div class="milestone-student mx-auto max-w-5xl p-3 mt-3">
   <div class="flex justify-start items-center">
     <button mat-button color="basic" class="rounded-xl" (click)="onNavigateBack()">
       <mat-icon>keyboard_arrow_left</mat-icon>
@@ -26,7 +26,8 @@
         <span>
           <span class="font-medium"> Trạng thái: &nbsp;</span>
           <span *ngIf="currentVersion?.url" class="text-green-400">Đã hoàn thành</span>
-          <span *ngIf="!currentVersion?.url" class="text-red-400">Chưa hoàn thành</span>
+          <span *ngIf="!currentVersion?.url && !isExpried(currentVersion?.milestone.endDate)" class="text-orange-400">Chưa hoàn thành</span>
+          <span *ngIf="!currentVersion?.url && isExpried(currentVersion?.milestone.endDate) " class="text-red-400">Trễ hạn nộp</span>
         </span>
       </div>
       <div class="description" *ngIf="currentMilestone?.description">

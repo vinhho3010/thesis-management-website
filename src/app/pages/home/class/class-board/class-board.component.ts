@@ -10,6 +10,7 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentPostComponent } from '../../dialog/comment-post/comment-post.component';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-class-board',
@@ -31,6 +32,16 @@ export class ClassBoardComponent implements OnInit {
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
+  editToolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
@@ -49,7 +60,8 @@ export class ClassBoardComponent implements OnInit {
     private toastService: ToastService,
     private loadingService: LoaderService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationsService
   ) {
     this.createPostForm = new FormGroup({
       content: new FormControl(
@@ -130,6 +142,9 @@ export class ClassBoardComponent implements OnInit {
         this.initClassInfo();
         this.getPostListByClass();
         this.toastService.showSuccessToast('Đăng bài thành công');
+
+        this.sendNotificationToStudent();
+
       },
       error: (err) => {
         this.toastService.showErrorToast(err.error.message);
@@ -138,6 +153,30 @@ export class ClassBoardComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  sendNotificationToStudent() {
+    let studentIds = [];
+
+    this.classService.getStudentInClass(this.classId as string).subscribe({
+      next: (res) => {
+        studentIds = res.map((student: { _id: any; }) => student._id);
+        studentIds.forEach((studentId: any) => {
+          this.notificationService.newNotification({
+            from: this.authService.getUser()._id,
+            to: studentId,
+            content: `Giảng viên ${this.authService.getUser().fullName} đã đăng thông báo mới trong lớp học`,
+            title: 'Thông báo mới',
+            linkAction: '/class'
+          });
+        });
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+
+
   }
 
   getPostListByClass(): void {
@@ -210,5 +249,10 @@ export class ClassBoardComponent implements OnInit {
         this.getPostListByClass();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.editEditor.destroy();
+    this.editor.destroy();
   }
 }

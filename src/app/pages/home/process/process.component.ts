@@ -47,4 +47,9 @@ export class ProcessComponent implements OnInit {
   onViewDetail(version: any) {
     this.router.navigate(['/process', version?.milestone._id]);
   }
+
+  isExpried(date: Date) {
+    const today = new Date();
+    return new Date(date) < today;
+  }
 }

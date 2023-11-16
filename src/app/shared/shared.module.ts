@@ -7,7 +7,6 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ThesisListComponent } from './components/thesis-list/thesis-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SemesterPipe } from './pipes/semester.pipe';
-import { DataTableComponent } from './components/data-table/data-table.component';
 import { RolePipe } from './pipes/role.pipe';
 import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
@@ -19,7 +18,19 @@ import { ThesisCardComponent } from '../pages/ministry/public-thesis/thesis-card
 import { ProfileDialogComponent } from './components/dialog/profile-dialog/profile-dialog.component';
 import { ChangePasswordComponent } from './components/dialog/change-password/change-password.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { RouterModule } from '@angular/router';
+import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
+import { ColumnChartComponent } from './components/charts/column-chart/column-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+
+
+export const textAppearAnimation = trigger('textAppear', [
+  state('hidden', style({ opacity: 0, transform: 'translateY(20px)' })),
+  state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+  transition('hidden => visible', animate('500ms ease-in')),
+]);
 
 @NgModule({
   declarations: [
@@ -27,7 +38,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SidebarComponent,
     ThesisListComponent,
     SemesterPipe,
-    DataTableComponent,
     RolePipe,
     DateToTextPipe,
     SanitizedHtmlPipe,
@@ -37,6 +47,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ThesisCardComponent,
     ProfileDialogComponent,
     ChangePasswordComponent,
+    NotificationsComponent,
+    PieChartComponent,
+    ColumnChartComponent,
+    LineChartComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +58,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClickOutsideDirective,
     ReactiveFormsModule,
     NgxEditorModule,
-    // BrowserAnimationsModule
+    RouterModule,
+    NgChartsModule
   ],
   exports: [
     HeaderComponent,
@@ -63,13 +78,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SafePipe,
     ThesisCardComponent,
     ProfileDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    NotificationsComponent,
+    PieChartComponent,
+    ColumnChartComponent,
+    LineChartComponent
   ]
 })
 export class SharedModule { }
-
-export const textAppearAnimation = trigger('textAppear', [
-  state('hidden', style({ opacity: 0, transform: 'translateY(20px)' })),
-  state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
-  transition('hidden => visible', animate('500ms ease-in')),
-]);

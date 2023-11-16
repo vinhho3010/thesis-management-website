@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./student-list.component.scss']
 })
 export class StudentListComponent {
-
+  studentPendingCount = 0
 }

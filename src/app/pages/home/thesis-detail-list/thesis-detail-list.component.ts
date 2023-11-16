@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {  ActivatedRoute, Router } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { ThesisStatus } from 'src/app/Model/enum/thesis-status';
 import { Thesis } from 'src/app/Model/thesis';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,6 +27,7 @@ export class ThesisDetailListComponent implements OnInit {
   majorList: any[] = [];
   selectedThesis: Thesis | undefined;
   thesisStatusArray = Object.values(ThesisStatus);
+  THESIS_STATUS = ThesisStatus;
 
   constructor(
     private authService: AuthService,
@@ -65,6 +67,7 @@ export class ThesisDetailListComponent implements OnInit {
     }
     this.loadMajorList();
     this.loadStudentList();
+    this.onListenThesisStatusChange();
   }
 
   loadMajorList(): void {
@@ -92,12 +95,23 @@ export class ThesisDetailListComponent implements OnInit {
     });
   }
 
+  loadStudentListChange(): void {
+    this.classService.getStudentInClass(this.classId).subscribe({
+      next: (res) => {
+        this.studentList = res;
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
   onChangeStudent(student: any): void {
     this.selectedStudent = student;
     this.thesisService.getStudentThesis(student._id).subscribe({
       next: (res) => {
         this.fillDataStudent(student);
-        this.detailThesisForm.patchValue(res);
+        this.detailThesisForm.patchValue(res, {emitEvent: false});
         this.selectedThesis = res;
       },
       error: (err) => {
@@ -107,7 +121,7 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   fillDataStudent(student: any): void {
-    this.studentForm.patchValue(student);
+    this.studentForm.patchValue(student, {emitEvent: false});
     this.studentForm.controls['major'].setValue(student.major._id);
   }
 
@@ -117,19 +131,29 @@ export class ThesisDetailListComponent implements OnInit {
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    this.thesisService.updateStudentThesis(this.selectedStudent._id, this.submitData).subscribe({
-      next: () => {
-        this.toastService.showSuccessToast('Cập nhật thành công');
-        this.loadStudentList();
-      },
-      error: (err) => {
-        this.toastService.showErrorToast(err.error.message);
-      },
-    });
+    this.handleSubmitThesis();
 
   }
 
   onGoBack(): void {
     this.router.navigate([`/students/${this.classId}`]);
+  }
+
+  handleSubmitThesis(): void {
+    this.thesisService.updateStudentThesis(this.selectedStudent._id, this.submitData).subscribe({
+      next: () => {
+        this.toastService.showSuccessToast('Cập nhật thành công');
+        this.loadStudentListChange();
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  onListenThesisStatusChange(){
+    this.detailThesisForm.get('status')?.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
+        this.handleSubmitThesis();
+    })
   }
 }

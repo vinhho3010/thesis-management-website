@@ -26,9 +26,10 @@
   <div class="w-full md:w-4/12 px-2">
     <!-- Second component with 5 columns -->
     <div class="w-full rounded-xl border border-gray-300 min-h-[50vh]">
-      <div class="mb-4 p-3 bg-blue-600 text-white rounded-tl-xl rounded-tr-xl">Thông tin sinh viên</div>
-      <form class="form-wrapper p-3 ">
+      <div class="mb-4 p-3 bg-blue-600 text-white rounded-tl-xl rounded-tr-xl">Thông tin chi tiết</div>
+      <form class="form-wrapper px-3 pb-3  ">
         <ng-container [formGroup]="studentForm">
+          <div class="mb-3 mt-1 text-gray-600">Thông tin sinh viên</div>
           <div class="input-field w-full gap-2">
             <mat-form-field class="lg:w-2/3 w-full">
               <mat-label>Họ tên </mat-label>
@@ -88,7 +89,9 @@
           <mat-form-field class="w-full">
             <mat-label>Trạng thái </mat-label>
             <mat-select formControlName="status">
-              <mat-option *ngFor="let status of thesisStatusArray" [value]="status">{{status | thesisStatus}}</mat-option>
+              <mat-option
+                *ngFor="let status of thesisStatusArray"
+                [value]="status">{{status | thesisStatus}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

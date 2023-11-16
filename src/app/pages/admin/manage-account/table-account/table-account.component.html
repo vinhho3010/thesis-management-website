@@ -1,96 +1,99 @@
-<div class="account-list-header flex flex-col justify-center items-start mt-9 p-3">
-  <div class="list-title w-1/2 text-3xl text-blue-800">
-    {{tableType === roleAccount.STUDENT ? 'Danh sách sinh viên' : tableType === roleAccount.TEACHER ? 'Danh sách giảng viên' : 'Danh sách giáo vụ'}}
-  </div>
-  <div class="flex items-center justify-between w-full lg:px-4">
-    <div class="search-wrapper w-1/2 p-3 flex items-center">
-      <mat-form-field floatLabel="always" appearance="outline" class="w-3/4 mt-4">
-        <mat-label>Tìm kiếm</mat-label>
-        <input matInput type="search" placeholder="Nhập từ khoá" [formControl]="searchCode">
-        <mat-icon matPrefix>search</mat-icon>
-      </mat-form-field>
+<div class="table-account-container lg:px-3 ">
+  <div class="account-list-header flex flex-col justify-center items-start mt-9 p-3">
+    <div class="list-title lg:w-1/2 w-full text-3xl text-blue-800">
+      {{tableType === roleAccount.STUDENT ? 'Danh sách sinh viên' : tableType === roleAccount.TEACHER ? 'Danh sách giảng viên' : 'Danh sách giáo vụ'}}
     </div>
-    <div class="flex items-center justify-end lg:w-2/5 w-3/4 gap-2">
-      <button mat-flat-button color="primary" class="button-add bg-blue-600" (click)="openDialogAddAccount()">
-        <mat-icon matPrefix>add</mat-icon>
-        Thêm tài khoản
-      </button>
-      <button mat-flat-button color="accent" class="button-add bg-orange-600" (click)="openDialogAddFile()">
-        <mat-icon matPrefix>input_file</mat-icon>
-        Thêm tập tin
-      </button>
+    <div class="flex items-center justify-between w-full lg:px-4 lg:flex-row flex-col">
+      <div class="search-wrapper lg:w-1/2 w-full p-3 flex items-center">
+        <mat-form-field floatLabel="always" appearance="outline" class="w-3/4 mt-4">
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput type="search" placeholder="Nhập từ khoá" [formControl]="searchCode">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="flex items-center justify-end lg:w-2/5 w-full gap-2">
+        <button mat-flat-button color="primary" class="button-add bg-blue-600" (click)="openDialogAddAccount()">
+          <mat-icon matPrefix>add</mat-icon>
+          Thêm tài khoản
+        </button>
+        <button mat-flat-button color="accent" class="button-add bg-orange-600" (click)="openDialogAddFile()">
+          <mat-icon matPrefix>input_file</mat-icon>
+          Thêm tập tin
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
 
-<div class="account-list table-wrapper">
-<table mat-table [dataSource]="dataSourceInput" class="mat-elevation-z0" matSort>
+  <div class="account-list table-wrapper">
+  <table mat-table [dataSource]="dataSourceInput" class="mat-elevation-z0" matSort>
 
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> STT </th>
-    <td mat-cell *matCellDef="let element; let i = dataIndex">
-      <span class="mobile-label">STT: </span>
-      {{dataSourceInput.filteredData.indexOf(element) + 1}}</td>
-  </ng-container>
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> STT </th>
+      <td mat-cell *matCellDef="let element; let i = dataIndex">
+        <span class="mobile-label">STT: </span>
+        {{dataSourceInput.filteredData.indexOf(element) + 1}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="code">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{tableType === roleAccount.STUDENT ? 'MSSV' : 'Mã cán bộ'}} </th>
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{tableType === roleAccount.STUDENT ? 'MSSV' : 'Mã cán bộ'}} </th>
 
-    <td mat-cell *matCellDef="let element">
-      <span class="mobile-label">{{tableType === roleAccount.STUDENT ? 'Mã số sinh viên:' : 'Mã cán bộ:'}} </span>
-      {{element.code}} </td>
-  </ng-container>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">{{tableType === roleAccount.STUDENT ? 'Mã số sinh viên:' : 'Mã cán bộ:'}} </span>
+        {{element.code}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="fullName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
-    <td mat-cell *matCellDef="let element">
-      <span class="mobile-label">Họ tên: </span>
-      {{element.fullName}} </td>
-  </ng-container>
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ Tên </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Họ tên: </span>
+        {{element.fullName}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="major">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngành </th>
-    <td mat-cell *matCellDef="let element">
-      <span class="mobile-label">Ngành: </span>
-      {{element.major?.name}} </td>
-  </ng-container>
+    <ng-container matColumnDef="major">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngành </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Ngành: </span>
+        {{element.major?.name}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại tài khoản </th>
-    <td mat-cell *matCellDef="let element">
-      <span class="mobile-label">Loại tài khoản: </span>
-      {{element.role | role}}  </td>
-  </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại tài khoản </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">Loại tài khoản: </span>
+        {{element.role | role}}  </td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
-    <td mat-cell *matCellDef="let row">
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Tuỳ chọn </th>
+      <td mat-cell *matCellDef="let row">
 
-      <button mat-icon-button color="primary" (click)="onEditRow(row)">
-        <mat-icon>edit</mat-icon>
-      </button>
+        <button mat-icon-button color="primary" (click)="onEditRow(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
 
-      <button mat-icon-button color="warn" (click)="onDeleteRow(row)">
-        <mat-icon>delete</mat-icon
-      ></button>
-    </td>
-  </ng-container>
+        <button mat-icon-button color="warn" (click)="onDeleteRow(row)">
+          <mat-icon>delete</mat-icon
+        ></button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr class="text-center" *matNoDataRow>
-    <td class="mat-cell py-4" colspan="10" *ngIf="dataSourceInput?.data?.length === 0">Không có dữ liệu</td>
-  </tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="text-center" *matNoDataRow>
+      <td class="mat-cell py-4" colspan="10" *ngIf="dataSourceInput?.data?.length === 0">Không có dữ liệu</td>
+    </tr>
 
-</table>
+  </table>
 
-<mat-paginator class="py-1"
-[pageSizeOptions]="[5, 10, 25]"
-[pageSize]="pagination.limit"
-[pageIndex]="pagination.page"
-[length]="pagination.length"
-(page)="onPageChange($event)"
-showFirstLastButtons>
-</mat-paginator>
+  <mat-paginator class="py-1"
+  [pageSizeOptions]="[5, 10, 25]"
+  [pageSize]="pagination.limit"
+  [pageIndex]="pagination.page"
+  [length]="pagination.length"
+  (page)="onPageChange($event)"
+  showFirstLastButtons>
+  </mat-paginator>
+  </div>
+
 </div>
