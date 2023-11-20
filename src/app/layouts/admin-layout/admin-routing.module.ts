@@ -12,7 +12,7 @@ const routes: Routes = [
     children : [
       {
         path: '',
-        redirectTo: 'manage-account',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {

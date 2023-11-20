@@ -46,6 +46,7 @@ export class LoginComponent {
 
   submit() {
     if (this.loginForm.invalid) {
+      this.toast.showErrorToast('Vui lòng nhập đầy đủ thông tin');
       return;
     }
     this.loadingService.setLoading(true);

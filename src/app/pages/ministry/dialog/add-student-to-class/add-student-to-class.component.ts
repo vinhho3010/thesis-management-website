@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
+import { MajorService } from 'src/app/services/major.service';
 import { ManageUserService } from 'src/app/services/manage-user.service';
 
 @Component({
@@ -13,10 +14,15 @@ import { ManageUserService } from 'src/app/services/manage-user.service';
 export class AddStudentToClassComponent implements OnInit{
   findStudentForm: FormGroup;
   studentResult: any = null;
-    constructor(private matDialogRef: MatDialogRef<AddStudentToClassComponent>, private manageUserService: ManageUserService) {
+  majorList: any[] = [];
+
+    constructor(private matDialogRef: MatDialogRef<AddStudentToClassComponent>, private manageUserService: ManageUserService, private majorService: MajorService) {
       this.findStudentForm = new FormGroup({
         studentCode: new FormControl('', [Validators.required]),
         studentName: new FormControl('', [Validators.required]),
+        major: new FormControl('', [Validators.required]),
+        class: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required]),
       });
      }
 
@@ -24,11 +30,24 @@ export class AddStudentToClassComponent implements OnInit{
       this.findStudentForm.controls['studentCode'].valueChanges.pipe(debounceTime(500))
       .subscribe((res) => {
         this.findStudentInfo();
-      })
+      });
+
+      this.loadMajorList();
      }
 
     onClose() {
       this.matDialogRef.close({result: null});
+    }
+
+    loadMajorList() {
+      this.majorService.getAllmajor().subscribe({
+        next: (res) => {
+          this.majorList = res;
+        },
+        error: (err) => {
+          this.majorList = [];
+        }
+      })
     }
 
     findStudentInfo(){
@@ -37,16 +56,25 @@ export class AddStudentToClassComponent implements OnInit{
         next: (res) => {
           if(res.length > 0){
             this.studentResult = res[0];
-            this.findStudentForm.controls['studentName'].setValue(res[0].fullName);
+            this.fillFormData(this.studentResult);
           } else {
             this.studentResult = null;
-            this.findStudentForm.controls['studentName'].setValue('');
+            this.findStudentForm.reset({
+              studentCode: studentCode
+            });
           }
         },
         error: (err) => {
           this.findStudentForm.controls['studentName'].setValue('');
         }
       })
+    }
+
+    fillFormData(data: any){
+      this.findStudentForm.controls['studentName'].setValue(data.fullName, {emitEvent: false});
+      this.findStudentForm.controls['major'].setValue(this.majorList.find(x => x._id === data.major).name, {emitEvent: false});
+      this.findStudentForm.controls['class'].setValue(data.class, {emitEvent: false});
+      this.findStudentForm.controls['email'].setValue(data.email, {emitEvent: false});
     }
 
     onSubmit() {

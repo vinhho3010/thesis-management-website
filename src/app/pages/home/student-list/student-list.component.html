@@ -14,10 +14,8 @@
 
       <mat-tab label="Registering">
       <ng-template mat-tab-label>
-
         Sinh viên đăng ký
         <span *ngIf="studentPendingCount > 0" class="text-red-400">
-          <br>
           ({{studentPendingCount}})</span>
       </ng-template>
       <div class="tab-content">
@@ -26,7 +24,5 @@
           ></app-pending-student-list>
       </div>
     </mat-tab>
-
-
   </mat-tab-group>
 </div>

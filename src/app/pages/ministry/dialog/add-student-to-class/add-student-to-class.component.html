@@ -1,4 +1,4 @@
-<div class="wrapper p-4 w-[50vw] md:w-[40vw] lg:w-[30vw]">
+<div class="wrapper p-4 w-[80vw] md:w-[50vw] lg:w-[40vw]">
   <h1 class="pb-6 pt-2 text-xl font-medium text-blue-700">Thêm sinh viên</h1>
 
 
@@ -14,6 +14,26 @@
       <mat-label>{{!studentResult ? 'Chưa có thông tin sinh viên' : 'Tên sinh viên'}}</mat-label>
       <input matInput formControlName="studentName" readonly>
     </mat-form-field>
+  </div>
+  <div class="input-field w-full gap-2">
+    <mat-form-field class="w-full">
+      <mat-label>{{'Email'}}</mat-label>
+      <input matInput formControlName="email" readonly>
+    </mat-form-field>
+  </div>
+  <div class="inline-input">
+    <div class="input-field w-full gap-2">
+      <mat-form-field class="w-full">
+        <mat-label>{{'Lớp'}}</mat-label>
+        <input matInput formControlName="class" readonly>
+      </mat-form-field>
+    </div>
+    <div class="input-field w-full gap-2">
+      <mat-form-field class="w-full">
+        <mat-label>{{'Ngành'}}</mat-label>
+        <input matInput formControlName="major" readonly>
+      </mat-form-field>
+    </div>
   </div>
 
   <div class="flex justify-end items-center gap-4">
