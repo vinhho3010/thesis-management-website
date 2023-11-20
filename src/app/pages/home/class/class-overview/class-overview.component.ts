@@ -78,7 +78,7 @@ export class ClassOverviewComponent implements OnInit {
   onAddStudent() {
     this.dialog.open(AddStudentToClassComponent).afterClosed().subscribe({
       next: (res) => {
-        if (res) {
+        if (res?.result) {
           this.loadingService.setLoading(true);
           this.classService.addStudentToClass(this.classId, res.result).subscribe({
             next: (res) => {

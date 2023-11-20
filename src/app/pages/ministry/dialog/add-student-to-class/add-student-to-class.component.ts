@@ -65,7 +65,10 @@ export class AddStudentToClassComponent implements OnInit{
           }
         },
         error: (err) => {
-          this.findStudentForm.controls['studentName'].setValue('');
+          this.studentResult = null;
+          this.findStudentForm.reset({
+            studentCode: studentCode
+          });
         }
       })
     }
