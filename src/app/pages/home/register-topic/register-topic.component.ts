@@ -131,7 +131,7 @@ export class RegisterTopicComponent implements OnInit {
 
   onRegisterTopic(teacher: any){
     if(teacher.major !== this.authService.getUser()?.major?._id){
-      this.toastService.infoToast('<b>Giáo viên không thuộc ngành của bạn</b>. <br> Bạn chỉ có thể đăng ký với giảng viên cùng chuyên ngành hoặc liên hệ riêng với giảng viên để được đăng ký');
+      this.toastService.infoToast('<b>Giảng viên không thuộc ngành của bạn</b>. <br> Bạn chỉ có thể đăng ký với giảng viên cùng chuyên ngành hoặc liên hệ riêng với giảng viên để được đăng ký');
       return;
     }
 

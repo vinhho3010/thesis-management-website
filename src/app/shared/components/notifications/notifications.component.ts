@@ -53,6 +53,7 @@ userId = this.authService.getUser()._id;
     this.notificationsService.deleteAllNotifications(this.userId).subscribe({
       next: (res) => {
         this.notificationList = [];
+        this.unreadNotification.emit(0);
       },
       error: (err) => {
         this.toastService.showErrorToast('Thông báo xoá thất bại');

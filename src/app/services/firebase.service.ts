@@ -58,10 +58,10 @@ export class FirebaseService {
   private saveFileDataToRefDoc(classId: string, fileUpload: FileUpload, typeId: string): void {
     this.refDocsService.createDocForClass(classId, fileUpload, typeId).subscribe({
       next: (res) => {
-        this.toastService.showSuccessToast('Upload file thành công');
+        this.toastService.showSuccessToast('Tải lên tập tin thành công');
       },
       error: (err) => {
-        this.toastService.showErrorToast('Upload file thất bại');
+        this.toastService.showErrorToast('Tải lên tập tin thất bại');
       }
     });
   }
@@ -69,10 +69,10 @@ export class FirebaseService {
   updateUrlForThesisVersion(fileUpload: FileUpload, thesisVersionId: string): void {
     this.thesisVersionService.updateThesisVersionUrl(thesisVersionId, fileUpload).subscribe({
       next: (res) => {
-        this.toastService.showSuccessToast('Upload file thành công');
+        this.toastService.showSuccessToast('Tải lên tập tin thành công');
       },
       error: (err) => {
-        this.toastService.showErrorToast('Upload file thất bại');
+        this.toastService.showErrorToast('Tải lên tập tin thất bại');
       }
     });
   }
@@ -80,13 +80,13 @@ export class FirebaseService {
   updateThesisUrl(fileUpload: FileUpload, thesisId: string, reloadCallback?: Function) {
     this.thesisService.updateThesisCustomUrl(thesisId, fileUpload, true).subscribe({
       next: (res) => {
-        this.toastService.showSuccessToast('Upload file thành công');
+        this.toastService.showSuccessToast('Tải lên tập tin thành công');
         if(reloadCallback){
           setTimeout(() => reloadCallback(), 0);
         }
       },
       error: (err) => {
-        this.toastService.showErrorToast('Upload file thất bại');
+        this.toastService.showErrorToast('Tải lên tập tin thất bại');
       }
     });
   }
@@ -100,13 +100,13 @@ export class FirebaseService {
     this.refDocsService.deleteDocForClass(fileUpload._id as string).subscribe({
       next: (res) => {
         this.deleteFileStorage(fileUpload.title);
-        this.toastService.showSuccessToast('Xóa file thành công');
+        this.toastService.showSuccessToast('Xóa tập tin thành công');
         if(reloadCallback){
           reloadCallback();
         }
       },
       error: (err) => {
-        this.toastService.showErrorToast('Xóa file thất bại');
+        this.toastService.showErrorToast('Xóa tập tin thất bại');
       }
     });
   }
@@ -115,13 +115,13 @@ export class FirebaseService {
     this.thesisVersionService.updateThesisVersionUrl(thesisVersionId, {url: '', title: ''}).subscribe({
       next: (res) => {
         this.deleteFileStorage(fileName);
-        this.toastService.showSuccessToast('Xóa file thành công');
+        this.toastService.showSuccessToast('Xóa tập tin thành công');
         if(reloadCallback){
           setTimeout(() => reloadCallback(), 0);
         }
       },
       error: (err) => {
-        this.toastService.showErrorToast('Xóa file thất bại');
+        this.toastService.showErrorToast('Xóa tập tin thất bại');
       }
     });
   }
@@ -134,13 +134,13 @@ export class FirebaseService {
     this.thesisService.updateThesisCustomUrl(thesisId, emptyData, false).subscribe({
       next: (res) => {
         this.deleteFileStorage(fileName);
-        this.toastService.showSuccessToast('Xóa file thành công');
+        this.toastService.showSuccessToast('Xóa tập tin thành công');
         if(reloadCallback){
           setTimeout(() => reloadCallback(), 0);
         }
       },
       error: (err) => {
-        this.toastService.showErrorToast('Xóa file thất bại');
+        this.toastService.showErrorToast('Xóa tập tin thất bại');
       }
     });
   }

@@ -88,6 +88,18 @@ export class ClassListComponent implements OnInit {
     });
   }
 
+  loadClassListChange(): void {
+    this.classService.getAllClass(this.pagination, this.filterOptionForm.value).subscribe({
+      next: (res) => {
+        this.pagination.length = res.length;
+        this.dataSource.data = this.standardizeData(res.data);
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
   getAllClass(): void {
     this.classService.getAllClass(this.pagination, this.filterOptionForm.value).subscribe({
       next: (res) => {
@@ -138,7 +150,7 @@ export class ClassListComponent implements OnInit {
   onCreateClass() {
     const addClassDialog = this.dialog.open(AddClassComponent);
     addClassDialog.afterClosed().subscribe((res) => {
-      this.loadClassList();
+      this.loadClassListChange();
     });
   }
 

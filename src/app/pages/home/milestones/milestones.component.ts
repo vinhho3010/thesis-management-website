@@ -62,7 +62,7 @@ export class MilestonesComponent implements OnInit {
     } else {
       this.loadingService.setLoading(false);
       this.milestonesList = [];
-      this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
+      //this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
     }
   }
 
@@ -81,7 +81,8 @@ export class MilestonesComponent implements OnInit {
           this.toastService.showErrorToast('Không tạo được');
         }
       })
-    } else {
+    }
+    else {
       this.toastService.showErrorToast('Bạn không có nhóm hướng dẫn trong học kỳ này');
     }
   }

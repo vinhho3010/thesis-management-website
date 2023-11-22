@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastService } from 'src/app/services/local/toast.service';
 
 @Component({
   selector: 'app-register-topic-dialog',
@@ -13,7 +14,8 @@ export class RegisterTopicDialogComponent {
 
   constructor(
     private matDialogRef: MatDialogRef<RegisterTopicDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private toastService: ToastService
   ) {
     this.registerTopicForm = new FormGroup({
       fullName: new FormControl('', ),
@@ -75,6 +77,7 @@ export class RegisterTopicDialogComponent {
 
   onSubmit() {
     if (this.registerTopicForm.invalid) {
+      this.toastService.showErrorToast('Vui lòng điền đầy đủ thông tin');
       return;
     }
     this.matDialogRef.close({ result: this.submitData });

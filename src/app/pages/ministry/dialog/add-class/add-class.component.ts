@@ -51,6 +51,10 @@ export class AddClassComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.newClassForm.invalid) {
+      this.toastService.showErrorToast('Vui lòng điền đầy đủ thông tin');
+      return;
+    }
     this.classService.createClass(this.submitData).subscribe({
       next: (res) => {
         this.toastService.showSuccessToast('Tạo nhóm hướng dẫn thành công');

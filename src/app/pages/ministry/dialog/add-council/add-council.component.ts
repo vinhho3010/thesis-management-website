@@ -69,6 +69,10 @@ export class AddCouncilComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.newCouncilForm.invalid) {
+      this.toastService.showErrorToast('Vui lòng điền đầy đủ thông tin');
+      return;
+    }
     this.matDialogRef.close({
       submitData: this.newCouncilForm.value
     });
