@@ -50,11 +50,11 @@
         {{element.fullName}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="major">
+    <ng-container matColumnDef="majorName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngành </th>
       <td mat-cell *matCellDef="let element">
         <span class="mobile-label">Ngành: </span>
-        {{element.major?.name}} </td>
+        {{element.majorName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="type">
@@ -81,7 +81,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr class="text-center" *matNoDataRow>
-      <td class="mat-cell py-4" colspan="10" *ngIf="dataSourceInput?.data?.length === 0">Không có dữ liệu</td>
+      <td class="mat-cell py-4" colspan="10" >Không có dữ liệu</td>
     </tr>
 
   </table>

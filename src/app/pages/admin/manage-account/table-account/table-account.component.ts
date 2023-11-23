@@ -42,13 +42,22 @@ export class TableAccountComponent {
     this.loadingService.setLoading(true);
     this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
       next: (response) =>{
-        this.dataSourceInput.data = response.data;
+        this.dataSourceInput.data = this.mapDataToTable(response.data);
         this.pagination.length = response.length;
         this.loadingService.setLoading(false);
       },
       error: () => {
         this.toastService.showErrorToast('Tải dữ liệu thất bại');
         this.loadingService.setLoading(false);
+      }
+    });
+  }
+
+  mapDataToTable(data: any): any[] {
+    return data.map((item: any) => {
+      return {
+        ...item,
+        majorName: item?.major?.name,
       }
     });
   }
@@ -66,7 +75,7 @@ export class TableAccountComponent {
   reloadDataSource(): void {
     this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
       next: (response) =>{
-        this.dataSourceInput.data = response.data;
+        this.dataSourceInput.data = this.mapDataToTable(response.data);
         this.pagination.length = response.length;
       },
       error: () => {
@@ -97,7 +106,7 @@ export class TableAccountComponent {
     this.manageUserService.deleteAccount(_id).subscribe({
       next: () => {
         this.toastService.showSuccessToast('Xóa thành công');
-        this.dataSourceInput.data = this.dataSourceInput.data.filter((value: any) => value._id !== _id);
+        this.reloadDataSource();
       },
       error: () => {
         this.toastService.showErrorToast('Xóa thất bại');
@@ -118,7 +127,7 @@ export class TableAccountComponent {
     const dialogRef = this.dialog.open(AddAccountDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.initDataSource();
+        this.reloadDataSource();
       }
     });
   }

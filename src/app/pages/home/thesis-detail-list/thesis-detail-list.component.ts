@@ -61,10 +61,6 @@ export class ThesisDetailListComponent implements OnInit {
 
   ngOnInit(): void {
     this.classId = this.route.snapshot.paramMap.get('id') as string;
-    const retrievedData = this.location.getState() as any;
-    if(retrievedData?.selectedStudent) {
-      this.onChangeStudent(retrievedData.selectedStudent);
-    }
     this.loadMajorList();
     this.loadStudentList();
     this.onListenThesisStatusChange();
@@ -87,6 +83,17 @@ export class ThesisDetailListComponent implements OnInit {
       next: (res) => {
         this.loadingService.setLoading(false);
         this.studentList = res;
+        const retrievedData = this.location.getState() as any;
+        if(retrievedData?.selectedStudent) {
+          this.onChangeStudent(retrievedData.selectedStudent);
+          console.log(retrievedData.selectedStudent);
+
+        }
+        else {
+          console.log(this.studentList[0]);
+
+          this.onChangeStudent(this.studentList[0]);
+        }
       },
       error: (err) => {
         this.loadingService.setLoading(false);
@@ -136,7 +143,7 @@ export class ThesisDetailListComponent implements OnInit {
   }
 
   onGoBack(): void {
-    this.router.navigate([`/students/${this.classId}`]);
+    this.router.navigateByUrl(this.routerExService.getPreviousUrl() as string)
   }
 
   handleSubmitThesis(): void {

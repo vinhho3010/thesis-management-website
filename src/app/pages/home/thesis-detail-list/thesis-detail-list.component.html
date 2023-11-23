@@ -6,8 +6,8 @@
       <div class="students-list px-2">
         <mat-card *ngFor="let student of studentList"
          class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 hover:shadow-md"
-         [class.bg-blue-500]="student._id === selectedStudent._id"
-         [class.text-white]="student._id === selectedStudent._id"
+         [class.bg-blue-500]="student?._id === selectedStudent?._id"
+         [class.text-white]="student?._id === selectedStudent?._id"
          [class.hover:bg-blue-400]="student._id === selectedStudent._id"
          [class.hover:bg-gray-200]="student._id !== selectedStudent._id"
          (click)="onChangeStudent(student)">

@@ -22,6 +22,7 @@
       <div *ngIf="isLogin"  class="flex justify-start items-center gap-2" >
         <div
         (clickOutside)="isShowNotification = false"
+        *ngIf="(userData?.role === ROLE?.STUDENT ||  userData?.role === ROLE?.TEACHER)"
         class="relative">
           <button mat-icon-button class="text-gray-600"  (click)="isShowNotification = !isShowNotification">
             <mat-icon *ngIf="unreadNotificationCount <= 0" matBadgeSize="small" matBadgeColor="primary">notifications</mat-icon>

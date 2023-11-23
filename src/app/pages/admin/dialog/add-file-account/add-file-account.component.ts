@@ -80,11 +80,14 @@ export class AddFileAccountComponent {
     this.fileName = event.target.files[0].name;
     this.excelHandleService.readExcelFile(event.target.files[0], this.accountSchema).then((data) => {
       data = data.map((element: any) => {
-        return {
-          ...element,
-          gender: element.gender == 'nam' ? 'male' : 'female',
-          major: this.majorList.find((major) => major.name === element.major.trim())?._id,
-        }});
+        if(element?.major){
+          return {
+            ...element,
+            gender: element.gender == 'nam' ? 'male' : 'female',
+            major: this.majorList.find((major) => major.name === element.major.trim())?._id,
+          }
+        }
+      });
       this.dataSourceInput.data = data;
       this.accountListForm.clear();
       data.forEach((element: any) => {

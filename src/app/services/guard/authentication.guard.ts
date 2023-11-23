@@ -76,14 +76,14 @@ export class AdminGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-
+      const userRole = this.authService.getRole();
       if(this.authService.getRole()?.includes(RoleAccount.ADMIN)){
         return true;
       } else {
-        //go to previous page
-        this.router.navigate([this.exRouter.getPreviousUrl()]);
-        this.toastService.showErrorToast('Bạn không có quyền truy cập');
-        return false;
+          //go to previous page
+          this.router.navigate([this.exRouter.getPreviousUrl()]);
+          this.toastService.showErrorToast('Bạn không có quyền truy cập');
+          return false;
       }
   }
 }
