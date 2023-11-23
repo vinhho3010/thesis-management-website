@@ -5,7 +5,7 @@ import { ClassListComponent } from 'src/app/pages/ministry/class-list/class-list
 import { PublicThesisComponent } from 'src/app/pages/ministry/public-thesis/public-thesis.component';
 import { CouncilComponent } from 'src/app/pages/ministry/council/council.component';
 import { ClassDetailComponent } from 'src/app/pages/ministry/class-list/class-detail/class-detail.component';
-import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
+import { AuthenticationGuard, MinistryGuard } from 'src/app/services/guard/authentication.guard';
 import { CouncilDetailComponent } from 'src/app/pages/ministry/council/council-detail/council-detail.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
 
@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: MinistryLayoutComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard, MinistryGuard],
     children: [
       {
         path: '',

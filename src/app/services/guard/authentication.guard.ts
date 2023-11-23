@@ -54,7 +54,7 @@ export class MinistryGuard {
         return true;
       } else {
         //go to previous page
-        this.router.navigate([this.exRouter.getPreviousUrl()]);
+        this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
         this.toastService.showErrorToast('Bạn không có quyền truy cập');
         return false;
       }
@@ -81,7 +81,7 @@ export class AdminGuard {
         return true;
       } else {
           //go to previous page
-          this.router.navigate([this.exRouter.getPreviousUrl()]);
+          this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
           this.toastService.showErrorToast('Bạn không có quyền truy cập');
           return false;
       }
@@ -107,7 +107,60 @@ export class TeacherGuard {
         return true;
       } else {
         //go to previous page
-        this.router.navigate([this.exRouter.getPreviousUrl()]);
+        this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
+        this.toastService.showErrorToast('Bạn không có quyền truy cập');
+        return false;
+      }
+  }
+}
+@Injectable({
+  providedIn: 'root',
+})
+export class StudentGuard {
+
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService, private exRouter: RouterExtService) {}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+
+      if(this.authService.getRole()?.includes(RoleAccount.STUDENT)){
+        return true;
+      } else {
+        //go to previous page
+        this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
+        this.toastService.showErrorToast('Bạn không có quyền truy cập');
+        return false;
+      }
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BothStudentTeacherGuard {
+
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService, private exRouter: RouterExtService) {}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+
+      if(this.authService.getRole()?.includes(RoleAccount.STUDENT) || this.authService.getRole()?.includes(RoleAccount.TEACHER)){
+        return true;
+      } else {
+        //go to previous page
+        this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
         this.toastService.showErrorToast('Bạn không có quyền truy cập');
         return false;
       }
