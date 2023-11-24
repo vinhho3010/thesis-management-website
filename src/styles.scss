@@ -197,6 +197,15 @@ body {
   background-color: rgb(244, 216, 59) !important;/* Replace with your desired background color */
   opacity: .9;
 }
+/* Warning toast */
+.toast-info {
+  margin-top: 12px !important;
+  border-radius: 12px !important;
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+  background-color: rgb(59, 170, 244) !important;/* Replace with your desired background color */
+  opacity: .9;
+}
 
 .shadow-custom {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px !important;

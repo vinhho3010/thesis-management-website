@@ -26,11 +26,12 @@
         class="relative">
           <button mat-icon-button class="text-gray-600"  (click)="isShowNotification = !isShowNotification">
             <mat-icon *ngIf="unreadNotificationCount <= 0" matBadgeSize="small" matBadgeColor="primary">notifications</mat-icon>
-            <mat-icon *ngIf="unreadNotificationCount > 0" matBadgeSize="small"  [matBadge]="unreadNotificationCount" matBadgeColor="primary">notifications</mat-icon>
+            <mat-icon *ngIf="unreadNotificationCount > 0" matBadgeSize="small"  [matBadge]="unreadNotificationCount" aria-hidden="false" matBadgeColor="primary">notifications</mat-icon>
           </button>
           <app-notifications *ngIf="isShowNotification"
           [isShowNotification]="isShowNotification"
           (unreadNotification)="onUnreadNotification($event)"
+
           ></app-notifications>
         </div>
         <div class="user-info flex justify-start items-center">

@@ -73,8 +73,18 @@ export class HeaderComponent implements OnInit{
   onListenNotification(){
     this.notificationsService.getNewNotification().subscribe({
       next: (res) => {
+        this.showToast.showNoticeToast('Bạn có thông báo mới');
         this.loadNotification();
       }
     })
+  }
+
+  onNewNotification(isHasNew: boolean){
+    console.log('fsd', isHasNew);
+
+    if(isHasNew){
+      this.showToast.showNoticeToast('Bạn có thông báo mới');
+    }
+
   }
 }

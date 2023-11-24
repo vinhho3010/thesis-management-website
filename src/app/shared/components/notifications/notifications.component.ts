@@ -19,6 +19,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
 export class NotificationsComponent implements OnInit {
 @Input() isShowNotification: any;
 @Output() unreadNotification = new EventEmitter<number>();
+@Output() newNotification = new EventEmitter<boolean>();
 textAppearState = 'hidden';
 notificationList: Notification[] = [];
 userId = this.authService.getUser()._id;
@@ -106,6 +107,9 @@ userId = this.authService.getUser()._id;
   listenNotification(){
     return this.notificationsService.getNewNotification().subscribe({
       next: (res) => {
+setTimeout( ()=> console.log(res), 1000)
+
+        this.newNotification.emit(true);
         this.notificationList.unshift(res as Notification);
         this.unreadNotification.emit(this.notificationList.filter((notification: Notification) => !notification.isRead).length);
       }
