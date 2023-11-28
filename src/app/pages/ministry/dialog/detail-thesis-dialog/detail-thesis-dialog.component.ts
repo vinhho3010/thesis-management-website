@@ -31,7 +31,7 @@ export class DetailThesisDialogComponent {
         this.thesis.results.forEach((result: any) => {
           this.avgScore += result.mark;
         });
-        this.avgScore = this.avgScore / this.thesis.results.length;
+        this.avgScore = (this.avgScore / this.thesis.results.length).toFixed(2);
       }
 
       if(this.thesis.isPublic !== undefined || this.thesis.isPublic !== null){

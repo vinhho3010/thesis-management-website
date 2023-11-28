@@ -159,10 +159,15 @@ export class BothStudentTeacherGuard {
       if(this.authService.getRole()?.includes(RoleAccount.STUDENT) || this.authService.getRole()?.includes(RoleAccount.TEACHER)){
         return true;
       } else {
-        //go to previous page
+        if(next.routeConfig?.path !== '' && this.exRouter.getPreviousUrl() === '') {
+          this.router.navigateByUrl('auth/login');
+          return false;
+        } else {
+          //go to previous page
         this.router.navigateByUrl(this.exRouter.getPreviousUrl() as string);
         this.toastService.showErrorToast('Bạn không có quyền truy cập');
         return false;
+        }
       }
   }
 }

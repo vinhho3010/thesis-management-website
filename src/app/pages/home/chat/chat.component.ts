@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.loadChatList();
     this.listenMessages();
-    this.webSocketService.reconnect();
+    //this.webSocketService.reconnect();
   }
 
   checkIfGoFromClass() {
@@ -89,6 +89,8 @@ export class ChatComponent implements OnInit {
       }
       this.chatService.sendMessage(message);
       this.messages.push(message);
+      console.log(message);
+
       this.inputForm.reset();
       setTimeout(
         ()=> this.scrollToBottom(), 200

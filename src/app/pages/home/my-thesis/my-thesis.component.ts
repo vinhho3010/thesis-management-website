@@ -133,7 +133,7 @@ export class MyThesisComponent implements OnInit {
     const scores = resultsList.map((result: any) => result.mark);
     const avgScore =
       scores.reduce((a: any, b: any) => a + b, 0) / scores.length;
-    return avgScore;
+    return avgScore.toFixed(2);
   }
 
   initFinalScore() {

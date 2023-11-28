@@ -104,6 +104,7 @@ export class ViewDocsComponent implements OnInit {
       });
     } else {
       this.addCommentForm.markAllAsTouched();
+      this.toastService.showErrorToast('Vui lòng nhập nội dung');
     }
   }
 
