@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.loadChatList();
     this.listenMessages();
-    //this.webSocketService.reconnect();
+    this.webSocketService.reconnect();
   }
 
   checkIfGoFromClass() {

@@ -13,7 +13,10 @@ export class MainLayoutComponent {
   routesInfo: RouteInfo[];
   constructor(private authService: AuthService, private websocketService: WebSocketService) {
     this.routesInfo = this.authService.getUser()?.role.includes(RoleAccount.TEACHER) ? routesInfoTeacher : routesInfoStudent;
-    this.websocketService.reconnect();
    }
+
+  ngOnInit(): void {
+    this.websocketService.reconnect();
+  }
 
 }

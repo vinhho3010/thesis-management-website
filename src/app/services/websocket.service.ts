@@ -10,8 +10,6 @@ export class WebSocketService {
   }
 
   reconnect() {
-    console.log('connected');
-
     this.socket.disconnect();
     this.socket.connect();
   }

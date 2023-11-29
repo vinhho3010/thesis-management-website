@@ -34,6 +34,7 @@ export class LoginComponent {
     private toast: ToastService,
     private storageService: StorageService,
     private loadingService: LoaderService,
+    private webSocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +101,7 @@ export class LoginComponent {
       case RoleAccount.TEACHER:
       case RoleAccount.STUDENT:
         this.router.navigate(['/home']);
+        this.webSocketService.reconnect();
         break;
       case RoleAccount.MINISTRY:
         this.router.navigate(['/ministry']);

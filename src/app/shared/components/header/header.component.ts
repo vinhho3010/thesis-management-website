@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit{
   notificationList: any[] = [];
   userId = this.authService.getUser()._id;
   unreadNotificationCount = 0;
+  userRole = this.authService.getUser()?.role;
 
   constructor(
     public sidebarService: SidebarService,
