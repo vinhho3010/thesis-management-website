@@ -63,8 +63,6 @@ export class LoginComponent {
           this.navigateBaseOnRole(this.authService.getRole());
           this.toast.showSuccessToast('Đăng nhập thành công');
           this.setRemember();
-          //this.webSocketService.reconnect();
-
         },
         error: (err) => {
           this.loadingService.setLoading(false);
@@ -101,7 +99,6 @@ export class LoginComponent {
       case RoleAccount.TEACHER:
       case RoleAccount.STUDENT:
         this.router.navigate(['/home']);
-        this.webSocketService.reconnect();
         break;
       case RoleAccount.MINISTRY:
         this.router.navigate(['/ministry']);

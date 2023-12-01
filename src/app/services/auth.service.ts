@@ -4,6 +4,7 @@ import { StorageService } from './local/storage.service';
 import { AccountInfo, ChangePasswordDto } from '../Model/account-info';
 import { Router } from '@angular/router';
 import { RoleAccount } from '../Model/enum/roleEnum';
+import { WebSocketService } from './websocket.service';
 
 export const USER_SAVE_KEY = 'user';
 export const TOKEN_KEY = 'token';
@@ -14,7 +15,7 @@ export const STORED_EMAIL_KEY = 'storedEmail';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private storageService: StorageService, private router: Router) {}
+  constructor(private http: HttpClient, private storageService: StorageService, private router: Router, private webSocketService: WebSocketService) {}
 
   login(email: string, password: string){
     return this.http.post<any>('/api/login', {email, password})
@@ -31,6 +32,10 @@ export class AuthService {
   saveUser(data: any){
     this.storageService.save(USER_SAVE_KEY, data.user);
     this.storageService.save(TOKEN_KEY, data.token);
+
+    setTimeout(() => {
+      this.webSocketService.reconnect();
+    }, 250);
   }
 
   saveUserData(data: any){
@@ -69,6 +74,7 @@ export class AuthService {
   logout() {
     this.storageService.remove(USER_SAVE_KEY);
     this.storageService.remove(TOKEN_KEY);
+    this.webSocketService.disconnect();
     this.router.navigate(['auth/login']);
   }
 

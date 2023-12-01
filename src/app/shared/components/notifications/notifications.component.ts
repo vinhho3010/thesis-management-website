@@ -43,6 +43,7 @@ userId = this.authService.getUser()._id;
     this.notificationsService.getNotifications(this.userId).subscribe({
       next: (res) => {
         this.notificationList = res;
+        this.unreadNotification.emit(this.notificationList.filter((notification: Notification) => !notification.isRead).length);
       },
       error: (err) => {
         this.toastService.showErrorToast('Không tải được thông báo');
