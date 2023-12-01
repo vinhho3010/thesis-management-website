@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/local/toast.service';
 import { ProfileDialogComponent } from '../dialog/profile-dialog/profile-dialog.component';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit{
     private showToast: ToastService,
     private dialog: MatDialog,
     private router: Router,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit{
 
     this.loadNotification();
     this.onListenNotification();
+    this.listenMessages();
   }
 
   onLogout(): void {
@@ -80,9 +83,19 @@ export class HeaderComponent implements OnInit{
     })
   }
 
-  onNewNotification(isHasNew: boolean){
-    console.log('fsd', isHasNew);
+  listenMessages() {
+    return this.chatService.getMessage().subscribe((data: any) => {
+      //get Current Route
+      const currentRoute = this.router.url;
+      const isChatPage = currentRoute.includes('chat');
 
+      if(!isChatPage){
+        this.showToast.showNoticeToast('Bạn có tin nhắn mới');
+      }
+    });
+  }
+
+  onNewNotification(isHasNew: boolean){
     if(isHasNew){
       this.showToast.showNoticeToast('Bạn có thông báo mới');
     }
