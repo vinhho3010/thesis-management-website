@@ -75,7 +75,7 @@ export class MilestonesComponent implements OnInit {
         next: (res) => {
           this.toastService.showSuccessToast('Tạo thành công');
           this.loadMilestones();
-          this.sendNotificationToStudent(classInfo);
+          this.sendCreateNotice(classInfo);
         },
         error: (err) => {
           this.toastService.showErrorToast('Không tạo được');
@@ -87,7 +87,7 @@ export class MilestonesComponent implements OnInit {
     }
   }
 
-  sendNotificationToStudent(classInfo: any) {
+  sendNotificationToStudent(classInfo: any, title?: string, content?: string) {
     let studentIds = [];
 
     this.classService.getStudentInClass(classInfo?._id as string).subscribe({
@@ -97,8 +97,8 @@ export class MilestonesComponent implements OnInit {
           this.notificationService.newNotification({
             from: this.authService.getUser()._id,
             to: studentId,
-            content: `Giảng viên ${this.authService.getUser().fullName} vừa thêm mới một mốc thời gian`,
-            title: 'Mốc thời gian mới',
+            content: content,
+            title: title,
             linkAction: '/process'
           });
         });
@@ -114,6 +114,7 @@ export class MilestonesComponent implements OnInit {
       next: (res) => {
         this.toastService.showSuccessToast('Cập nhật thành công');
         this.loadMilestones();
+        this,this.sendUpdateNotice(milestone?.class);
       },
       error: (err) => {
         this.toastService.showErrorToast('Không cập nhật được');
@@ -121,6 +122,17 @@ export class MilestonesComponent implements OnInit {
     })
   }
 
+  sendCreateNotice(classInfo: any) {
+    const content = `Giảng viên ${this.authService.getUser().fullName} vừa thêm mới một mốc thời gian`;
+    const title = 'Mốc thời gian mới';
+    this.sendNotificationToStudent(classInfo, title, content);
+  }
+
+  sendUpdateNotice(classInfo: any) {
+    const content = `Giảng viên ${this.authService.getUser().fullName} vừa cập nhật một mốc thời gian`;
+    const title = 'Mốc thời gian được cập nhật';
+    this.sendNotificationToStudent(classInfo, title, content);
+  }
 
   onAddMilestone() {
     const addMilestoneDialog = this.dialog.open(AddMilestoneComponent, {});
