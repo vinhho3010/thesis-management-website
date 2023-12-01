@@ -39,7 +39,7 @@
             <div class="name text-gray-700">{{userData.fullName}}</div>
             <div class="role text-sm text-gray-500">{{userData.role | role}}</div>
           </div>
-          <span class="avatar ml-2">
+          <span class="avatar ml-2 cursor-pointer">
             <img [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
               [src]="userData.avatar ? userData.avatar : '../../../../assets/picture/default-avatar.svg'" width="40px" height="40px">
           </span>
