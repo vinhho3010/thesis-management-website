@@ -1,6 +1,6 @@
 <div class="board-wrapper mx-auto pb-6">
   <div class="class-info relative text-white w-full md:w-4/5 lg:w-3/5">
-    <div class="class-name absolute lg:bottom-7 top-7 left-7 text-3xl">
+    <div class="class-name absolute lg:bottom-7 top-7 left-7 lg:text-3xl text-xl">
       {{className}}
     </div>
     <div class="class-name absolute bottom-7 right-7 text-base lg:text-lg">
@@ -19,6 +19,14 @@
         </ngx-editor-menu>
         <ngx-editor [placeholder]="'Nhập nội dung thông báo'" [editor]="editor" formControlName="content">
         </ngx-editor>
+      </div>
+      <div class="send-mail-container" *ngIf="isCreatePostFocused">
+          <mat-checkbox color="primary" [formControl]="isSendMail">
+            <div class="flex justify-center items-center text-gray-600">
+              <span>Thông báo cho tất cả sinh viên &nbsp; </span>
+              <mat-icon class="text-gray-500">mail</mat-icon>
+            </div>
+          </mat-checkbox>
       </div>
       <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isCreatePostFocused">
         <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearCreatePostForm()">Huỷ</button>

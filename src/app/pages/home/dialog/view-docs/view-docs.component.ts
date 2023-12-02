@@ -21,6 +21,7 @@ export class ViewDocsComponent implements OnInit {
   selectedComment: any;
   isEditComment = false;
   currentUser = this.authService.getUser();
+  isSendMail = new FormControl(true);
 
   addCommentForm = new FormGroup({
     content: new FormControl(
@@ -83,6 +84,7 @@ export class ViewDocsComponent implements OnInit {
         content: this.addCommentForm.value.content,
         belongsTo: this.data?.thesisVersion?._id,
         user: this.authService.getUser()._id,
+        isSendMail: this.isSendMail.value
       };
 
       this.thesisService.addCommentThesisVersion(this.data?.thesisVersion?._id, comment).subscribe({
