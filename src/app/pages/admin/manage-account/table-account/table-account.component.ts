@@ -64,12 +64,29 @@ export class TableAccountComponent {
 
   onListenSearchCode(): void {
     this.searchCode.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
-      if(value) {
-        this.dataSourceInput.filter = value.trim().toLowerCase();
-      } else {
-        this.dataSourceInput.filter = '';
-      }
+      this.handleSearchInfo(value);
     });
+  }
+
+  handleSearchInfo(value: any) {
+    if(value) {
+      value = value.trim();
+      this.manageUserService.search(value, this.pagination, this.tableType).subscribe({
+        next: (response) => {
+          this.dataSourceInput.data = this.mapDataToTable(response.data);
+          this.pagination.length = response.length;
+          this.pagination.page = response.page;
+          this.pagination.limit = response.limit;
+        },
+        error: () => {
+          this.toastService.showErrorToast('Tải dữ liệu thất bại');
+        }
+      });
+    } else {
+      this.pagination.page = 0;
+      this.pagination.limit = 5;
+      this.reloadDataSource();
+    }
   }
 
   reloadDataSource(): void {
@@ -135,6 +152,10 @@ export class TableAccountComponent {
   onPageChange(event: PageEvent) {
     this.pagination.page = event.pageIndex;
     this.pagination.limit = event.pageSize;
-    this.reloadDataSource();
+    if(this.searchCode.value) {
+      this.handleSearchInfo(this.searchCode.value);
+    } else {
+      this.reloadDataSource();
+    }
   }
 }

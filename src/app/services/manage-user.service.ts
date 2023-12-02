@@ -62,4 +62,21 @@ export class ManageUserService {
     }
     return this.http.put(`/api/force-change-password`, data)
   }
+
+  search(value?: string, pagination?: Pagination, tableType?: RoleAccount){
+    let params = new HttpParams();
+    if(tableType){
+     params = params.append('role', tableType);
+    }
+    if(value){
+      params = params.append('value', value);
+    }
+    if(pagination?.page){
+      params = params.append('page', pagination.page.toString());
+    }
+    if(pagination?.limit){
+      params = params.append('limit', pagination.limit.toString());
+    }
+    return this.http.get<PaginationResponse>(`/api/user/search/info`, {params})
+  }
 }
