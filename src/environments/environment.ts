@@ -12,8 +12,8 @@ export const firebaseConfig = {
 
 export const environment = {
   production: false,
-  currentSchoolYear: '2022-2023',
-  currentSemester: '2',
+  currentSchoolYear: '2023-2024',
+  currentSemester: '1',
   clientUrl: 'http://localhost:4200',
 };
 
