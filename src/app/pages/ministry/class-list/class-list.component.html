@@ -104,6 +104,9 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="text-center" *matNoDataRow>
+      <td class="mat-cell py-4" colspan="10" >Không có dữ liệu</td>
+    </tr>
 
   </table>
   <mat-paginator class="py-1"

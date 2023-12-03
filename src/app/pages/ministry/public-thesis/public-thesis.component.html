@@ -22,7 +22,7 @@
           <mat-option [value]="major._id" *ngFor="let major of majorList">{{major.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-    <div class="w-full flex justify-start items-center gap-2">
+
       <mat-form-field floatLabel="always" appearance="outline" class="w-full">
         <mat-label>Niên khoá</mat-label>
         <mat-select placeholder="Chọn niên khoá" formControlName="schoolYear">
@@ -30,15 +30,15 @@
           <mat-option [value]="item" *ngFor="let item of schoolYear">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field floatLabel="always" appearance="outline" class="w-1/2">
+      <mat-form-field floatLabel="always" appearance="outline" class="lg:w-1/2 w-full">
         <mat-label>Học kỳ</mat-label>
         <mat-select placeholder="Chọn học kỳ" formControlName="semester">
           <mat-option [value]="null">Chọn học kỳ</mat-option>
-          <mat-option [value]="1">1</mat-option>
-          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="'1'">1</mat-option>
+          <mat-option [value]="'2'">2</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+
   </ng-container>
   </div>
   <div class="card-list lg:px-10 px-5 grid grid-cols-6 gap-2 w-full">
