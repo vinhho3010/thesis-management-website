@@ -69,7 +69,10 @@
           <div class="flex justify-between">
             <div class="flex flex-row justify-start items-center">
               <img [src]="item?.student?.avatar ?? '../../../../../../assets/picture/default-avatar.svg'" class="avatar-info w-10 h-10 object-cover rounded-full">
-              <span class="name-info"> {{item?.student?.fullName}} </span>
+              <div class="flex flex-col items-start justify-center">
+                <span class="name-info"> {{item?.student?.fullName}} </span>
+                <span class="name-info text-gray-600 text-xs"> {{item?.student?.code}} </span>
+              </div>
             </div>
             <div class="flex items-center pr-2">
               <button mat-icon-button color="primary" [disabled]="!item?.url" matTooltip="Xem tài liệu" (click)="onViewSubmitDoc(item)">
@@ -88,7 +91,10 @@
           <div class="flex justify-between">
             <div class="flex flex-row justify-start items-center">
               <img [src]="item?.student?.avatar ??'../../../../../../assets/picture/default-avatar.svg'" class="avatar-info w-10 h-10 object-cover rounded-full">
-              <span class="name-info"> {{item?.student?.fullName}} </span>
+              <div class="flex flex-col items-start justify-center">
+                <span class="name-info"> {{item?.student?.fullName}} </span>
+                <span class="name-info text-gray-600 text-xs"> {{item?.student?.code}} </span>
+              </div>
             </div>
             <div class="flex items-center pr-2">
               <button mat-icon-button color="primary" [disabled]="!item?.url" (click)="onViewSubmitDoc(item?.url)">

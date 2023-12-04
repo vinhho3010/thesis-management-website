@@ -3,15 +3,15 @@
     <div class="list-title lg:w-1/2 w-full text-3xl text-blue-800">
       {{tableType === roleAccount.STUDENT ? 'Danh sách sinh viên' : tableType === roleAccount.TEACHER ? 'Danh sách giảng viên' : 'Danh sách giáo vụ'}}
     </div>
-    <div class="flex items-center justify-between w-full lg:px-4 lg:flex-row flex-col">
-      <div class="search-wrapper lg:w-1/2 w-full p-3 flex items-center">
-        <mat-form-field floatLabel="always" appearance="outline" class="w-3/4 mt-4">
+    <div class="flex items-center justify-between w-full lg:flex-row flex-col">
+      <div class="search-wrapper lg:w-1/2 w-full py-3 flex items-center">
+        <mat-form-field floatLabel="always" appearance="outline" class="md:w-3/4 w-full mt-4">
           <mat-label>Tìm kiếm</mat-label>
           <input matInput type="search" placeholder="Nhập từ khoá" [formControl]="searchCode">
           <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
       </div>
-      <div class="flex items-center justify-end lg:w-2/5 w-full gap-2">
+      <div class="flex md:items-center justify-end lg:w-2/5 w-full gap-2 md:flex-row flex-col items-stretch">
         <button mat-flat-button color="primary" class="button-add bg-blue-600" (click)="openDialogAddAccount()">
           <mat-icon matPrefix>add</mat-icon>
           Thêm tài khoản

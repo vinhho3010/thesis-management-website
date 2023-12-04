@@ -4,7 +4,7 @@
       Luận văn công khai
     </div>
   <div class="form-wrapper">
-      <div class="search-wrapper lg:w-2/3 w-full p-3 lg:flex block gap-2 justify-start items-center lg:px-10 px-5">
+      <div class="search-wrapper lg:w-2/3 w-full p-3 lg:flex block gap-2 justify-start items-center lg:px-10 px-5 basis-[10%]">
         <ng-container [formGroup]="filterOptionForm">
           <mat-form-field floatLabel="always" appearance="outline" class="w-full">
             <mat-label>Ngành</mat-label>
@@ -33,7 +33,9 @@
       </ng-container>
       </div>
 
-    <div class="max-h-[550px] overflow-y-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 py-2 px-2 md:px-12 gap-3">
+    <div class="basis-full flex-shrink flex-grow lg:min-h-[550px] overflow-y-auto grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 py-2 px-2 md:px-12 gap-3 auto-rows-[1fr]"
+    [class.grid-rows-2]="thesisList.length <= 3"
+    >
       <ng-container *ngIf="thesisList && thesisList.length > 0; else emptyThesis">
         <app-thesis-card-public *ngFor="let thesis of thesisList"
       [thesis]="thesis"
@@ -47,7 +49,7 @@
         </div>
       </ng-template>
     </div>
-    <mat-paginator class="py-1"
+    <mat-paginator class="py-1 basis-[10%]"
     *ngIf="thesisList && thesisList.length > 0"
     [pageSizeOptions]="[6, 12, 50, 100]"
     [pageSize]="pagination.limit"

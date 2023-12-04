@@ -1,4 +1,4 @@
-<mat-card class="thesis-item md:p-2 border border-gray-300 rounded-2xl hover:shadow-md" [class.mat-elevation-z0]="true">
+<mat-card class="thesis-item md:p-2 border border-gray-300 rounded-2xl hover:shadow-md min-h-full max-h-max" [class.mat-elevation-z0]="true">
   <mat-card-header>
     <mat-card-subtitle>
       <div class="font-bold">
@@ -43,12 +43,6 @@
     </mat-card-subtitle>
     <mat-card-subtitle>
       <span class="font-semibold">
-        Ngày bảo vệ:
-      </span>
-      {{thesis?.protectInfo?.date | date: 'dd/MM/yyyy'}} - {{thesis?.protectInfo?.time}}
-    </mat-card-subtitle>
-    <mat-card-subtitle>
-      <span class="font-semibold">
         Trạng thái :
       </span>
       <span *ngIf="!thesis?.isPublic" class="text-orange-600 bg-orange-200 py-1 px-3 rounded-full text-sm">Chưa công
@@ -56,8 +50,7 @@
       <span *ngIf="thesis?.isPublic" class="text-green-600 bg-green-200 py-1 px-3 rounded-full text-sm">Công khai</span>
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-actions class="justify-end">
+  <mat-card-actions class="justify-end items-end flex-1 flex-shrink-1 flex-basis-full">
     <button mat-button color="primary" class="button-view rounded-xl" (click)="onView(thesis)">Xem chi tiết</button>
-
   </mat-card-actions>
 </mat-card>

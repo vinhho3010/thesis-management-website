@@ -1,9 +1,9 @@
 <div class="wrapper p-4 w-[90vw] md:w-[80vw] lg:w-[60vw]">
-  <div class="lg:flex justify-start items-start">
-    <div class="min-h-[80vh] mt-3 doc-wrapper lg:w-1/2">
+  <div class="flex justify-start items-start lg:flex-row flex-col-reverse">
+    <div class="min-h-[80vh] mt-3 doc-wrapper lg:w-1/2 w-full">
       <iframe [src]="url | safe:'resourceUrl' " scrolling="auto"></iframe>
     </div>
-    <div class="info-field lg:w-1/2 p-3 border border-gray-200 rounded-xl ml-3 mt-3">
+    <div class="info-field lg:w-1/2 w-full p-3 border border-gray-200 rounded-xl lg:ml-3 mt-3">
       <div class="title text-blue-600 text-2xl py-3 px-2">
         Thông tin luận văn
       </div>
