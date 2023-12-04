@@ -1,6 +1,6 @@
 <div class="council-wrapper">
   <div class="council-list-header flex justify-between items-center mt-9 p-3">
-    <div class="list-title w-1/2 text-3xl text-blue-800">
+    <div class="list-title md:w-1/2 w-full text-3xl text-blue-800">
       Danh sách nhóm hội đồng
     </div>
 
@@ -106,7 +106,7 @@
   </table>
 
   <mat-paginator class="py-1"
-  [pageSizeOptions]="[5, 10, 25]"
+  [pageSizeOptions]="[5, 10, 25, 50]"
   [pageSize]="pagination.limit"
   [pageIndex]="pagination.page"
   [length]="pagination.length"

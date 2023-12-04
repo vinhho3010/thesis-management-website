@@ -11,9 +11,7 @@ import { routesInfoTeacher, routesInfoStudent, RouteInfo } from 'src/app/shared/
 })
 export class MainLayoutComponent {
   routesInfo: RouteInfo[];
-  constructor(private authService: AuthService, private websocketService: WebSocketService) {
+  constructor(private authService: AuthService) {
     this.routesInfo = this.authService.getUser()?.role.includes(RoleAccount.TEACHER) ? routesInfoTeacher : routesInfoStudent;
-    this.websocketService.reconnect();
    }
-
 }

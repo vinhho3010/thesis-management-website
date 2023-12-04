@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Observable, map, startWith } from 'rxjs';
 import { AccountInfo } from 'src/app/Model/account-info';
 import { RoleAccount } from 'src/app/Model/enum/roleEnum';
@@ -202,6 +202,15 @@ export class ClassDetailComponent {
           this.toastService.showErrorToast(err.error.message);
         }
       })
+    }
+
+    onNavigateClassDetail(row: any){
+      const navigationExtras: NavigationExtras = {
+        state: {
+          selectedStudent: row,
+        },
+      };
+      this.router.navigate([`ministry/class-list`, this.classId, 'students'], navigationExtras);
     }
 
 

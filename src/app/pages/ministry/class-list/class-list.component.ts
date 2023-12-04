@@ -43,7 +43,7 @@ export class ClassListComponent implements OnInit {
 
   pagination: Pagination = {
     page: 0,
-    limit: 5,
+    limit: 10,
     length: 0,
   };
 
@@ -83,6 +83,18 @@ export class ClassListComponent implements OnInit {
       },
       error: (err) => {
         this.loadingService.setLoading(false);
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  loadClassListChange(): void {
+    this.classService.getAllClass(this.pagination, this.filterOptionForm.value).subscribe({
+      next: (res) => {
+        this.pagination.length = res.length;
+        this.dataSource.data = this.standardizeData(res.data);
+      },
+      error: (err) => {
         this.toastService.showErrorToast(err.error.message);
       },
     });
@@ -138,7 +150,7 @@ export class ClassListComponent implements OnInit {
   onCreateClass() {
     const addClassDialog = this.dialog.open(AddClassComponent);
     addClassDialog.afterClosed().subscribe((res) => {
-      this.loadClassList();
+      this.loadClassListChange();
     });
   }
 

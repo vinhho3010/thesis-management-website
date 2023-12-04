@@ -35,27 +35,3 @@
   opacity: 1;
   transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
 }
-
-::ng-deep {
-  .container-outlet-public{
-    app-thesis-list {
-      .public-thesis-wrapper {
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-        width: 90vw !important;
-        height: calc(100vh - 64px) !important;
-        margin-top: 12px;
-
-        @media screen and (max-width: 576px) {
-          width: 98vw !important;
-          height: 100vh !important;
-
-          .public-wrapper {
-            .form-wrapper {
-              padding: 0.5rem !important;
-            }
-          }
-        }
-      }
-    }
-  }
-}

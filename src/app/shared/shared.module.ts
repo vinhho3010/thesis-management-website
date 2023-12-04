@@ -10,7 +10,6 @@ import { SemesterPipe } from './pipes/semester.pipe';
 import { RolePipe } from './pipes/role.pipe';
 import { NgxEditorModule } from 'ngx-editor';
 import { DateToTextPipe } from './pipes/dateToText.pipe';
-import { DomSanitizer } from '@angular/platform-browser';
 import { DomUrlPipe, SanitizedHtmlPipe } from './pipes/domSatinizer.pipe';
 import { ThesisStatusPipe } from './pipes/thesis-status.pipe';
 import { SafePipe } from './pipes/safe.pipe';
@@ -24,6 +23,7 @@ import { PieChartComponent } from './components/charts/pie-chart/pie-chart.compo
 import { ColumnChartComponent } from './components/charts/column-chart/column-chart.component';
 import { NgChartsModule } from 'ng2-charts';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+import { AddStudentToClassComponent } from '../pages/ministry/dialog/add-student-to-class/add-student-to-class.component';
 
 
 export const textAppearAnimation = trigger('textAppear', [
@@ -50,7 +50,8 @@ export const textAppearAnimation = trigger('textAppear', [
     NotificationsComponent,
     PieChartComponent,
     ColumnChartComponent,
-    LineChartComponent
+    LineChartComponent,
+    AddStudentToClassComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +83,8 @@ export const textAppearAnimation = trigger('textAppear', [
     NotificationsComponent,
     PieChartComponent,
     ColumnChartComponent,
-    LineChartComponent
+    LineChartComponent,
+    AddStudentToClassComponent
   ]
 })
 export class SharedModule { }

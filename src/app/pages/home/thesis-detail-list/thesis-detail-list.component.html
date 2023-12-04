@@ -1,4 +1,4 @@
-<div class="flex flex-wrap h-full mt-9 p-3">
+<div class="flex flex-wrap h-full md:mt-4 mt-0 p-3 items-stretch">
   <div class="w-full md:w-2/12">
     <!-- First component with 2 columns -->
     <div class="w-full min-h-[50vh] max-h-[75vh] overflow-y-auto">
@@ -6,8 +6,8 @@
       <div class="students-list px-2">
         <mat-card *ngFor="let student of studentList"
          class="student-item mat-elevation-z0 flex justify-start items-center student-item rounded-xl border border-gray-300 cursor-pointer mt-2 hover:shadow-md"
-         [class.bg-blue-500]="student._id === selectedStudent._id"
-         [class.text-white]="student._id === selectedStudent._id"
+         [class.bg-blue-500]="student?._id === selectedStudent?._id"
+         [class.text-white]="student?._id === selectedStudent?._id"
          [class.hover:bg-blue-400]="student._id === selectedStudent._id"
          [class.hover:bg-gray-200]="student._id !== selectedStudent._id"
          (click)="onChangeStudent(student)">
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="w-full md:w-4/12 px-2">
+  <div class="w-full md:w-4/12 px-2 md:mt-0 mt-2">
     <!-- Second component with 5 columns -->
     <div class="w-full rounded-xl border border-gray-300 min-h-[50vh]">
       <div class="mb-4 p-3 bg-blue-600 text-white rounded-tl-xl rounded-tr-xl">Thông tin chi tiết</div>
@@ -104,13 +104,13 @@
       </form>
     </div>
   </div>
-  <div class="w-full md:w-6/12 px-2" >
+  <div class="w-full md:w-6/12 px-2 md:mt-0 mt-2" >
     <!-- Third component with 5 columns -->
-    <div class="w-full bg-gray-500 min-h-[50vh] rounded-xl" *ngIf="selectedThesis?.url; else emptyDocs">
+    <div class="w-full bg-gray-500 min-h-[50vh] h-full rounded-xl" *ngIf="selectedThesis?.url; else emptyDocs">
       <!-- iframe to see pdf document -->
       <iframe
         [src]="selectedThesis?.url | safe:'resourceUrl' "
-        class="w-full min-h-[80vh] ref-doc"
+        class="w-full min-h-[80vh] h-full ref-doc"
         frameborder="0"
       ></iframe>
     </div>

@@ -24,7 +24,7 @@ export class ThesisListComponent {
 
   pagination: Pagination = {
     page: 0,
-    limit: 4,
+    limit: 6,
     length: 0,
   }
 

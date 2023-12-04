@@ -20,8 +20,8 @@
             <mat-form-field [hideRequiredMarker]="true" appearance="outline" class="w-full rounded-3xl ">
               <mat-label>Mật khẩu</mat-label>
               <input name="password" matInput [type]="isShowPassword ? 'text':'password'" formControlName="password"
-                [placeholder]=" isShowPassword ? 'Password' : ' • • • • • • • •' ">
-              <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Hide Password' : 'Show Password' "
+                [placeholder]=" isShowPassword ? 'Mật khẩu' : ' • • • • • • • •' ">
+              <button type="button" mat-icon-button [matTooltip]="isShowPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu' "
                 matSuffix tabindex="-1" (click)="isShowPassword=!isShowPassword">
                 <mat-icon style="color:gray">{{isShowPassword?'visibility_off':'visibility'}}</mat-icon>
               </button>

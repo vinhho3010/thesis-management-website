@@ -89,6 +89,8 @@ export class ChatComponent implements OnInit {
       }
       this.chatService.sendMessage(message);
       this.messages.push(message);
+      console.log(message);
+
       this.inputForm.reset();
       setTimeout(
         ()=> this.scrollToBottom(), 200

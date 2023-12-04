@@ -24,6 +24,7 @@ export class ClassBoardComponent implements OnInit {
   teacher: any;
   postList = [] as any[];
   selectedEditPost = {} as any;
+  isSendMail = new FormControl(true);
 
   createPostForm: FormGroup;
   editPostForm: FormGroup;
@@ -134,6 +135,7 @@ export class ClassBoardComponent implements OnInit {
       content: this.createPostForm.get('content')?.value,
       class: this.classId,
       user: this.authService.getUser()._id,
+      isSendMail: this.isSendMail.value
     };
     this.isLoading = true;
     this.postService.createPost(data).subscribe({

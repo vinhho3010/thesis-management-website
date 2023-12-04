@@ -21,6 +21,14 @@
               <ngx-editor [placeholder]="'Thêm nhận xét'" [editor]="editor" formControlName="content">
               </ngx-editor>
             </div>
+            <div class="send-mail-container" *ngIf="isInputFocused">
+              <mat-checkbox color="primary" [formControl]="isSendMail">
+                <div class="flex justify-center items-center text-gray-600">
+                  <span>Thông báo cho sinh viên &nbsp; </span>
+                  <mat-icon class="text-gray-500">mail</mat-icon>
+                </div>
+              </mat-checkbox>
+          </div>
             <div class="button-wrapper flex justify-end items-center mt-3 gap-2" *ngIf="isInputFocused">
               <button mat-button color="basic" class="rounded-xl min-w-[95px]" (click)="clearCommentForm()">Huỷ</button>
               <button mat-flat-button color="primary" class="rounded-xl bg-blue-600 min-w-[95px]"
@@ -34,7 +42,10 @@
           <mat-icon class="mr-2">supervisor_account</mat-icon>
           <span>{{comments.length}} nhận xét cho tài liệu</span>
         </div>
-        <div class="comment-list min-h-[50vh] max-h-[59vh] overflow-y-auto mt-2">
+        <div class="comment-list overflow-y-auto mt-2"
+        [class.max-h-[59vh]]="!isInputFocused"
+        [class.max-h-[43vh]]="isInputFocused"
+        >
           <ng-container *ngFor="let comment of comments">
             <div class="comment-card p-3 rounded-2xl mt-2 border border-gray-200">
               <div class="comment-header flex justify-between items-center">
@@ -42,7 +53,7 @@
                   <div class="comment-avatar w-[40px] h-[40px] rounded-full border border-gray-100">
                     <img [src]="comment?.user?.avatar ?? '../../../../../assets/picture/default-avatar.svg'" alt="avatar" class="w-full h-full object-cover rounded-full">
                   </div>
-                  <div class="comment-info flex items-center justify-start gap-2">
+                  <div class="comment-info flex md:items-center justify-start md:flex-row flex-col md:gap-2 ml-1 md:ml-0">
                     <div class="comment-author">
                       <span class="font-medium text-gray-700 text-base">{{comment?.user?.fullName}}</span>
                     </div>
@@ -69,7 +80,7 @@
                 </div>
               </div>
               <div class="comment-content">
-                <p *ngIf="!isEditComment || selectedComment?._id !== comment?._id" [innerHTML]="comment?.content | sanitizedHtml"></p>
+                <p class="mt-1" *ngIf="!isEditComment || selectedComment?._id !== comment?._id" [innerHTML]="comment?.content | sanitizedHtml"></p>
                 <form *ngIf="isEditComment && selectedComment?._id === comment?._id"
                   [formGroup]="editCommentForm" class="p-3 rounded-xl border border-gray-300"
                   [class.shadow-md]="isInputFocused"

@@ -25,6 +25,13 @@ export class ToastService {
     });
   }
 
+  showNoticeToast(message: string) {
+    this.toastr.findDuplicate('', message, true, false);
+    this.toastr.info(message, '', {
+      timeOut: 3000,
+    });
+  }
+
   // showSuccessToast(message: string){
   //   const successToast = Swal.mixin({
   //     toast: true,

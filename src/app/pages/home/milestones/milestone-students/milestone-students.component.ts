@@ -9,6 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ThesisVersion } from 'src/app/Model/milestone';
 import { MatSelectChange } from '@angular/material/select';
 import { ViewDocsComponent } from '../../dialog/view-docs/view-docs.component';
+import { ClassService } from 'src/app/services/class.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-milestone-students',
@@ -30,7 +33,10 @@ export class MilestoneStudentsComponent implements OnInit {
     private toastService: ToastService,
     private loadingService: LoaderService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private classService: ClassService,
+    private notificationService: NotificationsService,
+    private authService: AuthService
   ) {
     this.milestoneId = this.route.snapshot.paramMap.get('id') as string;
   }
@@ -84,6 +90,7 @@ export class MilestoneStudentsComponent implements OnInit {
   }
 
   countSubmittedStudent() {
+    this.submittedStudentCount = 0;
     this.thesisVersionList.forEach((version: any) => {
       if (version.url) {
         this.submittedStudentCount++;
@@ -109,11 +116,40 @@ export class MilestoneStudentsComponent implements OnInit {
       next: (res) => {
         this.toastService.showSuccessToast('Cập nhật thành công');
         this.loadCurrentMilestone();
+        this.sendUpdateNotice(milestone?.class);
       },
       error: (err) => {
         this.toastService.showErrorToast('Không cập nhật được');
       }
     })
+  }
+
+  sendUpdateNotice(classInfo: any) {
+    const content = `Giảng viên ${this.authService.getUser().fullName} vừa cập nhật một mốc thời gian`;
+    const title = 'Mốc thời gian được cập nhật';
+    this.sendNotificationToStudent(classInfo, title, content);
+  }
+
+  sendNotificationToStudent(classInfo: any, title?: string, content?: string) {
+    let studentIds = [];
+
+    this.classService.getStudentInClass(classInfo?._id as string).subscribe({
+      next: (res) => {
+        studentIds = res.map((student: { _id: any; }) => student._id);
+        studentIds.forEach((studentId: any) => {
+          this.notificationService.newNotification({
+            from: this.authService.getUser()._id,
+            to: studentId,
+            content: content,
+            title: title,
+            linkAction: '/process'
+          });
+        });
+      },
+      error: (err) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
   }
 
   onChangeFilter(event: MatSelectChange) {

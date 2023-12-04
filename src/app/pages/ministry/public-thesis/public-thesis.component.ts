@@ -11,6 +11,7 @@ import { ThesisService } from 'src/app/services/thesis.service';
 import { DetailThesisDialogComponent } from '../dialog/detail-thesis-dialog/detail-thesis-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MajorService } from 'src/app/services/major.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-public-thesis',
@@ -29,8 +30,8 @@ export class PublicThesisComponent implements OnInit {
   }
 
   filterOptionForm = new FormGroup({
-    schoolYear: new FormControl(schoolYear[schoolYear.length -1]),
-    semester: new FormControl(1),
+    schoolYear: new FormControl(environment.currentSchoolYear),
+    semester: new FormControl(environment.currentSemester),
     major: new FormControl(''),
     isPublic : new FormControl(false)
   })

@@ -42,7 +42,7 @@ export class TableAccountComponent {
     this.loadingService.setLoading(true);
     this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
       next: (response) =>{
-        this.dataSourceInput.data = response.data;
+        this.dataSourceInput.data = this.mapDataToTable(response.data);
         this.pagination.length = response.length;
         this.loadingService.setLoading(false);
       },
@@ -53,20 +53,46 @@ export class TableAccountComponent {
     });
   }
 
-  onListenSearchCode(): void {
-    this.searchCode.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
-      if(value) {
-        this.dataSourceInput.filter = value.trim().toLowerCase();
-      } else {
-        this.dataSourceInput.filter = '';
+  mapDataToTable(data: any): any[] {
+    return data.map((item: any) => {
+      return {
+        ...item,
+        majorName: item?.major?.name,
       }
     });
+  }
+
+  onListenSearchCode(): void {
+    this.searchCode.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
+      this.handleSearchInfo(value);
+    });
+  }
+
+  handleSearchInfo(value: any) {
+    if(value) {
+      value = value.trim();
+      this.manageUserService.search(value, this.pagination, this.tableType).subscribe({
+        next: (response) => {
+          this.dataSourceInput.data = this.mapDataToTable(response.data);
+          this.pagination.length = response.length;
+          this.pagination.page = response.page;
+          this.pagination.limit = response.limit;
+        },
+        error: () => {
+          this.toastService.showErrorToast('Tải dữ liệu thất bại');
+        }
+      });
+    } else {
+      this.pagination.page = 0;
+      this.pagination.limit = 5;
+      this.reloadDataSource();
+    }
   }
 
   reloadDataSource(): void {
     this.manageUserService.getAllAccountWithPagination(this.pagination, this.tableType).subscribe({
       next: (response) =>{
-        this.dataSourceInput.data = response.data;
+        this.dataSourceInput.data = this.mapDataToTable(response.data);
         this.pagination.length = response.length;
       },
       error: () => {
@@ -97,7 +123,7 @@ export class TableAccountComponent {
     this.manageUserService.deleteAccount(_id).subscribe({
       next: () => {
         this.toastService.showSuccessToast('Xóa thành công');
-        this.dataSourceInput.data = this.dataSourceInput.data.filter((value: any) => value._id !== _id);
+        this.reloadDataSource();
       },
       error: () => {
         this.toastService.showErrorToast('Xóa thất bại');
@@ -118,7 +144,7 @@ export class TableAccountComponent {
     const dialogRef = this.dialog.open(AddAccountDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.initDataSource();
+        this.reloadDataSource();
       }
     });
   }
@@ -126,6 +152,10 @@ export class TableAccountComponent {
   onPageChange(event: PageEvent) {
     this.pagination.page = event.pageIndex;
     this.pagination.limit = event.pageSize;
-    this.reloadDataSource();
+    if(this.searchCode.value) {
+      this.handleSearchInfo(this.searchCode.value);
+    } else {
+      this.reloadDataSource();
+    }
   }
 }

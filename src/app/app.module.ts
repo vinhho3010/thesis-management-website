@@ -65,6 +65,7 @@ import { NgChartsModule } from 'ng2-charts';
     },
     { provide: MatPaginatorIntl, useValue: new CustomMatPaginatorIntl() },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
     DatePipe,
     {

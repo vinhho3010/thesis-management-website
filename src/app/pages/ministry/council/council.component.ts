@@ -34,7 +34,7 @@ export class CouncilComponent implements OnInit, AfterViewInit {
 
   pagination: Pagination = {
     page: 0,
-    limit: 5,
+    limit: 10,
     length: 0
   }
 

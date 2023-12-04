@@ -1,6 +1,6 @@
 <div class="classes-wrapper">
   <div class="classes-list-header flex justify-between items-center mt-9 p-3">
-    <div class="list-title w-1/2 text-3xl text-blue-800">
+    <div class="list-title md:w-1/2 w-full text-3xl text-blue-800">
       Danh sách nhóm luận văn
     </div>
 
@@ -104,11 +104,14 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="text-center" *matNoDataRow>
+      <td class="mat-cell py-4" colspan="10" >Không có dữ liệu</td>
+    </tr>
 
   </table>
   <mat-paginator class="py-1"
   #paginator
-  [pageSizeOptions]="[5, 10, 25]"
+  [pageSizeOptions]="[5, 10, 25, 50]"
   [pageSize]="pagination.limit"
   [pageIndex]="pagination.page"
   [length]="pagination.length"

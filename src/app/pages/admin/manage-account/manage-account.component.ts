@@ -15,8 +15,8 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 
 export class ManageAccountComponent {
   tableTypeRole = RoleAccount;
-  displayedColumnsStudent: string[] = ['position', 'code', 'fullName', 'major', 'type', 'actions'];
-  displayedColumnsTeacher: string[] = ['position', 'code', 'fullName', 'major', 'type', 'actions'];
+  displayedColumnsStudent: string[] = ['position', 'code', 'fullName', 'majorName', 'type', 'actions'];
+  displayedColumnsTeacher: string[] = ['position', 'code', 'fullName', 'majorName', 'type', 'actions'];
   displayedColumnsMinistry: string[] = ['position', 'code', 'fullName', 'type', 'actions'];
   dataSource = new MatTableDataSource();
 

@@ -1,5 +1,5 @@
-<div class="add-doc-wrapper p-4 w-[80vw] md:w-[70vw] lg:w-[40vw]">
-  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Thêm loại tài liệu</h1>
+<div class="add-doc-wrapper p-4 w-[90vw] md:w-[70vw] lg:w-[40vw]">
+  <h1 class="pb-8 pt-2 text-xl font-medium text-blue-600">Thêm chủ đề tài liệu</h1>
   <div class="w-full flex flex-col justify-center items-start">
     <mat-form-field class="w-full">
       <mat-label>Chủ đề tài liệu</mat-label>
@@ -15,7 +15,7 @@
         [matTooltip]="fileName"
         [matTooltipDisabled]="!fileName">
         <mat-icon>insert_drive_file_outline</mat-icon>
-        <span>Chọn tập tin</span>
+        <span class="hidden md:inline">Chọn tập tin</span>
       </button>
       <span class="line-clamp-1 ml-2">{{fileName ? fileName : "Chưa có tập tin nào được chọn"}}</span>
     </div>

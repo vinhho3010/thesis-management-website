@@ -11,7 +11,7 @@ import { RegisterTopicComponent } from 'src/app/pages/home/register-topic/regist
 import { MyThesisComponent } from 'src/app/pages/home/my-thesis/my-thesis.component';
 import { RefDocumentsComponent } from 'src/app/pages/home/class/ref-documents/ref-documents.component';
 import { ThesisDetailListComponent } from 'src/app/pages/home/thesis-detail-list/thesis-detail-list.component';
-import { AuthenticationGuard } from 'src/app/services/guard/authentication.guard';
+import { AuthenticationGuard, BothStudentTeacherGuard, StudentGuard, TeacherGuard } from 'src/app/services/guard/authentication.guard';
 import { MilestoneStudentsComponent } from 'src/app/pages/home/milestones/milestone-students/milestone-students.component';
 import { ProcessDetailComponent } from 'src/app/pages/home/process/process-detail/process-detail.component';
 import { AssignedCouncilComponent } from 'src/app/pages/home/assigned-council/assigned-council.component';
@@ -32,71 +32,83 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [BothStudentTeacherGuard]
       },
       {
         path: 'milestones',
-        component: MilestonesComponent
+        component: MilestonesComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'milestones/:id',
-        component: MilestoneStudentsComponent
+        component: MilestoneStudentsComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'class',
-        component: ClassComponent
+        component: ClassComponent,
+        canActivate: [StudentGuard]
       },
       {
         path: 'class/:id',
-        component: ClassComponent
+        component: ClassComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'students',
-        component: StudentListComponent
+        component: StudentListComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'students/:id',
-        component: StudentListComponent
+        component: StudentListComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'students/thesis-detail/:id',//classId
-        component: ThesisDetailListComponent
+        component: ThesisDetailListComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'process',
-        component: ProcessComponent
+        component: ProcessComponent,
+        canActivate: [StudentGuard]
       },
       {
         path: 'process/:id',
-        component: ProcessDetailComponent
+        component: ProcessDetailComponent,
+        canActivate: [StudentGuard]
       },
       {
         path: 'register-topic',
-        component: RegisterTopicComponent
-      },
-      {
-        path: 'process',
-        component: ProcessComponent
+        component: RegisterTopicComponent,
+        canActivate: [StudentGuard]
       },
       {
         path: 'my-thesis',
-        component: MyThesisComponent
+        component: MyThesisComponent,
+        canActivate: [StudentGuard]
       },
       {
         path: 'class/:classId/documents/type/:typeId',
-        component: RefDocumentsComponent
+        component: RefDocumentsComponent,
+        canActivate: [BothStudentTeacherGuard]
       },
       {
         path: 'council-list',
-        component: AssignedCouncilComponent
+        component: AssignedCouncilComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'council-list/detail/:id',
-        component: AssignedDetailComponent
+        component: AssignedDetailComponent,
+        canActivate: [TeacherGuard]
       },
       {
         path: 'chat',
-        component: ChatComponent
+        component: ChatComponent,
+        canActivate: [BothStudentTeacherGuard]
       }
 
     ]

@@ -4,6 +4,7 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { CommonModule } from '@angular/common';
 import { ManageAccountComponent } from 'src/app/pages/admin/manage-account/manage-account.component';
 import { DashboardComponent } from 'src/app/pages/admin/dashboard/dashboard.component';
+import { AdminGuard } from 'src/app/services/guard/authentication.guard';
 
 const routes: Routes = [
   {
@@ -12,16 +13,18 @@ const routes: Routes = [
     children : [
       {
         path: '',
-        redirectTo: 'manage-account',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {
         path: 'manage-account',
-        component: ManageAccountComponent
+        component: ManageAccountComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
+        canActivate: [AdminGuard]
       }
     ]
   }

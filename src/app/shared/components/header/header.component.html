@@ -9,7 +9,7 @@
           <span class="sr-only">Open sidebar</span>
           <mat-icon>menu</mat-icon>
         </button>
-        <a routerLink="/home" class="flex ml-2 md:mr-24">
+        <a [routerLink]="userRole === ROLE.ADMIN ? '/admin' : userRole === ROLE.MINISTRY ? '/ministry' : '/home'" class="flex ml-2 md:mr-24">
           <img src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png" class="h-12 mr-3"
             alt="Logo" />
           <div class="flex flex-col justify-start items-start">
@@ -22,14 +22,16 @@
       <div *ngIf="isLogin"  class="flex justify-start items-center gap-2" >
         <div
         (clickOutside)="isShowNotification = false"
+        *ngIf="(userData?.role === ROLE?.STUDENT ||  userData?.role === ROLE?.TEACHER)"
         class="relative">
           <button mat-icon-button class="text-gray-600"  (click)="isShowNotification = !isShowNotification">
             <mat-icon *ngIf="unreadNotificationCount <= 0" matBadgeSize="small" matBadgeColor="primary">notifications</mat-icon>
-            <mat-icon *ngIf="unreadNotificationCount > 0" matBadgeSize="small"  [matBadge]="unreadNotificationCount" matBadgeColor="primary">notifications</mat-icon>
+            <mat-icon *ngIf="unreadNotificationCount > 0" matBadgeSize="small"  [matBadge]="unreadNotificationCount" aria-hidden="false" matBadgeColor="primary">notifications</mat-icon>
           </button>
           <app-notifications *ngIf="isShowNotification"
           [isShowNotification]="isShowNotification"
           (unreadNotification)="onUnreadNotification($event)"
+
           ></app-notifications>
         </div>
         <div class="user-info flex justify-start items-center">
@@ -37,7 +39,7 @@
             <div class="name text-gray-700">{{userData.fullName}}</div>
             <div class="role text-sm text-gray-500">{{userData.role | role}}</div>
           </div>
-          <span class="avatar ml-2">
+          <span class="avatar ml-2 cursor-pointer">
             <img [matMenuTriggerFor]="userMenu" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
               [src]="userData.avatar ? userData.avatar : '../../../../assets/picture/default-avatar.svg'" width="40px" height="40px">
           </span>

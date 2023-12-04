@@ -28,11 +28,23 @@
         </div>
         <div class="text-gray-600 w-full">
           <span class="text-gray-800 font-medium">
+            Mã số sinh viên:
+          </span>
+          {{thesis?.student?.code}}
+        </div>
+        <div class="text-gray-600 w-full">
+          <span class="text-gray-800 font-medium">
             Giảng viên hướng dẫn:
           </span>
           {{thesis?.class?.teacher?.fullName}}
         </div>
-        <ng-container *ngIf="thesis?.protectInfo">
+        <div *ngIf="thesis?.description && isView" class="text-gray-600 w-full max-h-[200px] overflow-y-auto">
+          <div class="text-gray-800 font-medium">
+            Mô tả:
+          </div>
+          {{thesis?.description}}
+        </div>
+        <ng-container *ngIf="thesis?.protectInfo && !isView" >
           <div class="text-gray-600 w-full">
             <span class="text-gray-800 font-medium">
               Thời gian bảo vệ:
@@ -46,7 +58,7 @@
             Phòng {{thesis?.protectInfo?.room}}
           </div>
         </ng-container>
-        <div class="text-gray-600 w-full" *ngIf="thesis.results.length>0">
+        <div class="text-gray-600 w-full" *ngIf="thesis.results.length>0 && !isView">
           <span class="text-gray-800 font-medium">
             Điểm:
           </span>
