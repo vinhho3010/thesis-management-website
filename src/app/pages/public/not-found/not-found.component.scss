@@ -1,0 +1,37 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  margin: 0 auto;
+  position: relative;
+  transition: .2s ease-in-out;
+  background-color: #6A11CB30;
+  background-image: url(https://edison.templatekit.co/wp-content/uploads/sites/21/2021/01/08.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  .container-outlet-public {
+    z-index: 1;
+    width: 100%;
+    flex: 1 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 64px;
+  }
+}
+
+.overlay-bg {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  background-image: linear-gradient(180deg, #FBF8FEDB 0%, #f9f8fe 100%);
+  opacity: 1;
+  transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TOKEN_KEY, USER_SAVE_KEY } from './services/auth.service';
 import { RoleAccount } from './Model/enum/roleEnum';
+import { NotFoundComponent } from './pages/public/not-found/not-found.component';
 
 const isLogin = localStorage.getItem(TOKEN_KEY) ? true : false;
 const user = JSON.parse(localStorage.getItem(USER_SAVE_KEY) || '{}');
@@ -34,10 +35,14 @@ const routes: Routes = [
   path: 'public',
   loadChildren: () => import('./layouts/public-layout/public.module').then(m => m.PublicModule),
 },
-// {
-//   path: '**',
-//   redirectTo: 'home'
-// }
+{
+  path: 'not-found',
+  component: NotFoundComponent
+},
+{
+  path: '**',
+  redirectTo: 'not-found'
+}
 
 ];
 

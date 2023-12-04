@@ -1,0 +1,45 @@
+<div class="wrapper">
+  <div class="overlay-bg"></div>
+  <nav
+  class="fixed top-0 z-50 w-full bg-white border-b backdrop-blur border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start">
+
+        <a routerLink="/" class="flex ml-2 md:mr-24">
+          <img src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png" class="h-12 mr-3"
+            alt="Logo" />
+          <div class="flex flex-col justify-start items-start">
+            <span class="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white text-blue-600">CTU
+              Tms</span>
+            <span class="text-base font-semibold whitespace-nowrap text-yellow-500">Quản lý luận văn</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+  <div class="container-outlet-public">
+    <div class="landing-container bg-transparent">
+      <div class="flex flex-col items-center p-8 w-full rounded-[32px] xl:px-60">
+        <div class="w-full h-full flex flex-col justify-center items-center gap-5 lg:-mt-8">
+          <h1 class="text-blue-700 md:text-8xl text-6xl font-bold">404</h1>
+          <h3 class="text-blue-600 md:text-4xl text-2xl font-bold main-title-font">
+            Trang không khả dụng
+          </h3>
+          <h2 class="text-indigo-400 font-light">
+            <p>
+              Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa. Vui lòng kiểm tra lại đường dẫn hoặc quay lại trang chủ.
+            </p>
+          </h2>
+          <button (click)="onNavigateToHome()" mat-raised-button color="primary" class="text-white bg-blue-600 md:w-1/2 w-full py-6 rounded-2xl">
+            Trang chủ
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
