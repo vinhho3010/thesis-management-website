@@ -19,7 +19,7 @@ export const environment = {
 
 const user = JSON.parse(localStorage.getItem('user') || '{}');
 const userId = user._id;
-export const socketIOConfig: SocketIoConfig = { url: 'https://ctu-tms.cyclic.app/', options: {
+export const socketIOConfig: SocketIoConfig = { url: 'https://ctu-tms-api.adaptable.app', options: {
   query: {
     userId: userId
   }
