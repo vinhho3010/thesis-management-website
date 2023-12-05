@@ -14,7 +14,7 @@ export const environment = {
   production: false,
   currentSchoolYear: '2023-2024',
   currentSemester: '1',
-  clientUrl: 'http://localhost:4200',
+  clientUrl: 'https://ctu-tms.vercel.app',
 };
 
 const user = JSON.parse(localStorage.getItem('user') || '{}');
