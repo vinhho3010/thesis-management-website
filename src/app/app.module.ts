@@ -57,7 +57,7 @@ import { NgChartsModule } from 'ng2-charts';
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {
         ...new MatDialogConfig(),
-        maxHeight: "95vh",
+        maxHeight: "90vh",
         maxWidth: "99vw",
         panelClass: 'custom-dialog',
         autoFocus: false,
