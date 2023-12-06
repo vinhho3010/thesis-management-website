@@ -45,6 +45,7 @@
     <ng-container *ngIf="thesisList && thesisList.length>0; else emptyThesis">
       <ng-container *ngFor="let thesis of thesisList">
         <app-thesis-card-public
+        *ngIf="thesis"
         class="lg:col-span-2 md:col-span-3 col-span-6"
         [thesis]="thesis"
         (onViewThesis)="onViewDetail($event)">

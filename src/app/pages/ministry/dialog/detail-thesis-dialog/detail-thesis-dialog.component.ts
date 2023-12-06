@@ -47,7 +47,7 @@ export class DetailThesisDialogComponent {
   onSubmit() {
     if(this.isPublic.value !== undefined || this.isPublic.value !== null) {
       const result = {
-        isPublic: this.isPublic.value,
+        isPublic: this.isPublic.value ? true : false,
         thesis: this.thesis._id,
       }
       this.refDialog.close({result});
