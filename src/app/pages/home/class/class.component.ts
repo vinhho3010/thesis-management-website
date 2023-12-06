@@ -16,6 +16,7 @@ selectedTab = 0;
   constructor(private authService: AuthService, private location: Location) {}
 
   ngOnInit(): void {
+    this.authService.getClassId()
     const retrievedData = this.location.getState() as any;
     if(retrievedData.previousIndex){
       this.selectedTab = retrievedData.previousIndex;

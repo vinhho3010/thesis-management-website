@@ -44,6 +44,7 @@ export class TableAccountComponent {
       next: (response) =>{
         this.dataSourceInput.data = this.mapDataToTable(response.data);
         this.pagination.length = response.length;
+        this.searchCode.setValue('');
         this.loadingService.setLoading(false);
       },
       error: () => {
@@ -111,6 +112,8 @@ export class TableAccountComponent {
     });
     editAccount.afterClosed().subscribe(result => {
       if (result){
+        this.pagination.page = 0;
+        this.pagination.limit = 5;
         this.initDataSource();
       }
     });
@@ -123,6 +126,8 @@ export class TableAccountComponent {
     this.manageUserService.deleteAccount(_id).subscribe({
       next: () => {
         this.toastService.showSuccessToast('Xóa thành công');
+        this.pagination.page = 0;
+        this.pagination.limit = 5;
         this.reloadDataSource();
       },
       error: () => {
